@@ -1,0 +1,1 @@
+var storyContent = ﻿{"inkVersion":17,"root":["^Test.","\n","done",{"#f":3}],"listDefs":{}};
