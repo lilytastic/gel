@@ -1,6 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-@import "./variables.scss";
+/* Bootstrap overrides */
 
-body {
-	font-family: "Alegreya Sans", sans-serif;
-}
+@import "./variables.scss";
+@import "node_modules/bootstrap/scss/bootstrap";

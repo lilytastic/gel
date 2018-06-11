@@ -1,6 +1,15 @@
-:host {
-	
-	.container {
-		padding-top: 30px;
-	}
+@import "../variables.scss";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "../custom.scss";
+
+.navbar {
+	z-index: 3;
+	position: relative;
+}
+
+.wipe {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
 }

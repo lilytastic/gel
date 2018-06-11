@@ -1,3 +1,20 @@
-<p>
-  reader works!
-</p>
+
+<div [@listAnimation]="ink.segments.length">
+  <p *ngFor="let segment of ink.segments">
+    {{segment.text}}
+  </p>      
+</div>
+
+<div *ngIf="ink.currentChoices.length" class="mt-5">
+  <div class="btn-group-vertical btn-block">
+    <button class="btn btn-outline-secondary py-2" tabindex="0" (click)="selectChoice(choice)"
+        *ngFor="let choice of ink.currentChoices" [class.active]="selectedChoice === choice">
+      {{choice.text}}
+    </button>
+  </div>
+  
+  <button class="btn btn-block btn-primary mt-3 py-2" tabindex="0" (click)="confirmChoice()"
+    [attr.disabled]="selectedChoice ? null : true">
+    Next
+  </button>    
+</div>

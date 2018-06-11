@@ -1,18 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AppRoutingModule } from './/app-routing.module';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './/app-routing.module';
 import { ReaderComponent } from './reader/reader.component';
+import { StatusComponent } from './status/status.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReaderComponent
+    ReaderComponent,
+    StatusComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

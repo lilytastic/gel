@@ -30,14 +30,14 @@
               "node_modules/bootstrap/dist/css/bootstrap-grid.min.css",
               "node_modules/bootstrap/dist/css/bootstrap-reboot.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/custom.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/js/ink.js",
-              "src/assets/js/story/story.js"
+              "src/assets/js/ink.js"
             ]
           },
           "configurations": {
