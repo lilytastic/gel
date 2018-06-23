@@ -97,6 +97,7 @@ export class ReaderComponent implements OnInit {
 
   selectChoice(choice): void {
     this.selectedChoice = choice;
+    this.confirmChoice();
   }
 
   confirmChoice(): void {

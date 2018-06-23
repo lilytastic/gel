@@ -7,19 +7,23 @@
 
 <div *ngIf="ink.choices.length" class="mt-5">
   <div class="btn-group-vertical btn-block">
-    <button class="btn btn-outline-secondary py-2" tabindex="0" (click)="selectChoice(choice)"
+    <button class="btn btn-outline-secondary py-2 btn-choice" tabindex="0" (click)="selectChoice(choice)"
         *ngFor="let choice of ink.choices" [class.active]="selectedChoice === choice"
         [attr.disabled]="choiceIsDisabled(choice) ? true : null">
-      <div>
-        {{choice.index+1}}. {{choice.text}}
-      </div>
-      <div *ngFor="let d of choice.metadata">
-          <div *ngIf="d.type=='requirement'">
-            Requires {{d.value}} {{d.variableName}}
-          </div>
-          <div *ngIf="d.type=='cost'">
-            Costs {{d.value}} {{d.variableName}}
-          </div>
+      <div class="row align-items-center">
+        <div class="col">
+          {{choice.index+1}}. {{choice.text}}
+        </div>
+        <div class="col-sm-auto">
+          <div class="small" *ngFor="let d of choice.metadata">
+            <div *ngIf="d.type=='requirement'">
+              Requires {{d.value}} {{d.variableName|pluralize:d.value}}
+            </div>
+            <div *ngIf="d.type=='cost'">
+              Costs {{d.value}} {{d.variableName|pluralize:d.value}}
+            </div>
+          </div>  
+        </div>        
       </div>
     </button>
   </div>  

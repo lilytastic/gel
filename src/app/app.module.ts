@@ -8,12 +8,14 @@ import { ReaderComponent } from '@modules/reader/reader.component';
 import { StatusComponent } from '@modules/status/status.component';
 
 import '@core/prototypes/string-prototypes';
+import { PluralizePipe } from './shared/pipes/pluralize.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReaderComponent,
-    StatusComponent
+    StatusComponent,
+    PluralizePipe
   ],
   imports: [
     BrowserModule,
