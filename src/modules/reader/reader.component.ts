@@ -45,6 +45,10 @@ export class ReaderComponent implements OnInit {
     ink.Continue();
   }
 
+  getValue(variableName): any {
+    return this.ink.story.variablesState[variableName];
+  }
+
   choiceSelected(): Choice {
     if (this.selectedChoice != undefined) {
       return this.selectedChoice;

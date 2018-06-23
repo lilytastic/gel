@@ -8,9 +8,9 @@
     "paths": {
       "@src/*": ["../*"],
       "@app/*": ["app/*"],
-      "@core/*": ["app/core/*"],
-      "@shared/*": ["app/shared/*"],
-      "@modules/*": ["app/modules/*"]
+      "@core/*": ["core/*"],
+      "@shared/*": ["shared/*"],
+      "@modules/*": ["modules/*"]
     }
   },
   "exclude": [

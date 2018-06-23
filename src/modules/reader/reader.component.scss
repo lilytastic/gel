@@ -1,0 +1,22 @@
+.btn-choice {
+    text-align: left;
+
+    .choice-locked, .choice-unlocked {
+        min-width: 1rem;
+        display: inline-block;
+        text-align: center;
+        margin-right: 0.5rem;
+    }
+
+    .choice-locked {
+        display: none;
+    }
+    &:disabled {
+        .choice-locked {
+            display: inline-block;
+        }
+        .choice-unlocked {
+            display: none;
+        }
+    }
+}

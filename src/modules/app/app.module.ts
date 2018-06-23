@@ -8,7 +8,7 @@ import { ReaderComponent } from '@modules/reader/reader.component';
 import { StatusComponent } from '@modules/status/status.component';
 
 import '@core/prototypes/string-prototypes';
-import { PluralizePipe } from './shared/pipes/pluralize.pipe';
+import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
 
 @NgModule({
   declarations: [

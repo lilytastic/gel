@@ -12,15 +12,17 @@
         [attr.disabled]="choiceIsDisabled(choice) ? true : null">
       <div class="row align-items-center">
         <div class="col">
-          {{choice.index+1}}. {{choice.text}}
+          <span class="choice-unlocked">{{choice.index+1}}.</span>
+          <span class="choice-locked fa fa-lock"></span>
+          {{choice.text}}
         </div>
         <div class="col-sm-auto">
           <div class="small" *ngFor="let d of choice.metadata">
             <div *ngIf="d.type=='requirement'">
-              Requires {{d.value}} {{d.variableName|pluralize:d.value}}
+              Requires {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
             </div>
             <div *ngIf="d.type=='cost'">
-              Costs {{d.value}} {{d.variableName|pluralize:d.value}}
+              Costs {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
             </div>
           </div>  
         </div>        
