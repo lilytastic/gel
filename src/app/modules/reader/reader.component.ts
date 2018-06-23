@@ -97,12 +97,10 @@ export class ReaderComponent implements OnInit {
 
   selectChoice(choice): void {
     this.selectedChoice = choice;
-    console.log(this.choiceIsDisabled(choice));
   }
 
   confirmChoice(): void {
     var choiceIndex = this.choiceSelected().index;
-    console.log(choiceIndex);
     this.selectedChoice = undefined;
     this.ink.selectChoice(choiceIndex);
   }

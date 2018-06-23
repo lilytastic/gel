@@ -8,15 +8,17 @@
 .btn {
     transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+/*
 [class^=btn] {
-    &:disabled, &[disabled] {
+    &:disabled, &.disabled, &[disabled] {
         background-color: #aaa;
         border-color: #aaa;
     }
 }
 [class^=btn-outline] {
-    &:disabled, &[disabled] {
+    &:disabled, &.disabled, &[disabled] {
         background-color: transparent;
         border-color: #aaa;
     }
 }
+*/

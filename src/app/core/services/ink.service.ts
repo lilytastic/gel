@@ -26,7 +26,7 @@ export class InkService {
   }
 
   resetNode(): void {
-    this.continueChoice = -1;
+    this.continueChoice = undefined;
   }
 
   compileChoices(raw): Choice[] {
@@ -54,7 +54,7 @@ export class InkService {
     this.segments = [];
     this.choices = [];
 
-    this.continueChoice = -1;
+    this.continueChoice = undefined;
 
     if ("storyContent" in window) {
       this.story = new inkjs.Story(storyContent);
