@@ -13,6 +13,11 @@
       "node_modules/@types",
       "../src/typings.d.ts"
     ],
+    "paths": {
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@modules/*": ["src/app/modules/*"]
+    },   
     "lib": [
       "es2017",
       "dom"

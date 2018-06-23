@@ -11,10 +11,9 @@
         *ngFor="let choice of ink.currentChoices" [class.active]="selectedChoice === choice">
       {{choice.text}}
     </button>
-  </div>
-  
-  <button class="btn btn-block btn-primary mt-3 py-2" tabindex="0" (click)="confirmChoice()"
-    [attr.disabled]="selectedChoice ? null : true">
-    Next
-  </button>    
+    <button class="btn btn-block btn-primary py-2" tabindex="0" (click)="confirmChoice()"
+      [attr.disabled]="selectedChoice ? null : true">
+      Next
+    </button>
+  </div>  
 </div>

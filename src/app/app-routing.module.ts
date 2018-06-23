@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ReaderComponent } from "./reader/reader.component";
-import { StatusComponent } from "./status/status.component";
+import { ReaderComponent } from "@modules/reader/reader.component";
+import { StatusComponent } from "@modules/status/status.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/read", pathMatch: "full" },

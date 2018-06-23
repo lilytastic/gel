@@ -5,15 +5,6 @@
 
 /* Global styles */
 
-/*
-.btn {
-	&:disabled, &.disabled, &[disabled] {
-		background-color: #6c757d;
-        border-color: #6c757d;
-        opacity: 1;
-	}
-}
-*/
 .btn {
     transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }

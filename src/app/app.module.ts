@@ -4,8 +4,8 @@ import { AppRoutingModule } from './/app-routing.module';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from './app.component';
-import { ReaderComponent } from './reader/reader.component';
-import { StatusComponent } from './status/status.component';
+import { ReaderComponent } from '@modules/reader/reader.component';
+import { StatusComponent } from '@modules/status/status.component';
 
 @NgModule({
   declarations: [

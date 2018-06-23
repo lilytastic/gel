@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Segment } from "./classes/segment";
+
+import { Segment } from "@core/classes/segment";
 
 @Injectable({
   providedIn: 'root'

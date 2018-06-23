@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
-import { InkService } from "../ink.service";
-import { ThemeService } from "../theme.service";
+import { InkService } from "@core/services/ink.service";
+import { ThemeService } from "@core/services/theme.service";
 
-import { Segment } from "../classes/segment";
+import { Segment } from "@core/classes/segment";
 
 @Component({
   selector: 'app-reader',
