@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { ReaderComponent } from '@modules/reader/reader.component';
 import { StatusComponent } from '@modules/status/status.component';
 
+import '@core/prototypes/string-prototypes';
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -5,6 +5,7 @@ import { InkService } from "@core/services/ink.service";
 import { ThemeService } from "@core/services/theme.service";
 
 import { Segment } from "@core/classes/segment";
+import { Choice } from "@core/classes/choice";
 
 @Component({
   selector: 'app-reader',
@@ -39,9 +40,55 @@ export class ReaderComponent implements OnInit {
     this.ink = ink;
 
     this.segments = ink.segments;
-    this.choices = ink.currentChoices;
+    this.choices = ink.choices;
 
     ink.Continue();
+  }
+
+  choiceSelected(): Choice {
+    if (this.selectedChoice != undefined) {
+      return this.selectedChoice;
+    }
+    else if (this.ink.continueChoice != undefined) {
+      return this.ink.continueChoice;
+    }
+    else {
+      return null;
+    }
+  }
+
+  choiceIsDisabled(choice): boolean {
+    var self = this;
+    var value = false;
+    choice.metadata.forEach(function(d) {
+      switch (d.type) {
+        case "requirement":
+          var currentValue = +self.ink.story.variablesState[d.variableName];
+          var soughtValue = +d.value;
+          switch (d.operator) {
+            case "==":
+              value = !(currentValue == soughtValue); break;
+            case "!=":
+              value = !(currentValue != soughtValue); break;
+            case ">":
+              value = !(currentValue > soughtValue); break;
+            case ">=":
+              value = !(currentValue >= soughtValue); break;
+            case "<":
+              value = !(currentValue < soughtValue); break;
+            case "<=":
+              value = !(currentValue <= soughtValue); break;
+            default:
+              break;
+          }
+          if (value) {
+            return value;
+          }
+        default:
+          break;
+      }
+    });
+    return value;
   }
   
   setTheme(_t): void {
@@ -50,11 +97,14 @@ export class ReaderComponent implements OnInit {
 
   selectChoice(choice): void {
     this.selectedChoice = choice;
+    console.log(this.choiceIsDisabled(choice));
   }
 
   confirmChoice(): void {
-    this.ink.selectChoice(this.selectedChoice);
+    var choiceIndex = this.choiceSelected().index;
+    console.log(choiceIndex);
     this.selectedChoice = undefined;
+    this.ink.selectChoice(choiceIndex);
   }
 
   ngOnInit() {

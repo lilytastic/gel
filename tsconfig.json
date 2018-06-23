@@ -14,6 +14,8 @@
       "../src/typings.d.ts"
     ],
     "paths": {
+      "@src/*": ["src/*"],
+      "@app/*": ["src/app/*"],
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
       "@modules/*": ["src/app/modules/*"]

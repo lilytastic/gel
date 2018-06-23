@@ -5,15 +5,26 @@
   </p>      
 </div>
 
-<div *ngIf="ink.currentChoices.length" class="mt-5">
+<div *ngIf="ink.choices.length" class="mt-5">
   <div class="btn-group-vertical btn-block">
     <button class="btn btn-outline-secondary py-2" tabindex="0" (click)="selectChoice(choice)"
-        *ngFor="let choice of ink.currentChoices" [class.active]="selectedChoice === choice">
-      {{choice.text}}
-    </button>
-    <button class="btn btn-block btn-primary py-2" tabindex="0" (click)="confirmChoice()"
-      [attr.disabled]="selectedChoice ? null : true">
-      Next
+        *ngFor="let choice of ink.choices" [class.active]="selectedChoice === choice"
+        [attr.disabled]="choiceIsDisabled(choice) ? true : null">
+      <div>
+        {{choice.index+1}}. {{choice.text}}
+      </div>
+      <div *ngFor="let d of choice.metadata">
+          <div *ngIf="d.type=='requirement'">
+            Requires {{d.value}} {{d.variableName}}
+          </div>
+          <div *ngIf="d.type=='cost'">
+            Costs {{d.value}} {{d.variableName}}
+          </div>
+      </div>
     </button>
   </div>  
+  <button class="btn btn-block btn-primary mt-4 py-2" tabindex="0" (click)="confirmChoice()"
+    [attr.disabled]="choiceSelected() != undefined ? null : true">
+    Next
+  </button>
 </div>

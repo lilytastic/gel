@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Segment } from "@core/classes/segment";
+import { Choice } from "@core/classes/choice";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,9 @@ export class InkService {
 
   story: any;
   segments: Segment[];
-  currentChoices: any[];
+  choices: Choice[];
+
+  continueChoice: Choice;
 
   Continue(): void {
     while (this.story.canContinue) {
@@ -18,16 +21,41 @@ export class InkService {
       }
       this.segments.push(_segment);
     }
-    this.currentChoices = this.story.currentChoices;
+    this.resetNode();
+    this.choices = this.compileChoices(this.story.currentChoices);
+  }
+
+  resetNode(): void {
+    this.continueChoice = -1;
+  }
+
+  compileChoices(raw): Choice[] {
+    var _choices = [];
+    var self = this;
+    raw.forEach(function(c) {
+      switch (c.text) {
+        case "DO NOTHING":
+          self.continueChoice = c;
+          break;
+        default: 
+          _choices.push(new Choice(c));
+          break;
+      }
+    });
+    return _choices;
   }
 
   selectChoice(choice): void {
-    this.story.ChooseChoiceIndex(choice.index);
+    this.story.ChooseChoiceIndex(choice);
     this.Continue();
   }
 
   constructor() { 
     this.segments = [];
+    this.choices = [];
+
+    this.continueChoice = -1;
+
     if ("storyContent" in window) {
       this.story = new inkjs.Story(storyContent);
     }
