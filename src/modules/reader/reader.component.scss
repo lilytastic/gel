@@ -1,5 +1,11 @@
+.reader {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .btn-choice {
     text-align: left;
+    white-space: normal;
 
     .choice-locked, .choice-unlocked {
         min-width: 1rem;
@@ -17,6 +23,20 @@
         }
         .choice-unlocked {
             display: none;
+        }
+    }
+
+    .choice-metadata {
+        text-align: right;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .btn-choice {
+        .choice-metadata {
+            text-align: left;
+            padding-left: 2.75rem;
         }
     }
 }

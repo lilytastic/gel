@@ -6,8 +6,24 @@
 /* Global styles */
 
 .btn {
-    transition: opacity 0.15s ease-in-out, color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: opacity 0.15s ease-in-out, 
+                color 0.15s ease-in-out, 
+                background-color 0.15s ease-in-out, 
+                border-color 0.15s ease-in-out,
+                box-shadow 0.15s ease-in-out;
 }
+/*
+.btn {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+[class^=btn-group] {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    .btn {
+        box-shadow: none;
+    }
+}
+*/
 /*
 [class^=btn] {
     &:disabled, &.disabled, &[disabled] {
