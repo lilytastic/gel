@@ -19,7 +19,7 @@
         <div class="col-sm-auto">
           <div class="small" *ngFor="let d of choice.metadata">
             <div *ngIf="d.type=='requirement'">
-              Requires {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
+              Need {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
             </div>
             <div *ngIf="d.type=='cost'">
               Costs {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
@@ -29,8 +29,4 @@
       </div>
     </button>
   </div>  
-  <button class="btn btn-block btn-primary mt-4 py-2" tabindex="0" (click)="confirmChoice()"
-    [attr.disabled]="choiceSelected() != undefined ? null : true">
-    Next
-  </button>
 </div>
