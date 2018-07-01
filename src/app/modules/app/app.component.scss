@@ -1,6 +1,6 @@
-@import "../../variables.scss";
+@import "../../../variables.scss";
 @import "node_modules/bootstrap/scss/bootstrap";
-@import "../../custom.scss";
+@import "../../../custom.scss";
 
 .navbar {
 	z-index: 3;
@@ -16,10 +16,4 @@
 	top: 0;
 	left: 0;
 	z-index: 1;
-}
-
-.stat-list {
-	.navbar-text {
-		
-	}
 }

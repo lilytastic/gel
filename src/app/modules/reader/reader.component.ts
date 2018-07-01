@@ -4,7 +4,7 @@ import { trigger, animate, style, group, animateChild, query, stagger, transitio
 
 import { InkService } from '@core/services/ink.service';
 import { ThemeService } from '@core/services/theme.service';
-import { UtilityService } from '@core/services/util/util.service';
+import { UtilityService } from '@core/services/util.service';
 
 import { Segment } from '@core/classes/segment';
 import { Choice } from '@core/classes/choice';
@@ -33,7 +33,6 @@ import { utils } from 'protractor';
   styleUrls: ['./reader.component.scss']
 })
 export class ReaderComponent implements OnInit {
-
   segments: Segment[];
   choices: any[];
   selectedChoice: any;
@@ -52,10 +51,6 @@ export class ReaderComponent implements OnInit {
     this.ink.Continue();
   }
 
-  getValue(variableName): any {
-    return this.ink.story.variablesState[variableName];
-  }
-
   choiceSelected(): Choice {
     if (this.selectedChoice !== undefined) {
       return this.selectedChoice;
@@ -64,23 +59,6 @@ export class ReaderComponent implements OnInit {
     } else {
       return null;
     }
-  }
-
-  choiceIsDisabled(choice): boolean {
-    const self = this;
-    let value = false;
-    choice.metadata.forEach(function(d) {
-      switch (d.type) {
-        case 'requirement':
-          const currentValue = +self.ink.story.variablesState[d.variableName];
-          const soughtValue = +d.value;
-          value = !(self.util.checkWithOperator[d.operator](currentValue, soughtValue));
-          break;
-        default:
-          break;
-      }
-    });
-    return value;
   }
 
   selectChoice(choice): void {

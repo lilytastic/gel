@@ -1,0 +1,16 @@
+<div class="content container pt-5">
+  <div [@segmentAnimation]="ink.segments.length">
+    <p *ngFor="let segment of ink.segments">
+      {{segment.text}}
+    </p>
+  </div>
+  
+  <div *ngIf="ink.choices.length" class="mt-5">
+    <div class="btn-group-vertical btn-block">
+      <reader-choice *ngFor="let choice of ink.choices"
+        (click)="selectChoice(choice)"
+        [choice]="choice" [class.active]="selectedChoice === choice">
+      </reader-choice>
+    </div>
+  </div>
+</div>

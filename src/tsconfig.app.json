@@ -7,10 +7,11 @@
     "types": [],
     "paths": {
       "@src/*": ["../*"],
+      "@assets/*": ["assets/*"],
       "@app/*": ["app/*"],
-      "@core/*": ["core/*"],
-      "@shared/*": ["shared/*"],
-      "@modules/*": ["modules/*"]
+      "@core/*": ["app/core/*"],
+      "@shared/*": ["app/shared/*"],
+      "@modules/*": ["app/modules/*"]
     }
   },
   "exclude": [

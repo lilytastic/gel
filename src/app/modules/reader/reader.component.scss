@@ -1,0 +1,11 @@
+.btn-group-vertical {
+    reader-choice {
+        + reader-choice {
+            margin-top: -1px;
+            .btn {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        }
+    }
+}

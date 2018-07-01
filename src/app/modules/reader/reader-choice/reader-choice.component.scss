@@ -1,6 +1,10 @@
-.btn-choice {
+:host {
+    width: 100%;
+}
+.btn {
     text-align: left;
     white-space: normal;
+    width: 100%;
 
     .choice-locked, .choice-unlocked {
         min-width: 1rem;
@@ -8,7 +12,6 @@
         text-align: center;
         margin-right: 0.5rem;
     }
-
     .choice-locked {
         display: none;
     }
@@ -28,7 +31,7 @@
 
 
 @media (max-width: 576px) {
-    .btn-choice {
+    .btn {
         .choice-metadata {
             text-align: left;
             padding-left: 2.75rem;
