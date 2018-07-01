@@ -56,11 +56,14 @@ export class InkService {
 
     this.continueChoice = undefined;
 
-    if ("storyContent" in window) {
+    try {
       this.story = new inkjs.Story(storyContent);
     }
-    else {
-      console.log("No story!");
+    catch(err) {
+      console.error(err);
+    }
+    finally {
+      
     }
   }
 }

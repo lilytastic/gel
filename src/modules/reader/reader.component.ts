@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
 import { InkService } from "@core/services/ink.service";
 import { ThemeService } from "@core/services/theme.service";
+import { UtilityService } from "@core/services/util/util.service";
 
 import { Segment } from "@core/classes/segment";
 import { Choice } from "@core/classes/choice";
+import { utils } from 'protractor';
 
 @Component({
   selector: 'app-reader',
   animations: [
-    trigger('listAnimation', [
+    trigger('segmentAnimation', [
       transition('* => *', [ // each time the binding value changes
         query(':leave', [
           stagger(300, [
@@ -36,13 +39,17 @@ export class ReaderComponent implements OnInit {
   selectedChoice: any;
   ink: InkService;
 
-  constructor(ink: InkService, private themeService: ThemeService) { 
+  constructor(ink: InkService, private util: UtilityService) { 
     this.ink = ink;
 
     this.segments = ink.segments;
     this.choices = ink.choices;
 
-    ink.Continue();
+    this.beginStory();
+  }
+
+  beginStory() {
+    this.ink.Continue();
   }
 
   getValue(variableName): any {
@@ -69,34 +76,13 @@ export class ReaderComponent implements OnInit {
         case "requirement":
           var currentValue = +self.ink.story.variablesState[d.variableName];
           var soughtValue = +d.value;
-          switch (d.operator) {
-            case "==":
-              value = !(currentValue == soughtValue); break;
-            case "!=":
-              value = !(currentValue != soughtValue); break;
-            case ">":
-              value = !(currentValue > soughtValue); break;
-            case ">=":
-              value = !(currentValue >= soughtValue); break;
-            case "<":
-              value = !(currentValue < soughtValue); break;
-            case "<=":
-              value = !(currentValue <= soughtValue); break;
-            default:
-              break;
-          }
-          if (value) {
-            return value;
-          }
+          value = !(self.util.checkWithOperator[d.operator](currentValue, soughtValue));
+          break;
         default:
           break;
       }
     });
     return value;
-  }
-  
-  setTheme(_t): void {
-    this.themeService.theme = _t; 
   }
 
   selectChoice(choice): void {

@@ -31,6 +31,6 @@ export class AppComponent {
   constructor(private themeService: ThemeService) { }
 
   getState(outlet) {
-    return outlet.activatedRouteData.state;
+    //return outlet.activatedRouteData.state;
   }
 }

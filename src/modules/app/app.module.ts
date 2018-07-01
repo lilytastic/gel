@@ -8,6 +8,10 @@ import { ReaderComponent } from '@modules/reader/reader.component';
 import { StatusComponent } from '@modules/status/status.component';
 
 import '@core/prototypes/string-prototypes';
+
+import '../../assets/js/ink.js';
+import '../../assets/js/story/story.js';
+
 import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
 
 @NgModule({

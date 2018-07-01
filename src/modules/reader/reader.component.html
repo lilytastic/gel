@@ -1,5 +1,5 @@
-<div class="reader">
-  <div [@listAnimation]="ink.segments.length">
+<div class="content container pt-5">
+  <div [@segmentAnimation]="ink.segments.length">
     <p *ngFor="let segment of ink.segments">
       {{segment.text}}
     </p>      
