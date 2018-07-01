@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
-import { InkService } from "@core/services/ink.service";
-import { ThemeService } from "@core/services/theme.service";
-import { UtilityService } from "@core/services/util/util.service";
+import { InkService } from '@core/services/ink.service';
+import { ThemeService } from '@core/services/theme.service';
+import { UtilityService } from '@core/services/util/util.service';
 
-import { Segment } from "@core/classes/segment";
-import { Choice } from "@core/classes/choice";
+import { Segment } from '@core/classes/segment';
+import { Choice } from '@core/classes/choice';
 import { utils } from 'protractor';
 
 @Component({
@@ -39,7 +39,7 @@ export class ReaderComponent implements OnInit {
   selectedChoice: any;
   ink: InkService;
 
-  constructor(ink: InkService, private util: UtilityService) { 
+  constructor(ink: InkService, private util: UtilityService) {
     this.ink = ink;
 
     this.segments = ink.segments;
@@ -57,25 +57,23 @@ export class ReaderComponent implements OnInit {
   }
 
   choiceSelected(): Choice {
-    if (this.selectedChoice != undefined) {
+    if (this.selectedChoice !== undefined) {
       return this.selectedChoice;
-    }
-    else if (this.ink.continueChoice != undefined) {
+    } else if (this.ink.continueChoice !== undefined) {
       return this.ink.continueChoice;
-    }
-    else {
+    } else {
       return null;
     }
   }
 
   choiceIsDisabled(choice): boolean {
-    var self = this;
-    var value = false;
+    const self = this;
+    let value = false;
     choice.metadata.forEach(function(d) {
       switch (d.type) {
-        case "requirement":
-          var currentValue = +self.ink.story.variablesState[d.variableName];
-          var soughtValue = +d.value;
+        case 'requirement':
+          const currentValue = +self.ink.story.variablesState[d.variableName];
+          const soughtValue = +d.value;
           value = !(self.util.checkWithOperator[d.operator](currentValue, soughtValue));
           break;
         default:
@@ -91,7 +89,7 @@ export class ReaderComponent implements OnInit {
   }
 
   confirmChoice(): void {
-    var choiceIndex = this.choiceSelected().index;
+    const choiceIndex = this.choiceSelected().index;
     this.selectedChoice = undefined;
     this.ink.selectChoice(choiceIndex);
   }

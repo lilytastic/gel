@@ -8,6 +8,6 @@ export class ThemeService {
   theme: string;
 
   constructor() {
-    this.theme = "default";
+    this.theme = 'default';
   }
 }

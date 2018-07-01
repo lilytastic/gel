@@ -1,3 +1,3 @@
 export class Segment {
-    text: string
+    text: string;
 }

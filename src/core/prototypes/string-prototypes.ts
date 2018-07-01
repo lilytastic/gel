@@ -9,11 +9,10 @@ interface String {
 function trimWhiteSpaces() {
     return this.split(' ').join('');
 }
-function splice(start,end?) {
+function splice(start, end?) {
     if (end) {
         return this.slice(0, start) + this.slice(end);
-    }
-    else {
+    } else {
         return this.slice(0, start);
     }
 }
