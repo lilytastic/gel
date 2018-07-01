@@ -4,21 +4,47 @@ import { Choice } from './choice';
 
 describe('choice', () => {
   it('should be created', () => {
-    const simpleChoice = new Choice({text: 'TEST', index: 0});
-    expect(simpleChoice).toBeTruthy();
+    const choice = new Choice({text: 'success', index: 0});
+    expect(choice).toBeTruthy();
   });
 
   it ('should parse metadata', () => {
-    const choiceWithMetadata = new Choice({text: 'test (&x==0)', index: 0});
-    expect(choiceWithMetadata).toBeTruthy();
-    expect(choiceWithMetadata.metadata.length).toBe(1);
-    expect(choiceWithMetadata.metadata[0].type === 'requirement');
-    expect(choiceWithMetadata.text).toBe('test');
+    const choice = new Choice({text: 'success (&x==0)', index: 0});
+    expect(choice).toBeTruthy();
+    expect(choice.metadata.length).toBe(1);
+    expect(choice.metadata[0].type === 'requirement');
+    expect(choice.text).toBe('success');
+  });
 
-    const choiceWithMetadata2 = new Choice({text: 'test( $ x >= 0 )', index: 0});
-    expect(choiceWithMetadata2).toBeTruthy();
-    expect(choiceWithMetadata2.metadata.length).toBe(1);
-    expect(choiceWithMetadata2.metadata[0].type === 'cost');
-    expect(choiceWithMetadata2.text).toBe('test');
+  it ('should parse multiple metadata', () => {
+    const choice = new Choice({text: 'success ($x>0, &y===0)', index: 0});
+    expect(choice).toBeTruthy();
+    expect(choice.metadata.length).toBe(2);
+    expect(choice.metadata[0].type === 'cost');
+    expect(choice.metadata[1].type === 'requirement');
+    expect(choice.text).toBe('success');
+  });
+
+  it ('should parse metadata with odd spacing', () => {
+    const choice = new Choice({text: ' success( $ x >= 0 ,&y===0 ) ', index: 0});
+    expect(choice).toBeTruthy();
+    expect(choice.metadata.length).toBe(2);
+    expect(choice.metadata[0].type === 'cost');
+    expect(choice.metadata[1].type === 'requirement');
+    expect(choice.text).toBe('success');
+  });
+
+  it ('should respect escape character', () => {
+    const choice = new Choice({text: 'success \\(truth)', index: 0});
+    expect(choice).toBeTruthy();
+    expect(choice.metadata.length).toBe(0);
+    expect(choice.text).toBe('success (truth)');
+  });
+
+  it ('should ignore malformed metadata', () => {
+    const choice = new Choice({text: 'success (&x aa!0)', index: 0});
+    expect(choice).toBeTruthy();
+    expect(choice.metadata.length).toBe(0);
+    expect(choice.text).toBe('success');
   });
 });

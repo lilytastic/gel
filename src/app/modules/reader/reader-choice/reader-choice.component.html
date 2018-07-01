@@ -1,4 +1,5 @@
-<button class="btn btn-outline-secondary py-3" [attr.disabled]="choiceIsDisabled() ? true : null">
+<button class="btn btn-outline-secondary py-3" (click)="onClick()"
+    [attr.disabled]="choiceIsDisabled() ? true : null">
   <div class="row align-items-center">
     <div class="col">
       <span class="choice-unlocked">{{choice.index+1}}.</span>

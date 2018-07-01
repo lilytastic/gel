@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
 import { InkService } from '@core/services/ink.service';
-import { ThemeService } from '@core/services/theme.service';
 import { UtilityService } from '@core/services/util.service';
 
 import { Segment } from '@core/classes/segment';

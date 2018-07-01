@@ -8,6 +8,7 @@ import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
 describe('ReaderChoiceComponent', () => {
   let component: ReaderChoiceComponent;
   let fixture: ComponentFixture<ReaderChoiceComponent>;
+  let button: any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,6 +22,7 @@ describe('ReaderChoiceComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReaderChoiceComponent);
+    button = fixture.nativeElement.querySelector('button');
     component = fixture.componentInstance;
     component.choice = new Choice({
       text: '',
@@ -31,5 +33,13 @@ describe('ReaderChoiceComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit the index on click', () => {
+    spyOn(component, 'onClick');
+    button.click();
+    fixture.whenStable().then(() => {
+      expect(component.onClick).toHaveBeenCalled();
+    });
   });
 });

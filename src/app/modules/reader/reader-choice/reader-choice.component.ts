@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { Choice } from '@core/classes/choice';
 
@@ -12,10 +12,15 @@ import { UtilityService } from '@core/services/util.service';
 })
 export class ReaderChoiceComponent implements OnInit {
   @Input() choice: Choice;
+  @Output() selectChoice: EventEmitter<any> = new EventEmitter();
 
   constructor(private ink: InkService, private util: UtilityService) { }
 
   ngOnInit() {
+  }
+
+  onClick(): void {
+    this.selectChoice.emit(this.choice.index);
   }
 
   getValue(variableName): any {

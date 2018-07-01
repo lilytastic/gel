@@ -5,17 +5,24 @@ import '@core/prototypes/string-prototypes';
 export class Choice {
     index: number;
     text: string;
+    rawText: string;
     metadata: any[];
 
     constructor(choice: any) {
         this.index = choice.index;
+        this.rawText = choice.text;
         const choiceElements: any = this.separateElements(choice.text);
         this.text = choiceElements.text;
         this.metadata = this.compileMetadata(choiceElements.meta);
     }
 
     separateElements(text: string): any {
-        const bracketOpen = text.indexOf('(');
+        let bracketOpen = text.indexOf('(');
+        if (text[bracketOpen - 1] === '\\') {
+            text = text.replace('\\(', '(');
+            bracketOpen = text.indexOf('(', bracketOpen + 1);
+        }
+
         const bracketClose = text.indexOf(')', bracketOpen);
         if (bracketOpen > -1) {
             return {
@@ -36,44 +43,35 @@ export class Choice {
             return elements;
         }
 
-        const operators = ['>=', '<=', '>', '<', '!=', '==', '='];
+        const operators = ['>=', '<=', '>', '<', '!=', '!==', '==', '='];
+        const types = {
+            '&': 'requirement',
+            '$': 'cost'
+        };
         metadata.forEach(function(t) {
-            t = t.trim();
+            t = t.trimWhiteSpaces();
             let operator = '';
             let operatorIndex = -1;
             for (let i = 0; i < operators.length; i++) {
                 operatorIndex = t.indexOf(operators[i], 1);
                 if (operatorIndex !== -1) {
                     operator = operators[i];
-                    if (operator === '=') { operator = '=='; }
                     break;
                 }
             }
-            let variableName = '';
-            let requiredValue = 0;
             if (operator) {
-                variableName = t.substr(1, operatorIndex - 1).trim();
-                requiredValue = +(t.substr(operatorIndex + operator.length).trim());
-            }
-            switch (t[0]) {
-                case '&':
-                    elements.push({
-                        type: 'requirement',
-                        variableName: variableName,
-                        value: requiredValue,
-                        operator: operator
-                    });
-                    break;
-                case '$':
-                    elements.push({
-                        type: 'cost',
-                        variableName: variableName,
-                        value: requiredValue,
-                        operator: operator
-                    });
-                    break;
-                default:
-                    break;
+                const variableName = t.substr(1, operatorIndex - 1).trim();
+                const requiredValue = +(t.substr(operatorIndex + operator.length).trim());
+                Object.keys(types).forEach(function(type) {
+                    if (t[0] === type) {
+                        elements.push({
+                            type: types[type],
+                            variableName: variableName,
+                            value: requiredValue,
+                            operator: operator
+                        });
+                    }
+                });
             }
         });
         return elements;

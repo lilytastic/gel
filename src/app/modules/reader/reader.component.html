@@ -8,8 +8,8 @@
   <div *ngIf="ink.choices.length" class="mt-5">
     <div class="btn-group-vertical btn-block">
       <reader-choice *ngFor="let choice of ink.choices"
-        (click)="selectChoice(choice)"
-        [choice]="choice" [class.active]="selectedChoice === choice">
+        (selectChoice)="selectChoice(choice)"
+        [choice]="choice">
       </reader-choice>
     </div>
   </div>

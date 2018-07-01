@@ -7,7 +7,6 @@ import { Choice } from '@core/classes/choice';
   providedIn: 'root'
 })
 export class InkService {
-
   story: any;
   segments: Segment[];
   choices: Choice[];
