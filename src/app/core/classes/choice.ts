@@ -50,15 +50,11 @@ export class Choice {
         };
         metadata.forEach(function(t) {
             t = t.trimWhiteSpaces();
-            let operator = '';
             let operatorIndex = -1;
-            for (let i = 0; i < operators.length; i++) {
-                operatorIndex = t.indexOf(operators[i], 1);
-                if (operatorIndex !== -1) {
-                    operator = operators[i];
-                    break;
-                }
-            }
+            const operator = operators.find((x) => {
+                operatorIndex = t.indexOf(x, 1);
+                return operatorIndex !== -1;
+            });
             if (operator) {
                 const variableName = t.substr(1, operatorIndex - 1).trim();
                 const requiredValue = +(t.substr(operatorIndex + operator.length).trim());
