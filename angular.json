@@ -39,7 +39,8 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/js/ink.js",
               "src/assets/js/story/story.js"
-            ]
+            ],
+            "serviceWorker": true
           },
           "configurations": {
             "production": {
@@ -90,7 +91,7 @@
             ],
             "scripts": [
               "src/assets/js/ink.js",
-              "src/assets/js/story/story.js"
+              "src/assets/js/story/test.js"
             ],
             "assets": [
               "src/favicon.ico",

@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './routing/app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '@environments/environment';
 
 import { AppComponent } from './app.component';
 import { ReaderModule } from '@modules/reader/reader.module';
@@ -21,7 +23,8 @@ import '@assets/js/story/story.js';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ReaderModule
+    ReaderModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
