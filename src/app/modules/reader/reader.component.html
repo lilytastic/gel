@@ -1,4 +1,4 @@
-<div class="content container pt-5">
+<div class="content">
   <div [@segmentAnimation]="ink.segments.length">
     <p *ngFor="let segment of ink.segments">
       {{segment.text}}
@@ -9,8 +9,14 @@
     <div class="btn-group-vertical btn-block">
       <reader-choice *ngFor="let choice of ink.choices"
         (selectChoice)="selectChoice(choice)"
+        [isSelected]="selectedChoice===choice"
         [choice]="choice">
       </reader-choice>
     </div>
+    <button class="btn btn-danger btn-block px-3 py-2 mt-3" 
+            (click)="confirmChoice()"
+            [attr.disabled]="selectedChoice ? null : true">
+      Next
+    </button>
   </div>
 </div>

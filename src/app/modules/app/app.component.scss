@@ -1,10 +1,20 @@
 @import "../../../variables.scss";
-@import "node_modules/bootstrap/scss/bootstrap";
+@import "../../../../node_modules/bootstrap/scss/bootstrap";
 @import "../../../custom.scss";
 
 .navbar {
 	z-index: 3;
 	position: relative;
+
+	.behind {
+		position: absolute;
+		z-index: -1;
+		top: 0;
+		bottom: -3rem;
+		left: 0;
+		right: 0;
+		background-color: inherit;
+	}
 }
 .navbar-primary {
 	box-shadow: 0 1px 10px rgba(0,0,0,0.3);

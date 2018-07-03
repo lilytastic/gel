@@ -12,6 +12,7 @@ import { UtilityService } from '@core/services/util.service';
 })
 export class ReaderChoiceComponent implements OnInit {
   @Input() choice: Choice;
+  @Input() isSelected: boolean;
   @Output() selectChoice: EventEmitter<any> = new EventEmitter();
 
   constructor(private ink: InkService, private util: UtilityService) { }

@@ -13,7 +13,6 @@ import '@core/prototypes/string-prototypes';
 
 import '@assets/js/ink.js';
 import '@assets/js/story/story.js';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [

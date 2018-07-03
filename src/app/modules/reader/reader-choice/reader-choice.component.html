@@ -1,7 +1,12 @@
-<button class="btn btn-outline-secondary p-3" (click)="onClick()"
+<button class="btn px-3 py-2" 
+    [class.selected]="isSelected"
+    [class.btn-light]="!isSelected"
+    [class.btn-primary]="isSelected"
+    (click)="onClick()"
     [attr.disabled]="choiceIsDisabled() ? true : null">
   <div class="row align-items-center">
     <div class="col">
+      <span class="choice-selected fa fa-check"></span>
       <span class="choice-unlocked">{{choice.index+1}}.</span>
       <span class="choice-locked fa fa-lock"></span>
       {{choice.text}}

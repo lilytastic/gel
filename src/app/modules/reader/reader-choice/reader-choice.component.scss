@@ -8,24 +8,39 @@
     width: 100%;
 
     .choice-locked,
-    .choice-unlocked {
+    .choice-unlocked,
+    .choice-selected {
         min-width: 1rem;
-        display: inline-block;
         text-align: center;
         margin-right: 0.5rem;
-    }
-
-    .choice-locked {
         display: none;
     }
 
-    &:disabled {        
+    .choice-unlocked {
+        display: inline-block;
+    }
+
+    &:disabled {
         .choice-locked {
             display: inline-block;
         }
 
         .choice-unlocked {
             display: none;
+        }
+    }
+
+    &.selected {
+        .choice-unlocked {
+            display: none;
+        }
+        
+        .choice-locked {
+            display: none;
+        }
+
+        .choice-selected {
+            display: inline-block;
         }
     }
 
