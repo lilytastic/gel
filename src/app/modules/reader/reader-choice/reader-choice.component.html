@@ -1,23 +1,28 @@
-<button class="btn px-3 py-2" 
+<button class="btn btn-tab"
     [class.selected]="isSelected"
-    [class.btn-light]="!isSelected"
+    [class.locked]="choiceIsDisabled()"
+    [class.btn-outline-secondary]="!isSelected"
     [class.btn-primary]="isSelected"
-    (click)="onClick()"
-    [attr.disabled]="choiceIsDisabled() ? true : null">
-  <div class="row align-items-center">
-    <div class="col">
-      <span class="choice-selected fa fa-check"></span>
-      <span class="choice-unlocked">{{choice.index+1}}.</span>
-      <span class="choice-locked fa fa-lock"></span>
-      {{choice.text}}
-    </div>
-    <div class="col-sm-auto choice-metadata">
-      <div class="small" *ngFor="let d of choice.metadata">
-        <div *ngIf="d.type=='requirement'">
-          Need {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
-        </div>
-        <div *ngIf="d.type=='cost'">
-          Costs {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
+    (click)="onClick()">
+  
+  <div class="btn-tab-icon">
+    <span class="choice-selected fa fa-check"></span>
+    <span class="choice-unlocked">{{choice.index+1}}.</span>
+    <span class="choice-locked fa fa-lock"></span>
+  </div>
+  <div class="btn-tab-content">
+    <div class="row align-items-center">
+      <div class="col">
+        {{choice.text}}
+      </div>
+      <div class="col-sm-auto choice-metadata">
+        <div class="small" *ngFor="let d of choice.metadata">
+          <div *ngIf="d.type=='requirement'">
+            Need {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
+          </div>
+          <div *ngIf="d.type=='cost'">
+            Costs {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
+          </div>
         </div>
       </div>
     </div>

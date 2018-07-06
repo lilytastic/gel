@@ -50,6 +50,27 @@ export class ReaderComponent implements OnInit {
     this.ink.Continue();
   }
 
+  getValue(variableName): any {
+    return this.ink.story.variablesState[variableName];
+  }
+
+  choiceIsDisabled(choice): boolean {
+    const self = this;
+    let value = false;
+    choice.metadata.forEach(function(d) {
+      switch (d.type) {
+        case 'requirement':
+          const currentValue = +self.ink.story.variablesState[d.variableName];
+          const soughtValue = +d.value;
+          value = !(self.util.checkWithOperator[d.operator](currentValue, soughtValue));
+          break;
+        default:
+          break;
+      }
+    });
+    return value;
+  }
+
   choiceSelected(): Choice {
     if (this.selectedChoice !== undefined) {
       return this.selectedChoice;
@@ -65,9 +86,12 @@ export class ReaderComponent implements OnInit {
   }
 
   confirmChoice(): void {
-    const choiceIndex = this.choiceSelected().index;
-    this.selectedChoice = undefined;
-    this.ink.selectChoice(choiceIndex);
+    const selectedChoice = this.selectedChoice;
+    if (selectedChoice && selectedChoice.index !== undefined) {
+      const choiceIndex = selectedChoice.index;
+      this.selectedChoice = undefined;
+      this.ink.selectChoice(choiceIndex);
+    }
   }
 
   ngOnInit() {

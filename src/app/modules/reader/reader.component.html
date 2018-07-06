@@ -13,10 +13,11 @@
         [choice]="choice">
       </reader-choice>
     </div>
-    <button class="btn btn-danger btn-block px-3 py-2 mt-3" 
+    <button class="btn btn-block px-3 py-2 mt-3" 
             (click)="confirmChoice()"
-            [attr.disabled]="selectedChoice ? null : true">
-      Next
+            [class.btn-secondary]="!selectedChoice"
+            [class.btn-danger]="selectedChoice">
+      {{selectedChoice ? "Next" : "Select a choice"}}
     </button>
   </div>
 </div>

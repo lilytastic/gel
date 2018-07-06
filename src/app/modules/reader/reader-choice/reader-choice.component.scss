@@ -10,9 +10,6 @@
     .choice-locked,
     .choice-unlocked,
     .choice-selected {
-        min-width: 1rem;
-        text-align: center;
-        margin-right: 0.5rem;
         display: none;
     }
 
@@ -20,7 +17,7 @@
         display: inline-block;
     }
 
-    &:disabled {
+    &.locked {
         .choice-locked {
             display: inline-block;
         }
@@ -53,7 +50,6 @@
     .btn {
         .choice-metadata {
             text-align: left;
-            padding-left: 2.75rem;
         }
     }
 }

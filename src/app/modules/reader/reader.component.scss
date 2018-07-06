@@ -3,3 +3,59 @@ reader-choice {
         margin-top: 1rem;
     }
 }
+
+.choice {
+    text-align: left;
+    white-space: normal;
+    width: 100%;
+
+    .choice-locked,
+    .choice-unlocked,
+    .choice-selected {
+        min-width: 1rem;
+        text-align: center;
+        margin-right: 0.5rem;
+        display: none;
+    }
+
+    .choice-unlocked {
+        display: inline-block;
+    }
+
+    &:disabled {
+        .choice-locked {
+            display: inline-block;
+        }
+
+        .choice-unlocked {
+            display: none;
+        }
+    }
+
+    &.selected {
+        .choice-unlocked {
+            display: none;
+        }
+        
+        .choice-locked {
+            display: none;
+        }
+
+        .choice-selected {
+            display: inline-block;
+        }
+    }
+
+    .choice-metadata {
+        text-align: right;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn {
+        .choice-metadata {
+            text-align: left;
+            padding-left: 2.75rem;
+        }
+    }
+}

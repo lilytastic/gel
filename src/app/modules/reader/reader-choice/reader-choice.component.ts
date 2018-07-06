@@ -21,6 +21,9 @@ export class ReaderChoiceComponent implements OnInit {
   }
 
   onClick(): void {
+    if (this.choiceIsDisabled()) {
+      return;
+    }
     this.selectChoice.emit(this.choice.index);
   }
 

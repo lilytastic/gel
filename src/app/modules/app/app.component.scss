@@ -3,10 +3,10 @@
 @import "../../../custom.scss";
 
 .navbar {
-	z-index: 3;
-	position: relative;
+	z-index: 999;
 
 	.behind {
+		display: none;
 		position: absolute;
 		z-index: -1;
 		top: 0;
@@ -21,9 +21,28 @@
 	z-index: 4;
 }
 
+.main-content {
+	z-index: 3;
+	position: relative;
+    padding-top: 3.5rem;
+}
+
 .wipe {
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 1;
+}
+
+@media (max-width: 575.98px) {
+	.navbar {
+		background-color: $primary !important;
+	}
+}
+@media (max-width: 767.98px) {
+	.navbar {
+		.container {
+			padding: 0;
+		}
+	}
 }
