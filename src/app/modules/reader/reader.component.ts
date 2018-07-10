@@ -112,7 +112,7 @@ export class ReaderComponent implements OnInit {
       setTimeout(function() {
         self.selectedChoice = undefined;
         self.choices = self.ink.choices;
-      }, 800);
+      }, 1200);
     }
   }
 
