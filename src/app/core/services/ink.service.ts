@@ -13,15 +13,16 @@ export class InkService {
 
   continueChoice: Choice;
 
-  Continue(): void {
+  Continue(): Segment {
+    const paragraphs = [];
     while (this.story.canContinue) {
-      const _segment: Segment = {
-        text: this.story.Continue()
-      };
-      this.segments.push(_segment);
+      paragraphs.push({text: this.story.Continue()});
     }
+    const _segment = new Segment(paragraphs);
+    this.segments.push(_segment);
     this.resetNode();
     this.choices = this.compileChoices(this.story.currentChoices);
+    return _segment;
   }
 
   resetNode(): void {

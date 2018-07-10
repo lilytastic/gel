@@ -5,6 +5,8 @@ import { trigger, animate, style, group, animateChild, query, stagger, transitio
 import { InkService } from '@core/services/ink.service';
 import { UtilityService } from '@core/services/util.service';
 
+import { FlexHeightDirective } from '@shared/directives/flex-height.directive';
+
 import { Segment } from '@core/classes/segment';
 import { Choice } from '@core/classes/choice';
 import { utils } from 'protractor';
@@ -12,17 +14,29 @@ import { utils } from 'protractor';
 @Component({
   selector: 'app-reader',
   animations: [
+    trigger('choiceAnimation', [
+      transition('* => *', [
+        query(':leave', [
+          style({ opacity: 1 }),
+          animate('0.15s ease-in-out', style({ opacity: 0 }))
+        ], {optional: true}),
+        query(':enter', [
+          style({ opacity: 0 }),
+          animate('0.15s ease-in-out', style({ opacity: 1 }))
+        ], {optional: true})
+      ])
+    ]),
     trigger('segmentAnimation', [
-      transition('* => *', [ // each time the binding value changes
+      transition('* => *', [
         query(':leave', [
           stagger(300, [
-            animate('0.8s', style({ opacity: 0 }))
+            animate('0.8s', style({  opacity: 0 }))
           ])
         ], {optional: true}),
         query(':enter', [
           style({ opacity: 0 }),
           stagger(300, [
-            animate('0.8s', style({ opacity: 1 }))
+            animate('0.8s ease-in-out', style({ opacity: 1 }))
           ])
         ], {optional: true})
       ])
@@ -36,12 +50,14 @@ export class ReaderComponent implements OnInit {
   choices: any[];
   selectedChoice: any;
   ink: InkService;
+  choiceRequiresConfirmation: boolean;
 
   constructor(ink: InkService, private util: UtilityService) {
     this.ink = ink;
 
     this.segments = ink.segments;
     this.choices = ink.choices;
+    this.choiceRequiresConfirmation = false;
 
     this.beginStory();
   }
@@ -83,6 +99,12 @@ export class ReaderComponent implements OnInit {
 
   selectChoice(choice): void {
     this.selectedChoice = choice;
+    if (!this.choiceRequiresConfirmation) {
+      const self = this;
+      setTimeout(function() {
+        self.confirmChoice();
+      }, 800);
+    }
   }
 
   confirmChoice(): void {

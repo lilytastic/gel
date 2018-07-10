@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
+import { FlexHeightDirective } from '@shared/directives/flex-height.directive';
 import { ReaderComponent } from '@modules/reader/reader.component';
 import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
 
@@ -11,7 +12,8 @@ import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
     declarations: [
         PluralizePipe,
         ReaderComponent,
-        ReaderChoiceComponent
+        ReaderChoiceComponent,
+        FlexHeightDirective
     ],
     imports: [
         CommonModule,

@@ -1,18 +1,16 @@
-<button class="btn btn-tab"
+<button class="btn p-0"
     [class.selected]="isSelected"
-    [class.locked]="choiceIsDisabled()"
-    [class.btn-outline-secondary]="!isSelected"
-    [class.btn-primary]="isSelected"
+    [class.declined]="selectedChoice && selectedChoice !== choice"
+    [attr.disabled]="choiceIsDisabled() ? true : null"
+    [class.btn-light]="!isSelected"
     (click)="onClick()">
   
-  <div class="btn-tab-icon">
-    <span class="choice-selected fa fa-check"></span>
-    <span class="choice-unlocked">{{choice.index+1}}.</span>
-    <span class="choice-locked fa fa-lock"></span>
-  </div>
-  <div class="btn-tab-content">
+  <div class="content px-3 py-3">
     <div class="row align-items-center">
       <div class="col">
+        <span class="choice-selected fa fa-check"></span>
+        <span class="choice-unlocked">{{choice.index+1}}.</span>
+        <span class="choice-locked fa fa-lock"></span>
         {{choice.text}}
       </div>
       <div class="col-sm-auto choice-metadata">

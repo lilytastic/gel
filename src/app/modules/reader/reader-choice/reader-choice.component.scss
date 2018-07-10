@@ -1,23 +1,43 @@
 :host {
     width: 100%;
+    transition: top .8s ease-in-out;
+    position: relative;
+    display: block;
 }
 
 .btn {
     text-align: left;
     white-space: normal;
     width: 100%;
+    top: 0;
+    right: 0;
+
+    .content {
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    &.declined {
+        position: relative;
+        pointer-events: none;
+        transition: opacity 1s ease-in-out, right 1s ease-in-out;
+        right: -400px;
+        opacity: 0;
+    }
 
     .choice-locked,
     .choice-unlocked,
     .choice-selected {
         display: none;
+        margin-right: 1rem;
+        min-width: 1rem;
+        text-align: center;
     }
 
     .choice-unlocked {
         display: inline-block;
     }
 
-    &.locked {
+    &.locked, &:disabled, &.disabled {
         .choice-locked {
             display: inline-block;
         }
@@ -28,6 +48,14 @@
     }
 
     &.selected {
+        position: relative;
+        background-color: white;
+        box-shadow: none;
+
+        .content {
+            opacity: 0;
+        }
+
         .choice-unlocked {
             display: none;
         }
@@ -43,6 +71,7 @@
 
     .choice-metadata {
         text-align: right;
+        padding-left: 3.25rem;
     }
 }
 
