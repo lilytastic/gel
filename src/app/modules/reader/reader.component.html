@@ -1,21 +1,15 @@
 <div class="container p-2">
-  <div class="sections" id="sections" [@segmentAnimation]="ink.segments.length">
-    <div class="section" appFlexHeight *ngFor="let segment of ink.segments"
-      id="{{segment.id}}">
-      <div class="section-inner p-4">
-        <p *ngFor="let paragraph of segment.paragraphs">
-          {{paragraph.text}}
-        </p>
-      </div>
-    </div>
+  <div class="sections" id="sections">
+    <reader-segment *ngFor="let segment of segments"
+      [segment]="segment">
+    </reader-segment>
   </div>
 
-  <div class="mt-4 choices">
-    <div *ngIf="ink.choices.length">
+  <div class="mt-4 choices" [@choiceAnimation]="choices.length">
+    <div *ngIf="choices.length">
       <div class="btn-block">
-        <reader-choice *ngFor="let choice of ink.choices"
+        <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
           (selectChoice)="selectChoice(choice)"
-          [appendTo]="'#sections'"
           [selectedChoice]="selectedChoice"
           [choice]="choice">
         </reader-choice>

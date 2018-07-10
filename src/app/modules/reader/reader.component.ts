@@ -16,13 +16,9 @@ import { utils } from 'protractor';
   animations: [
     trigger('choiceAnimation', [
       transition('* => *', [
-        query(':leave', [
-          style({ opacity: 1 }),
-          animate('0.15s ease-in-out', style({ opacity: 0 }))
-        ], {optional: true}),
         query(':enter', [
           style({ opacity: 0 }),
-          animate('0.15s ease-in-out', style({ opacity: 1 }))
+          animate('0.35s ease-in-out', style({ opacity: 1 }))
         ], {optional: true})
       ])
     ]),
@@ -55,8 +51,6 @@ export class ReaderComponent implements OnInit {
   constructor(ink: InkService, private util: UtilityService) {
     this.ink = ink;
 
-    this.segments = ink.segments;
-    this.choices = ink.choices;
     this.choiceRequiresConfirmation = false;
 
     this.beginStory();
@@ -64,6 +58,8 @@ export class ReaderComponent implements OnInit {
 
   beginStory() {
     this.ink.Continue();
+    this.segments = this.ink.segments;
+    this.choices = this.ink.choices;
   }
 
   getValue(variableName): any {
@@ -101,9 +97,7 @@ export class ReaderComponent implements OnInit {
     this.selectedChoice = choice;
     if (!this.choiceRequiresConfirmation) {
       const self = this;
-      setTimeout(function() {
-        self.confirmChoice();
-      }, 800);
+      self.confirmChoice();
     }
   }
 
@@ -111,8 +105,14 @@ export class ReaderComponent implements OnInit {
     const selectedChoice = this.selectedChoice;
     if (selectedChoice && selectedChoice.index !== undefined) {
       const choiceIndex = selectedChoice.index;
-      this.selectedChoice = undefined;
       this.ink.selectChoice(choiceIndex);
+      this.segments = this.ink.segments;
+
+      const self = this;
+      setTimeout(function() {
+        self.selectedChoice = undefined;
+        self.choices = self.ink.choices;
+      }, 800);
     }
   }
 

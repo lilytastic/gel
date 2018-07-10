@@ -7,13 +7,15 @@ import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
 import { FlexHeightDirective } from '@shared/directives/flex-height.directive';
 import { ReaderComponent } from '@modules/reader/reader.component';
 import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
+import { ReaderSegmentComponent } from './reader-segment/reader-segment.component';
 
 @NgModule({
     declarations: [
         PluralizePipe,
         ReaderComponent,
         ReaderChoiceComponent,
-        FlexHeightDirective
+        FlexHeightDirective,
+        ReaderSegmentComponent
     ],
     imports: [
         CommonModule,

@@ -13,12 +13,12 @@ export class InkService {
 
   continueChoice: Choice;
 
-  Continue(): Segment {
+  Continue(lastChoice?: number): Segment {
     const paragraphs = [];
     while (this.story.canContinue) {
       paragraphs.push({text: this.story.Continue()});
     }
-    const _segment = new Segment(paragraphs);
+    const _segment = new Segment(paragraphs, lastChoice);
     this.segments.push(_segment);
     this.resetNode();
     this.choices = this.compileChoices(this.story.currentChoices);
@@ -46,8 +46,9 @@ export class InkService {
   }
 
   selectChoice(choice): void {
+    console.log(choice);
     this.story.ChooseChoiceIndex(choice);
-    this.Continue();
+    this.Continue(choice);
   }
 
   constructor() {

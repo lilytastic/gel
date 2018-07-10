@@ -17,7 +17,9 @@ export class FlexHeightDirective implements AfterViewInit {
     const self = this;
     this.observer = new MutationObserver(mutations => {
       self.adjustHeight();
+      console.log(mutations);
     });
+    this.adjustHeight();
     this.observer.observe(this.ref.nativeElement, {attributes: true});
   }
 
