@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, ElementRef, Renderer2, AfterViewInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, ElementRef, Renderer2, AfterViewInit, Output, OnInit } from '@angular/core';
 
 import { Choice } from '@core/classes/choice';
 
@@ -10,17 +10,23 @@ import { UtilityService } from '@core/services/util.service';
   templateUrl: './reader-choice.component.html',
   styleUrls: ['./reader-choice.component.scss']
 })
-export class ReaderChoiceComponent {
+export class ReaderChoiceComponent implements OnInit {
   @Input() choice: Choice;
   @Input() selectedChoice: Choice;
   @Input() appendTo: string;
   @Output() selectChoice: EventEmitter<any> = new EventEmitter();
+
+  isDisabled = false;
 
   get isSelected(): boolean {
     return this.selectedChoice && this.selectedChoice === this.choice;
   }
 
   constructor(private ink: InkService, private util: UtilityService) {
+  }
+
+  ngOnInit(): void {
+    this.isDisabled = this.choiceIsDisabled();
   }
 
   onClick(): void {

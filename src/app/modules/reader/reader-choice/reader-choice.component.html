@@ -1,7 +1,7 @@
 <button class="btn p-0"
     [class.selected]="isSelected"
     [class.declined]="selectedChoice && selectedChoice !== choice"
-    [attr.disabled]="choiceIsDisabled() ? true : null"
+    [attr.disabled]="isDisabled ? true : null"
     [class.btn-light]="!isSelected"
     (click)="onClick()">
   

@@ -5,7 +5,7 @@
     </reader-segment>
   </div>
 
-  <div class="mt-4 choices" [@choiceAnimation]="choices.length">
+  <div class="mt-5 choices" [@choiceAnimation]="choices.length">
     <div *ngIf="choices.length">
       <div class="btn-block">
         <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"

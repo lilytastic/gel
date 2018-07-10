@@ -36,6 +36,10 @@ $border-thickness: 1px;
     box-shadow: 0 1px 7px rgba(0,0,0,0.3);
 }
 
+reader-choice + reader-choice {
+    margin-top: 0.5rem;
+}
+
 /*
 .sections {
     max-height: 0px;
