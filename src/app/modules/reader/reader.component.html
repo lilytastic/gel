@@ -1,6 +1,12 @@
 <div class="container p-2">
+
   <div class="section-container mb-5">
-    <div class="sections" id="sections">
+    <div class="text-center header">
+        <h1>The Intercept</h1>
+        <h5 class="text-muted">by Inkle</h5>
+    </div>
+
+    <div class="sections" id="sections" [class.active]="segments && segments.length">
       <reader-segment *ngFor="let segment of segments; let last = last"
         [segment]="segment"
         id="{{last ? 'latest' : null}}">
@@ -9,7 +15,7 @@
   </div>
 
   <div class="choices" [@choiceAnimation]="segmentLength">
-    <div>
+    <div *ngIf="choices && choices.length">
       <div class="btn-block">
         <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
           (selectChoice)="selectChoice(choice)"

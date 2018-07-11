@@ -68,9 +68,10 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
       const mobile = false; // window.screen.width < 575;
       this.renderer.setStyle(nativeEl, 'top', (mobile ? otherBounds.top : bindElm.offsetTop) + 'px');
 
+      const transitionSpeed = 650;
       this.renderer.setStyle(nativeEl, 'max-height', otherBounds.height + 'px');
       this.renderer.setStyle(nativeEl, 'width', segmentContainerBounds.width + 'px');
-      this.renderer.setStyle(nativeEl, 'transition', 'opacity .15s ease-in-out, top 0.8s ease-in-out, box-shadow .35s ease-in-out, max-height .35s ease-in-out');
+      this.renderer.setStyle(nativeEl, 'transition', `opacity .15s ease-in-out, top ${transitionSpeed*0.001}s ease-in-out, box-shadow .35s ease-in-out, max-height .35s ease-in-out`);
       const self = this;
       setTimeout(function() {
         self.renderer.addClass(nativeEl, 'moving');
@@ -80,12 +81,15 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
         setTimeout(function() {
           self.renderer.removeClass(nativeEl, 'moving');
           self.renderer.addClass(nativeEl, 'ingrained');
-          self.renderer.setStyle(nativeEl, 'transition', 'box-shadow .35s ease-in-out, border-radius .35s ease-in-out, border-top .35s ease-in-out .2s');
+          self.renderer.setStyle(nativeEl, 'transition', 'border-radius .35s ease-in-out, background-color .35s ease-in-out, border-radius .35s ease-in-out, border-top .35s ease-in-out .2s');
           self.renderer.setStyle(nativeEl, 'max-height', 'unset');
           self.renderer.setStyle(nativeEl, 'width', 'auto');
           self.renderer.setStyle(nativeEl, 'position', 'relative');
           self.renderer.setStyle(nativeEl, 'top', '0px');
-        }, 1100);
+          setTimeout(function() {
+            self.renderer.setStyle(nativeEl, 'transition', 'all .35s ease-in-out, top 0s ease-in-out 0s, border-radius .35s ease-in-out 1.1s, border-top .35s ease-in-out .2s');
+          }, 350);
+        }, transitionSpeed + 50);
       }, 50);
     } else {
       this.renderer.addClass(nativeEl, 'active');

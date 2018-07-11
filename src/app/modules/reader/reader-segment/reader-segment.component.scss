@@ -1,5 +1,4 @@
-@import "../../../../variables.scss";
-@import "../../../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../../custom.scss";
 
 :host {
     font-family: "Roboto Slab", serif;
@@ -14,13 +13,17 @@
     border-radius: $border-radius;
 
     ::ng-deep .highlighted {
-        color: $pink;
+        color: theme-color("primary");
         margin-bottom: 1rem;
     }
 
     .section-inner {
-        transition: opacity .8s ease-in-out 0.1s;
+        transition: opacity .8s ease-in-out 0.1s, padding .35s ease-in-out;
         opacity: 0;
+        padding: 1.5rem;
+        @media (max-width: 576px) {
+            padding: 1.2rem;
+        }
     }
 
     /*
@@ -32,7 +35,12 @@
     }
     */
     &:not(.ingrained) {
-        box-shadow: 0 0 1px rgba(0,0,0,0.1), 0 0 7px rgba(0,0,0,0.2);
+        box-shadow: 0 0 1px $border-color, 0 0 7px rgba(0,0,0,0.2);
+    }
+
+    &.ingrained {
+        background-color: transparent;
+        box-shadow: 0 0 0 transparent;
     }
     
     &.active {

@@ -1,6 +1,8 @@
 /* Bootstrap overrides */
 
-$enable-rounded: false;
+$theme-colors: (
+  "primary": #f34567,
+);
 
 @import "./variables.scss";
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -10,7 +12,7 @@ $enable-rounded: false;
 html, body {
     height: 100%;
     overflow-x: hidden;
-    background: #f3f3f3;
+    background: #f1f1f1;
 }
 body {
     overflow-y: scroll;
@@ -18,7 +20,7 @@ body {
 }
 @media (min-width: 576px) {
 	html, body {
-        background: #f3f3f3;
+        background: #f1f1f1;
 	}
 }
 

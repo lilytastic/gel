@@ -63,7 +63,8 @@ export class ReaderComponent implements OnInit {
 
     this.choiceRequiresConfirmation = false;
 
-    this.beginStory();
+    const self = this;
+    setTimeout(self.beginStory.bind(self), 100);
   }
 
   beginStory() {
@@ -114,29 +115,78 @@ export class ReaderComponent implements OnInit {
     }
   }
 
+  scrollTo(bottom): void {
+    let scrollTarget = bottom;
+    const body = document.body;
+    const html = document.documentElement;
+    const maxHeight = Math.max( body.scrollHeight, body.offsetHeight,
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+    let cap = maxHeight - screen.height;
+    if (cap < 0) {
+      cap = 0;
+    }
+    //console.log(maxHeight, window.innerHeight, cap);
+
+    if (scrollTarget > cap) {
+      //scrollTarget = cap;
+    }
+
+    const start = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    // console.log(`Start: ${start}, target: ${scrollTarget}`);
+    const dist = scrollTarget - start;
+    const speed = 300;
+    const duration = speed + speed * dist / 100;
+    if (dist < 0) {
+      return;
+    }
+
+    let startTime = null;
+    function step(time) {
+      if (startTime == null) {
+        startTime = time;
+      }
+      const t = (time - startTime) / duration;
+      const lerp = 3*t*t - 2*t*t*t;
+      if (document.body.scrollTo) {
+        document.body.scrollTo(0, start + lerp * dist);
+      } else {
+        document.body.scrollTop = start + lerp * dist;
+      }
+      if (t < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
   confirmChoice(): void {
     const selectedChoice = this.selectedChoice;
     if (selectedChoice && selectedChoice.index !== undefined) {
+
+      // Scroll to the latest segment
+      const latestSegment = <HTMLElement>document.querySelector('#latest');
+      const bounds = latestSegment.getBoundingClientRect();
+      const self = this;
+
+      setTimeout(function() {
+        const target = screen.width < 575 ?
+            (latestSegment.offsetTop + latestSegment.scrollHeight - 10) :
+            (latestSegment.offsetTop + latestSegment.scrollHeight - 200);
+        self.scrollTo(target);
+      }, 100);
+
       const choiceIndex = selectedChoice.index;
       this.ink.selectChoice(choiceIndex);
       this.segments = this.ink.segments;
       this.choiceLength = this.ink.choices.length;
 
-      const self = this;
       setTimeout(function() {
         // By now, our choice animations should be over; previous choices are visually gone.
         self.selectedChoice = undefined;
         self.choices = self.ink.choices;
         // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
         self.segmentLength = self.segments.length;
-        // Mobile only -- snap to the latest segment
-        if (screen.width < 576) {
-          setTimeout(function() {
-            const latestSegment = document.querySelector('#latest');
-            latestSegment.scrollIntoView({behavior: 'smooth', block: 'start'});
-          }, 100);
-        }
-      }, 1200);
+      }, 900);
     }
   }
 
