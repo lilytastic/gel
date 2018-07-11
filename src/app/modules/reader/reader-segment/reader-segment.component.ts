@@ -81,14 +81,7 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
         setTimeout(function() {
           self.renderer.removeClass(nativeEl, 'moving');
           self.renderer.addClass(nativeEl, 'ingrained');
-          self.renderer.setStyle(nativeEl, 'transition', 'border-radius .35s ease-in-out, background-color .35s ease-in-out, border-radius .35s ease-in-out, border-top .35s ease-in-out .2s');
-          self.renderer.setStyle(nativeEl, 'max-height', 'unset');
-          self.renderer.setStyle(nativeEl, 'width', 'auto');
-          self.renderer.setStyle(nativeEl, 'position', 'relative');
-          self.renderer.setStyle(nativeEl, 'top', '0px');
-          setTimeout(function() {
-            self.renderer.setStyle(nativeEl, 'transition', 'all .35s ease-in-out, top 0s ease-in-out 0s, border-radius .35s ease-in-out 1.1s, border-top .35s ease-in-out .2s');
-          }, 350);
+          self.renderer.removeAttribute(nativeEl, 'style');
         }, transitionSpeed + 50);
       }, 50);
     } else {

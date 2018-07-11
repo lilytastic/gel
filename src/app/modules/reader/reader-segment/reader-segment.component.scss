@@ -18,7 +18,7 @@
     }
 
     .section-inner {
-        transition: opacity .8s ease-in-out 0.1s, padding .35s ease-in-out;
+        transition: opacity .8s ease-in-out 0.1s;
         opacity: 0;
         padding: 1.5rem;
         @media (max-width: 576px) {
@@ -48,12 +48,6 @@
             box-shadow: 0 0 0 transparent;
             &:not(:first-child) {
                 border-top: dashed 1px #eeeeee;
-                border-top-left-radius: 0;
-                border-top-right-radius: 0;
-            }
-            &:not(:last-child) {
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
             }
         }
         opacity: 1;

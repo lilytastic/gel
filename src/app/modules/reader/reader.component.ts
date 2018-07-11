@@ -149,6 +149,8 @@ export class ReaderComponent implements OnInit {
       const lerp = 3*t*t - 2*t*t*t;
       if (document.body.scrollTo) {
         document.body.scrollTo(0, start + lerp * dist);
+      } else if (window.scroll) {
+        window.scroll(0, start + lerp * dist);
       } else {
         document.body.scrollTop = start + lerp * dist;
       }
