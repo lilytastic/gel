@@ -1,8 +1,9 @@
 <div class="container p-2">
   <div class="section-container mb-5">
     <div class="sections" id="sections">
-      <reader-segment *ngFor="let segment of segments"
-        [segment]="segment">
+      <reader-segment *ngFor="let segment of segments; let last = last"
+        [segment]="segment"
+        id="{{last ? 'latest' : null}}">
       </reader-segment>
     </div>
   </div>

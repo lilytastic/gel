@@ -10,6 +10,11 @@ $border-thickness: 1px;
 @media (max-width: 576px) {
     .container {
         min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        .section-container {
+            flex-grow: 1;
+        }
         .choices {
             margin-bottom: 0;
         }
