@@ -69,21 +69,20 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
       this.renderer.setStyle(nativeEl, 'top', (mobile ? otherBounds.top : bindElm.offsetTop) + 'px');
 
       const transitionSpeed = 650;
+      this.renderer.addClass(nativeEl, 'moving');
+      this.renderer.addClass(nativeEl, 'active');
       this.renderer.setStyle(nativeEl, 'max-height', otherBounds.height + 'px');
       this.renderer.setStyle(nativeEl, 'width', segmentContainerBounds.width + 'px');
       this.renderer.setStyle(nativeEl, 'transition', `opacity .15s ease-in-out, top ${transitionSpeed*0.001}s ease-in-out, box-shadow .35s ease-in-out, max-height .35s ease-in-out`);
+      this.renderer.setStyle(nativeEl, 'top', segmentContainerElm.offsetTop + segmentContainerElm.offsetHeight + 'px');
+      this.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
+
       const self = this;
       setTimeout(function() {
-        self.renderer.addClass(nativeEl, 'moving');
-        self.renderer.addClass(nativeEl, 'active');
-        self.renderer.setStyle(nativeEl, 'top', segmentContainerElm.offsetTop + segmentContainerElm.offsetHeight + 'px');
-        self.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
-        setTimeout(function() {
-          self.renderer.removeClass(nativeEl, 'moving');
-          self.renderer.addClass(nativeEl, 'ingrained');
-          self.renderer.removeAttribute(nativeEl, 'style');
-        }, transitionSpeed + 50);
-      }, 50);
+        self.renderer.addClass(nativeEl, 'ingrained');
+        self.renderer.removeClass(nativeEl, 'moving');
+        self.renderer.removeAttribute(nativeEl, 'style');
+      }, transitionSpeed + 10);
     } else {
       this.renderer.addClass(nativeEl, 'active');
       this.renderer.addClass(nativeEl, 'ingrained');

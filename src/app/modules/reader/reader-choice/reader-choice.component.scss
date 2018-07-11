@@ -30,6 +30,7 @@
     border-width: 1px;
     border-radius: $border-radius;
     border-color: $border-color;
+    position: relative;
 
     .content {
         margin-left: 0.5rem;
@@ -40,9 +41,9 @@
     &:before {
         content: '';
         position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
+        left: -1px;
+        top: -1px;
+        bottom: -1px;
         width: 0.5rem;
         border: solid 1px $border-color;
         background-color: theme-color("primary");
@@ -52,6 +53,7 @@
     }
     &:focus {
         box-shadow: 0 0 0 0.2rem rgba(theme-color("primary"), 0.2);
+        z-index: 1;
     }
     &:hover, &:active {
         &:before {
