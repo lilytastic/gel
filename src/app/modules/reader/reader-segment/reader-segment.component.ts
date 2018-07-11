@@ -1,21 +1,50 @@
-import { Component, AfterViewInit, ElementRef, Renderer2, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, Renderer2, Input } from '@angular/core';
 
 import { Segment } from '@core/classes/segment';
+import { Choice } from '@core/classes/choice';
 
 @Component({
   selector: 'reader-segment',
   templateUrl: './reader-segment.component.html',
   styleUrls: ['./reader-segment.component.scss']
 })
-export class ReaderSegmentComponent implements AfterViewInit {
+export class ReaderSegmentComponent implements OnInit, AfterViewInit {
   @Input() segment: Segment;
 
   ref: ElementRef;
   renderer: Renderer2;
+  displayLastChoice = false;
+  visibleParagraphs: any[];
+  lastChoice: Choice;
+  hideFirstParagraph = false;
 
   constructor(private _ref: ElementRef, private _renderer: Renderer2) {
     this.ref = _ref;
     this.renderer = _renderer;
+  }
+
+  ngOnInit() {
+    if (this.segment.lastChoice) {
+      this.lastChoice = this.segment.lastChoice;
+      this.displayLastChoice = true;
+      this.visibleParagraphs = this.segment.paragraphs;
+      if (this.visibleParagraphs.length > 0) {
+        const text = this.visibleParagraphs[0].text;
+        if (text.startsWith(this.lastChoice.text)) {
+          let highlightLength = this.lastChoice.text.length;
+          if (text[highlightLength] === '.') {
+            highlightLength++;
+          }
+          this.visibleParagraphs[0].text = `
+            <span class="highlighted">
+              >&nbsp;${text.substr(0, highlightLength)}
+            </span>
+            ${text.substr(highlightLength)}
+          `;
+          this.displayLastChoice = false;
+        }
+      }
+    }
   }
 
   ngAfterViewInit() {

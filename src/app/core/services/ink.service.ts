@@ -18,7 +18,7 @@ export class InkService {
     while (this.story.canContinue) {
       paragraphs.push({text: this.story.Continue()});
     }
-    const _segment = new Segment(paragraphs, lastChoice);
+    const _segment = new Segment(paragraphs, this.choices[lastChoice]);
     this.segments.push(_segment);
     this.resetNode();
     this.choices = this.compileChoices(this.story.currentChoices);

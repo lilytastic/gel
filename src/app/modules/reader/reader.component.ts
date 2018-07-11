@@ -67,6 +67,7 @@ export class ReaderComponent implements OnInit {
   }
 
   beginStory() {
+    console.log(this.ink.story.currentTags);
     this.ink.Continue();
     this.segments = this.ink.segments;
     this.choices = this.ink.choices;
@@ -128,10 +129,13 @@ export class ReaderComponent implements OnInit {
         self.choices = self.ink.choices;
         // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
         self.segmentLength = self.segments.length;
-        setTimeout(function() {
-          const latestSegment = document.querySelector('#latest');
-          latestSegment.scrollIntoView({behavior: 'smooth', block: 'start'});
-        }, 100);
+        // Mobile only -- snap to the latest segment
+        if (screen.width < 576) {
+          setTimeout(function() {
+            const latestSegment = document.querySelector('#latest');
+            latestSegment.scrollIntoView({behavior: 'smooth', block: 'start'});
+          }, 100);
+        }
       }, 1200);
     }
   }

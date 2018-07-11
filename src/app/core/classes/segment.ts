@@ -1,11 +1,17 @@
+import { Choice } from '@core/classes/choice';
+
 export class Segment {
     id: number;
     paragraphs: any[];
+    lastChoice: Choice;
     choiceIndex: number;
 
-    constructor(_paragraphs: any[], lastChoice?: number) {
+    constructor(_paragraphs: any[], lastChoice?: Choice) {
         this.id = Math.floor(Math.random() * 9999);
         this.paragraphs = _paragraphs;
-        this.choiceIndex = lastChoice;
+        if (lastChoice) {
+            this.lastChoice = lastChoice;
+            this.choiceIndex = lastChoice.index;
+        }
     }
 }
