@@ -20,14 +20,12 @@ export class ReaderSegmentComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     // Start this off at the position of the choice, if it exists.
-    console.log(this.segment);
     let bindElm = null;
     let segmentContainerElm = null;
     const nativeEl = this.ref.nativeElement;
 
     if (this.segment.choiceIndex !== undefined) {
       bindElm = document.querySelector('#choice' + this.segment.choiceIndex);
-      console.log(bindElm);
       segmentContainerElm = document.querySelector('#sections');
     }
     if (bindElm && segmentContainerElm) {
@@ -35,11 +33,10 @@ export class ReaderSegmentComponent implements AfterViewInit {
       const bounds = nativeEl.getBoundingClientRect();
       const segmentContainerBounds = segmentContainerElm.getBoundingClientRect();
 
-      console.log(otherBounds, bounds, segmentContainerBounds);
       this.renderer.addClass(nativeEl, 'addition');
       this.renderer.setStyle(nativeEl, 'position', 'absolute');
 
-      const mobile = window.screen.width < 575;
+      const mobile = false; // window.screen.width < 575;
       this.renderer.setStyle(nativeEl, 'top', (mobile ? otherBounds.top : bindElm.offsetTop) + 'px');
 
       this.renderer.setStyle(nativeEl, 'max-height', otherBounds.height + 'px');
@@ -50,19 +47,20 @@ export class ReaderSegmentComponent implements AfterViewInit {
         self.renderer.addClass(nativeEl, 'moving');
         self.renderer.addClass(nativeEl, 'active');
         self.renderer.setStyle(nativeEl, 'top', segmentContainerElm.offsetTop + segmentContainerElm.offsetHeight + 'px');
-        console.log(segmentContainerBounds.bottom);
         self.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
         setTimeout(function() {
           self.renderer.removeClass(nativeEl, 'moving');
+          self.renderer.addClass(nativeEl, 'ingrained');
           self.renderer.setStyle(nativeEl, 'transition', 'box-shadow .35s ease-in-out, border-radius .35s ease-in-out, border-top .35s ease-in-out .2s');
           self.renderer.setStyle(nativeEl, 'max-height', 'unset');
           self.renderer.setStyle(nativeEl, 'width', 'auto');
           self.renderer.setStyle(nativeEl, 'position', 'relative');
           self.renderer.setStyle(nativeEl, 'top', '0px');
-        }, 1000);
+        }, 1100);
       }, 50);
     } else {
       this.renderer.addClass(nativeEl, 'active');
+      this.renderer.addClass(nativeEl, 'ingrained');
     }
   }
 

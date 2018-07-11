@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewChecked } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
@@ -18,7 +18,10 @@ import { utils } from 'protractor';
       transition('* => *', [
         query(':enter', [
           style({ opacity: 0 }),
-          animate('0.35s ease-in-out', style({ opacity: 1 }))
+          stagger(300, [
+            style({ opacity: 0, transform: 'scale(0.9)' }),
+            animate('0.35s ease-in-out', style({ opacity: 1, transform: 'scale(1)' }))
+          ])
         ], {optional: true})
       ])
     ]),
@@ -26,7 +29,7 @@ import { utils } from 'protractor';
       transition('* => *', [
         query(':leave', [
           stagger(300, [
-            animate('0.8s', style({  opacity: 0 }))
+            animate('0.8s ease-in-out', style({ opacity: 0 }))
           ])
         ], {optional: true}),
         query(':enter', [
@@ -48,6 +51,13 @@ export class ReaderComponent implements OnInit {
   ink: InkService;
   choiceRequiresConfirmation: boolean;
 
+  segmentLength = -1;
+  choiceLength = -1;
+
+  ngOnInit() {
+    const self = this;
+  }
+
   constructor(ink: InkService, private util: UtilityService) {
     this.ink = ink;
 
@@ -60,6 +70,8 @@ export class ReaderComponent implements OnInit {
     this.ink.Continue();
     this.segments = this.ink.segments;
     this.choices = this.ink.choices;
+    this.segmentLength = this.segments.length;
+    this.choiceLength = this.ink.choices.length;
   }
 
   getValue(variableName): any {
@@ -107,16 +119,17 @@ export class ReaderComponent implements OnInit {
       const choiceIndex = selectedChoice.index;
       this.ink.selectChoice(choiceIndex);
       this.segments = this.ink.segments;
+      this.choiceLength = this.ink.choices.length;
 
       const self = this;
       setTimeout(function() {
+        // By now, our choice animations should be over; previous choices are visually gone.
         self.selectedChoice = undefined;
         self.choices = self.ink.choices;
+        // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
+        self.segmentLength = self.segments.length;
       }, 1200);
     }
-  }
-
-  ngOnInit() {
   }
 
 }

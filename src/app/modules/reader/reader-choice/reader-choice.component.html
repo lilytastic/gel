@@ -5,12 +5,14 @@
     [class.btn-light]="!isSelected"
     (click)="onClick()">
   
-  <div class="content px-3 py-3">
+  <div class="content px-4 py-3">
     <div class="row align-items-center">
       <div class="col">
+        <!--
         <span class="choice-selected fa fa-check"></span>
         <span class="choice-unlocked">{{choice.index+1}}.</span>
         <span class="choice-locked fa fa-lock"></span>
+        -->
         {{choice.text}}
       </div>
       <div class="col-sm-auto choice-metadata">

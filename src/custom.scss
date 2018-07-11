@@ -7,15 +7,17 @@ $enable-rounded: false;
 
 /* Global styles */
 
-$background: $secondary;
-
 html, body {
     height: 100%;
     overflow-x: hidden;
-    background-color: $background;
+    background: #f3f3f3;
+}
+body {
+    overflow-y: scroll;
 }
 @media (min-width: 576px) {
 	html, body {
+        background: #f3f3f3;
 	}
 }
 

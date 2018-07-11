@@ -1,12 +1,14 @@
 <div class="container p-2">
-  <div class="sections" id="sections">
-    <reader-segment *ngFor="let segment of segments"
-      [segment]="segment">
-    </reader-segment>
+  <div class="section-container mb-5">
+    <div class="sections" id="sections">
+      <reader-segment *ngFor="let segment of segments"
+        [segment]="segment">
+      </reader-segment>
+    </div>
   </div>
 
-  <div class="mt-5 choices" [@choiceAnimation]="choices.length">
-    <div *ngIf="choices.length">
+  <div class="choices" [@choiceAnimation]="segmentLength">
+    <div>
       <div class="btn-block">
         <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
           (selectChoice)="selectChoice(choice)"

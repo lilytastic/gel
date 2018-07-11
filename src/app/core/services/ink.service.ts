@@ -46,7 +46,6 @@ export class InkService {
   }
 
   selectChoice(choice): void {
-    console.log(choice);
     this.story.ChooseChoiceIndex(choice);
     this.Continue(choice);
   }

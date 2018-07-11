@@ -1,17 +1,64 @@
+@import "../../../../variables.scss";
+@import "../../../../../node_modules/bootstrap/scss/bootstrap";
+
 :host {
+    font-family: "Roboto Slab", serif;
     width: 100%;
     transition: top .8s ease-in-out;
     position: relative;
     display: block;
+
+    &:not(:first-child) {
+        margin-top: 0.5rem;
+    }
 }
 
 .btn {
     text-align: left;
     white-space: normal;
     width: 100%;
+    /*
+    background-color: $pink;
+    color: color-yiq($pink);
+    &:hover {
+        background-color: darken($pink, 15);
+    }
+    &:focus {
+        box-shadow: 0 0 0 0.2rem rgba( $pink, .25 );
+        background-color: darken($pink, 20);
+    }
+    */
+    /*
+    border-radius: $border-radius;
+    background-color: transparent;
+    border-width: 2px;
+    border-color: white;
+    color: white;
+    */
+    background-color: white;
+    border-width: 1px;
+    border-color: rgba(0,0,0,0.1);
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0.5rem;
+        border: solid 1px rgba(0,0,0,0.1);
+        background-color: $pink;
+        transition: background-color .15s ease-in-out;
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+    }
+    &:hover, &:focus {
+        &:before {
+            background-color: darken($pink, 17  );
+        }
+    }
+
     top: 0;
     right: 0;
-    box-shadow: 0 1px 7px rgba(0,0,0,0.3);
 
     &.declined {
         position: relative;
@@ -25,8 +72,8 @@
     .choice-unlocked,
     .choice-selected {
         display: none;
-        margin-right: 1rem;
-        min-width: 1rem;
+        margin-right: 0.5rem;
+        min-width: 1.2rem;
         text-align: center;
     }
 
@@ -69,7 +116,7 @@
 
     .choice-metadata {
         text-align: right;
-        padding-left: 3.25rem;
+        font-family: "Roboto", sans-serif;
     }
 }
 
