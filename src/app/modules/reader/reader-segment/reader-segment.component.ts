@@ -24,31 +24,7 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    if (this.segment.lastChoice) {
-      this.lastChoice = this.segment.lastChoice;
-      this.displayLastChoice = true;
-      this.visibleParagraphs = this.segment.paragraphs;
-      if (this.visibleParagraphs.length > 0) {
-        const text = this.visibleParagraphs[0].text;
-        let textToCheck = this.lastChoice.text.trim();
-        if (textToCheck.endsWith('"')) {
-          textToCheck = textToCheck.substr(0, textToCheck.length - 1);
-        }
-        if (text.startsWith(textToCheck)) {
-          let highlightLength = textToCheck.length;
-          if (text[highlightLength] === '.') {
-            highlightLength++;
-          }
-          if (text[highlightLength] === '"') {
-            highlightLength++;
-          }
-          this.visibleParagraphs[0].text = `
-            <span class="highlighted">>&nbsp;&nbsp;${text.substr(0, highlightLength)}</span>${text.substr(highlightLength)}
-          `;
-          this.displayLastChoice = false;
-        }
-      }
-    }
+
   }
 
   ngAfterViewInit() {
