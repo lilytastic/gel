@@ -23,21 +23,25 @@
 }
 
 .btn {
-    text-align: left;
     white-space: normal;
     width: 100%;
     background-color: white;
     border-width: 1px;
     border-radius: $border-radius;
     border-color: $border-color;
-    position: relative;
+    text-align: left;
 
+    @media (min-width: 576px) {
+        position: relative;
+    }
+    
     .content {
         margin-left: 0.5rem;
         padding-left: 1.2rem;
         padding-right: 1.5rem;
         transition: margin-left .15s ease-in-out;
     }
+    
     &:before {
         content: '';
         position: absolute;
@@ -47,25 +51,19 @@
         width: 0.5rem;
         border: solid 1px $border-color;
         background-color: theme-color("primary");
-        transition: width .15s ease-in-out, background-color .15s ease-in-out;
+        transition: background-color .15s ease-in-out;
         border-top-left-radius: inherit;
         border-bottom-left-radius: inherit;
     }
     &:focus {
-        box-shadow: 0 0 0 0.2rem rgba(theme-color("primary"), 0.2);
-        z-index: 1;
+        @media (min-width: 576px) {
+            box-shadow: 0 0 0 0.2rem rgba(theme-color("primary"), 0.2);
+            z-index: 1;
+        }
     }
     &:hover, &:active {
         &:before {
             background-color: darken(theme-color("primary"), 17);
-        }
-    }
-    &:hover, &:focus, &:active {
-        .content {
-            margin-left: 1rem;
-        }
-        &:before {
-            width: 1rem;
         }
     }
 
