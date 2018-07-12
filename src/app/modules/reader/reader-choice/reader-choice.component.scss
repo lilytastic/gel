@@ -34,7 +34,7 @@
     @media (min-width: 576px) {
         position: relative;
     }
-    
+
     .content {
         margin-left: 0.5rem;
         padding-left: 1.2rem;
@@ -45,15 +45,20 @@
     &:before {
         content: '';
         position: absolute;
-        left: -1px;
-        top: -1px;
-        bottom: -1px;
+        left: 0;
+        top: 0;
+        bottom: 0;
         width: 0.5rem;
         border: solid 1px $border-color;
         background-color: theme-color("primary");
         transition: background-color .15s ease-in-out;
         border-top-left-radius: inherit;
         border-bottom-left-radius: inherit;
+        @media (min-width: 576px) {
+            left: -1px;
+            top: -1px;
+            bottom: -1px;
+        }
     }
     &:focus {
         @media (min-width: 576px) {

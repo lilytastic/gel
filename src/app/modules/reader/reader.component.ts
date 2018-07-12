@@ -144,11 +144,13 @@ export class ReaderComponent implements OnInit {
       }
       const t = (time - startTime) / duration;
       const lerp = 3*t*t - 2*t*t*t;
-      if (document.body.scrollTo) {
-        document.body.scrollTo(0, start + lerp * dist);
-      } else if (window.scroll) {
+      if (window.scroll) {
         window.scroll(0, start + lerp * dist);
-      } else {
+      }
+      else if (document.body.scrollTo) {
+        document.body.scrollTo(0, start + lerp * dist);
+      }
+      else {
         document.body.scrollTop = start + lerp * dist;
       }
       if (t < 1) {
