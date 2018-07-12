@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, HostListener, Renderer2, ElementRef, AfterViewChecked } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
@@ -16,7 +16,7 @@ import { utils } from 'protractor';
   animations: [
     trigger('choiceAnimation', [
       transition('* => *', [
-        query(':enter', [
+        query('.choices', [
           style({ opacity: 0 }),
           animate('1s ease-in-out', style({ opacity: 1 }))
         ], {optional: true})
@@ -47,6 +47,10 @@ export class ReaderComponent implements OnInit {
   selectedChoice: any;
   ink: InkService;
   choiceRequiresConfirmation: boolean;
+  ref: ElementRef;
+  renderer: Renderer2;
+
+  handlingChoice = false;
 
   segmentLength = -1;
   choiceLength = -1;
@@ -55,7 +59,9 @@ export class ReaderComponent implements OnInit {
     const self = this;
   }
 
-  constructor(ink: InkService, private util: UtilityService) {
+  constructor(ink: InkService, private util: UtilityService, private _ref: ElementRef, private _renderer: Renderer2) {
+    this.ref = _ref;
+    this.renderer = _renderer;
     this.ink = ink;
 
     this.choiceRequiresConfirmation = false;
@@ -64,8 +70,14 @@ export class ReaderComponent implements OnInit {
     setTimeout(self.beginStory.bind(self), 100);
   }
 
+  @HostListener('window:keypress', ['$event']) onKeyDown(event) {
+    const key = parseInt(event.key, 10);
+    if (key && key <= this.choices.length) {
+      this.selectChoice(this.choices[key - 1]);
+    }
+  }
+
   beginStory() {
-    console.log(this.ink.story.currentTags);
     this.ink.Continue();
     this.segments = this.ink.segments;
     this.choices = this.ink.choices;
@@ -105,6 +117,9 @@ export class ReaderComponent implements OnInit {
   }
 
   selectChoice(choice): void {
+    if (this.handlingChoice) {
+      return;
+    }
     this.selectedChoice = choice;
     if (!this.choiceRequiresConfirmation) {
       const self = this;
@@ -163,11 +178,14 @@ export class ReaderComponent implements OnInit {
   confirmChoice(): void {
     const selectedChoice = this.selectedChoice;
     if (selectedChoice && selectedChoice.index !== undefined) {
+      this.handlingChoice = true;
 
       // Scroll to the latest segment
       const latestSegment = <HTMLElement>document.querySelector('#latest');
       const bounds = latestSegment.getBoundingClientRect();
       const self = this;
+
+      this.renderer.addClass(this.ref.nativeElement, 'animating');
 
       setTimeout(function() {
         const target = screen.width < 575 ?
@@ -183,10 +201,12 @@ export class ReaderComponent implements OnInit {
 
       setTimeout(function() {
         // By now, our choice animations should be over; previous choices are visually gone.
+        self.handlingChoice = false;
         self.selectedChoice = undefined;
         self.choices = self.ink.choices;
         // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
         self.segmentLength = self.segments.length;
+        self.renderer.removeClass(self.ref.nativeElement, 'animating');
       }, 900);
     }
   }

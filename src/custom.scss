@@ -2,6 +2,9 @@
 
 $theme-colors: (
   "primary": #f34567,
+  "muted": #aab2b6,
+  "bg-light": #ffffff,
+  "bg-dark": #001e31
 );
 
 @import "./variables.scss";
@@ -9,16 +12,27 @@ $theme-colors: (
 
 /* Global styles */
 
+$mobile-font-size: 1.1rem;
+$border-color: rgba(color-yiq(theme-color("bg-light")),0.16);
+
 html {
     overflow-x: hidden;
+    overflow-y: scroll;
 }
 body {
     height: 100%;
-    overflow-y: scroll;
-    background: #f1f1f1;
+    min-height: 100vh;
+    background-color: darken(theme-color("bg-light"),5);
+    background-attachment: fixed;
+    background: linear-gradient(165deg, darken(theme-color("bg-light"),5), darken(theme-color("bg-light"),9));
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-touch-callout: none;
+}
+@media (max-width: 576px) {
+    body {
+        font-size: $mobile-font-size;
+    }
 }
 
 .btn-tab {
@@ -64,13 +78,10 @@ body {
                 background-color 0.15s ease-in-out, 
                 border-color 0.15s ease-in-out,
                 box-shadow 0.15s ease-in-out;
-}
-@media (min-width: 576px) {
-    .container {
-        max-width: 800px;
+    @media (max-width: 576px) {
+        font-size: $mobile-font-size;
     }
 }
-
 /*
 .btn {
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);

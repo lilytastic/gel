@@ -3,7 +3,8 @@
 :host {
     font-family: "Roboto Slab", serif;
     display: block;
-    background-color: white;
+    background-color: theme-color("bg-light");
+    color: rgba(color-yiq(theme-color("bg-light")),0.95);
     overflow-y: hidden;
     box-sizing: content-box;
     z-index: 9;
@@ -13,7 +14,8 @@
     border-radius: $border-radius;
 
     ::ng-deep .highlighted {
-        color: theme-color("primary");
+        // color: theme-color("primary");
+        color: theme-color("muted");
         margin-bottom: 1rem;
     }
 
@@ -47,7 +49,9 @@
         &:not(.moving) {
             box-shadow: 0 0 0 transparent;
             &:not(:first-child) {
-                border-top: dashed 1px #eeeeee;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-top: dashed 1px rgba(color-yiq(theme-color("bg-light")),0.1);
             }
         }
         opacity: 1;
