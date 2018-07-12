@@ -16,7 +16,8 @@ export class InkService {
   Continue(lastChoice?: number): Segment {
     const paragraphs = [];
     while (this.story.canContinue) {
-      paragraphs.push({text: this.story.Continue()});
+      const storyText: string = this.story.Continue();
+      paragraphs.push({text: storyText.prettify()});
     }
     const _segment = new Segment(paragraphs, this.choices[lastChoice]);
     this.segments.push(_segment);

@@ -12,7 +12,7 @@ export class Choice {
         this.index = choice.index;
         this.rawText = choice.text;
         const choiceElements: any = this.separateElements(choice.text);
-        this.text = choiceElements.text;
+        this.text = choiceElements.text.prettify();
         this.metadata = this.compileMetadata(choiceElements.meta);
     }
 

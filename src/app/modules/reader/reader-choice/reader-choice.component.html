@@ -13,8 +13,8 @@
         <span class="choice-unlocked">{{choice.index+1}}.</span>
         <span class="choice-locked fa fa-lock"></span>
         -->
-        <span class="choice-index">{{choice.index+1}}.&nbsp;</span>
-        {{choice.text}}
+        <span class="choice-index">{{choice.index+1}}.</span>&nbsp;
+        <span>{{choice.text}}</span>
       </div>
       <div class="col-sm-auto choice-metadata">
         <div class="small" *ngFor="let d of choice.metadata">
