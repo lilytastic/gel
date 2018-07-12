@@ -18,10 +18,7 @@ import { utils } from 'protractor';
       transition('* => *', [
         query(':enter', [
           style({ opacity: 0 }),
-          stagger(300, [
-            style({ opacity: 0, transform: 'scale(0.9)' }),
-            animate('0.35s ease-in-out', style({ opacity: 1, transform: 'scale(1)' }))
-          ])
+          animate('1s ease-in-out', style({ opacity: 1 }))
         ], {optional: true})
       ])
     ]),
