@@ -1,8 +1,7 @@
 <div class="section" id="{{segment.id}}">
   <div class="section-inner">
     <div *ngIf="lastChoice && displayLastChoice" class="highlighted">
-      >
-      {{lastChoice.text}}
+      >&nbsp;&nbsp;{{lastChoice.text}}
     </div>
     <p *ngFor="let paragraph of segment.paragraphs; let first = first" [innerHTML]="paragraph.text">
 

@@ -1,12 +1,10 @@
 <div class="container p-2">
 
   <div class="section-container">
-    <!--
     <div class="text-center header">
         <h1>The Intercept</h1>
         <h5 class="text-muted">by Inkle</h5>
     </div>
-    -->
 
     <div class="sections" id="sections" [class.active]="segments && segments.length">
       <reader-segment *ngFor="let segment of segments; let last = last"

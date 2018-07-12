@@ -30,17 +30,20 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
       this.visibleParagraphs = this.segment.paragraphs;
       if (this.visibleParagraphs.length > 0) {
         const text = this.visibleParagraphs[0].text;
-        if (text.startsWith(this.lastChoice.text)) {
-          let highlightLength = this.lastChoice.text.length;
+        let textToCheck = this.lastChoice.text.trim();
+        if (textToCheck.endsWith('"')) {
+          textToCheck = textToCheck.substr(0, textToCheck.length - 1);
+        }
+        if (text.startsWith(textToCheck)) {
+          let highlightLength = textToCheck.length;
           if (text[highlightLength] === '.') {
             highlightLength++;
           }
+          if (text[highlightLength] === '"') {
+            highlightLength++;
+          }
           this.visibleParagraphs[0].text = `
-            <span class="highlighted">
-              >
-              ${text.substr(0, highlightLength)}
-            </span>
-            ${text.substr(highlightLength)}
+            <span class="highlighted">>&nbsp;&nbsp;${text.substr(0, highlightLength)}</span>${text.substr(highlightLength)}
           `;
           this.displayLastChoice = false;
         }

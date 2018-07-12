@@ -3,8 +3,8 @@
 :host {
     font-family: "Roboto Slab", serif;
     display: block;
-    background-color: theme-color("bg-light");
-    color: rgba(color-yiq(theme-color("bg-light")),0.95);
+    background-color: theme-color("base");
+    color: rgba(color-yiq(theme-color("base")),0.95);
     overflow-y: hidden;
     box-sizing: content-box;
     z-index: 9;
@@ -23,8 +23,10 @@
         transition: opacity .8s ease-in-out 0.1s;
         opacity: 0;
         padding: 1.5rem;
+        padding-left: $horizontal-space;
+        padding-right: $horizontal-space;
         @media (max-width: 576px) {
-            padding: 1.2rem;
+            padding: $horizontal-space-mobile;
         }
     }
 
@@ -51,7 +53,7 @@
             &:not(:first-child) {
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
-                border-top: dashed 1px rgba(color-yiq(theme-color("bg-light")),0.1);
+                border-top: dashed 1px rgba(color-yiq(theme-color("base")),0.1);
             }
         }
         opacity: 1;

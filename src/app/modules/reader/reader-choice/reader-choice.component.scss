@@ -26,8 +26,8 @@
 .btn {
     white-space: normal;
     width: 100%;
-    background-color: theme-color("bg-light");
-    color: rgba(color-yiq(theme-color("bg-light")),0.95);
+    background-color: theme-color("base");
+    color: rgba(color-yiq(theme-color("base")),0.95);
     border-width: 1px;
     border-radius: $border-radius;
     border-color: $border-color;
@@ -50,9 +50,13 @@
     }
 
     .content {
-        padding-left: 1.2rem;
-        padding-right: 1.5rem;
+        padding-left: $horizontal-space;
+        padding-right: $horizontal-space;
         margin-right: $tab-width;
+        @media (max-width: 576px) {
+            padding-left: $horizontal-space-mobile;
+            padding-right: $horizontal-space-mobile;
+        }
     }
 
     &:before {

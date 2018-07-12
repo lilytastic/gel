@@ -3,8 +3,7 @@
 $theme-colors: (
   "primary": #f34567,
   "muted": #aab2b6,
-  "bg-light": #ffffff,
-  "bg-dark": #001e31
+  "base": #ffffff
 );
 
 @import "./variables.scss";
@@ -13,7 +12,9 @@ $theme-colors: (
 /* Global styles */
 
 $mobile-font-size: 1.1rem;
-$border-color: rgba(color-yiq(theme-color("bg-light")),0.16);
+$horizontal-space: 1.8rem;
+$horizontal-space-mobile: 1.3rem;
+$border-color: rgba(color-yiq(theme-color("base")),0.16);
 
 html {
     overflow-x: hidden;
@@ -22,9 +23,9 @@ html {
 body {
     height: 100%;
     min-height: 100vh;
-    background-color: darken(theme-color("bg-light"),5);
+    background-color: darken(theme-color("base"),5);
     background-attachment: fixed;
-    background: linear-gradient(165deg, darken(theme-color("bg-light"),5), darken(theme-color("bg-light"),9));
+    background: linear-gradient(165deg, darken(theme-color("base"),5), darken(theme-color("base"),9));
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-touch-callout: none;

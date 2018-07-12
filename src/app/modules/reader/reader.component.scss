@@ -81,7 +81,7 @@ $border-thickness: 1px;
     }
 }
 .sections {
-    background-color: theme-color("bg-light");
+    background-color: theme-color("base");
     border: solid 1px $border-color;
     border-radius: $border-radius;
     transform: scale(0.9);
