@@ -37,6 +37,11 @@
     right: 0;
     position: relative;
     transition: transform .15s ease-in-out, background-color .15s ease-in-out;
+    @media (max-width: 576px) {
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
 
     $tab-width: 3.5rem;
 
@@ -50,10 +55,12 @@
     }
 
     .content {
+        padding: 1.2rem;
         padding-left: $horizontal-space;
         padding-right: $horizontal-space;
         margin-right: $tab-width;
         @media (max-width: 576px) {
+            padding: 0.9rem;
             padding-left: $horizontal-space-mobile;
             padding-right: $horizontal-space-mobile;
         }

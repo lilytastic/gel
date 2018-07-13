@@ -5,7 +5,7 @@
     [class.btn-light]="!isSelected"
     (click)="onClick()">
   
-  <div class="content py-3">
+  <div class="content">
     <div class="row align-items-center">
       <div class="col">
         <!--
@@ -13,7 +13,7 @@
         <span class="choice-unlocked">{{choice.index+1}}.</span>
         <span class="choice-locked fa fa-lock"></span>
         -->
-        <span class="choice-index">{{choice.index+1}}.</span>&nbsp;
+        <span class="choice-index">{{choice.index+1}}.&nbsp;</span>
         <span>{{choice.text}}</span>
       </div>
       <div class="col-sm-auto choice-metadata">
