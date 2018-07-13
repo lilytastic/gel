@@ -60,6 +60,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   segmentLength = -1;
   choiceLength = -1;
 
+  isScrolling = false;
   lastChoice: ElementRef;
   scrolledPast = true;
 
@@ -166,29 +167,25 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   }
 
   scrollTo(bottom, speed = 300): void {
-    let scrollTarget = bottom;
+    if (this.isScrolling) {
+      return;
+    }
+    this.isScrolling = true;
+    const scrollTarget = bottom;
     const body = document.body;
     const html = document.documentElement;
     const maxHeight = Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
-    let cap = maxHeight - screen.height;
-    if (cap < 0) {
-      cap = 0;
-    }
-    //console.log(maxHeight, window.innerHeight, cap);
-
-    if (scrollTarget > cap) {
-      //scrollTarget = cap;
-    }
 
     const start = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    // console.log(`Start: ${start}, target: ${scrollTarget}`);
     const dist = scrollTarget - start;
     const duration = speed + speed * dist / 100;
     if (dist < 0) {
+      this.isScrolling = false;
       return;
     }
 
+    const self = this;
     let startTime = null;
     function step(time) {
       if (startTime == null) {
@@ -198,15 +195,15 @@ export class ReaderComponent implements OnInit, AfterViewInit {
       const lerp = 3*t*t - 2*t*t*t;
       if (window.scroll) {
         window.scroll(0, start + lerp * dist);
-      }
-      else if (document.body.scrollTo) {
+      } else if (document.body.scrollTo) {
         document.body.scrollTo(0, start + lerp * dist);
-      }
-      else {
+      } else {
         document.body.scrollTop = start + lerp * dist;
       }
       if (t < 1) {
         requestAnimationFrame(step);
+      } else {
+        self.isScrolling = false;
       }
     }
     requestAnimationFrame(step);
