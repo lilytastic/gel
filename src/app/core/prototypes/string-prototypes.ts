@@ -6,6 +6,7 @@ String.prototype.replaceAt = replaceAt;
 interface String {
     trimWhiteSpaces: typeof trimWhiteSpaces;
     splice: typeof splice;
+    replaceAt: typeof replaceAt;
     prettify: typeof prettify;
 }
 
