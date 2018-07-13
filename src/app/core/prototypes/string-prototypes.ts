@@ -54,6 +54,5 @@ function prettify() {
     }
     newString = newString.replace(/\.\.\./g, '…');
     newString = newString.replace(/--/g, '–');
-    console.log(newString);
     return newString;
 }

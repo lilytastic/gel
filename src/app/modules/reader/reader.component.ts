@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Renderer2, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, HostListener, Renderer2, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
@@ -41,7 +41,10 @@ import { utils } from 'protractor';
   templateUrl: './reader.component.html',
   styleUrls: ['./reader.component.scss']
 })
-export class ReaderComponent implements OnInit {
+export class ReaderComponent implements OnInit, AfterViewInit {
+  @ViewChild('sections') sections: ElementRef;
+  @ViewChild('sideNav') sideNav: ElementRef;
+
   segments: Segment[];
   choices: any[];
   selectedChoice: any;
@@ -59,6 +62,9 @@ export class ReaderComponent implements OnInit {
     const self = this;
   }
 
+  ngAfterViewInit() {
+  }
+
   constructor(ink: InkService, private util: UtilityService, private _ref: ElementRef, private _renderer: Renderer2) {
     this.ref = _ref;
     this.renderer = _renderer;
@@ -68,6 +74,17 @@ export class ReaderComponent implements OnInit {
 
     const self = this;
     setTimeout(self.beginStory.bind(self), 100);
+  }
+
+  @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
+    if (this.sideNav) {
+      const self = this;
+      this.renderer.setStyle(this.sideNav.nativeElement, 'transform', `translateY(${event.target.documentElement.scrollTop}px)`);
+      this.renderer.setStyle(this.sideNav.nativeElement, 'opacity', '0.15');
+      setTimeout(function() {
+        self.renderer.setStyle(self.sideNav.nativeElement, 'opacity', '1');
+      }, 1700);
+    }
   }
 
   @HostListener('window:keypress', ['$event']) onKeyDown(event) {
@@ -188,9 +205,10 @@ export class ReaderComponent implements OnInit {
       this.renderer.addClass(this.ref.nativeElement, 'animating');
 
       setTimeout(function() {
+        const segmentBottom = latestSegment.getBoundingClientRect().bottom + window.scrollY;
         const target = screen.width < 575 ?
-            (latestSegment.offsetTop + latestSegment.scrollHeight - 20) :
-            (latestSegment.offsetTop + latestSegment.scrollHeight - Math.min(300, window.innerHeight * 0.25));
+            (segmentBottom - 20) :
+            (segmentBottom - Math.min(300, window.innerHeight * 0.25));
         self.scrollTo(target);
       }, 100);
 

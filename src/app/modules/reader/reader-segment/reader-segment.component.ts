@@ -24,30 +24,29 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+  }
 
+  getChoiceSection(): HTMLElement {
+    if (this.segment.choiceIndex !== undefined) {
+      return document.querySelector('#choice' + this.segment.choiceIndex);
+    } else {
+      return undefined;
+    }
   }
 
   ngAfterViewInit() {
     // Start this off at the position of the choice, if it exists.
-    let bindElm = null;
-    let segmentContainerElm = null;
+    const bindElm: HTMLElement = this.getChoiceSection();
     const nativeEl = this.ref.nativeElement;
 
-    if (this.segment.choiceIndex !== undefined) {
-      bindElm = document.querySelector('#choice' + this.segment.choiceIndex);
-      segmentContainerElm = document.querySelector('#sections');
-    }
-    if (bindElm && segmentContainerElm) {
+    if (bindElm) {
       const self = this;
       const otherBounds = bindElm.getBoundingClientRect();
       const bounds = nativeEl.getBoundingClientRect();
-      const segmentContainerBounds = segmentContainerElm.getBoundingClientRect();
-
       this.renderer.addClass(nativeEl, 'addition');
       this.renderer.setStyle(nativeEl, 'position', 'absolute');
-      this.renderer.setStyle(nativeEl, 'transform', `translateY(${bindElm.offsetTop}px)`);
-      this.renderer.setStyle(nativeEl, 'top', '0px');
-      this.renderer.setStyle(nativeEl, 'width', `${segmentContainerBounds.width - 2}px`);
+      this.renderer.setStyle(nativeEl, 'transform', `translateY(${bindElm.offsetTop - nativeEl.offsetTop}px)`);
+      this.renderer.setStyle(nativeEl, 'width', `${bounds.width}px`);
       self.renderer.setStyle(nativeEl, 'max-height', `${otherBounds.height}px`);
 
       setTimeout(function() {
@@ -57,9 +56,13 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
         const transitionSpeed = 650;
         self.renderer.addClass(nativeEl, 'moving');
         self.renderer.addClass(nativeEl, 'active');
-        self.renderer.setStyle(nativeEl, 'transition', `opacity .15s ease-in-out, transform ${transitionSpeed*0.001}s ease-in-out, box-shadow .35s ease-in-out, max-height .35s ease-in-out`);
-        // this.renderer.setStyle(nativeEl, 'top', `${segmentContainerElm.offsetTop + segmentContainerElm.offsetHeight}px`);
-        self.renderer.setStyle(nativeEl, 'transform', `translateY(${segmentContainerElm.offsetTop + segmentContainerElm.offsetHeight}px)`);
+        self.renderer.setStyle(nativeEl, 'transition', `
+          opacity .15s ease-in-out,
+          transform ${transitionSpeed * 0.001}s ease-in-out,
+          box-shadow .35s ease-in-out,
+          max-height .35s ease-in-out
+        `);
+        self.renderer.setStyle(nativeEl, 'transform', `translateY(0px)`);
         self.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
 
         setTimeout(function() {
