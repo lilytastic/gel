@@ -43,15 +43,16 @@
     .choice-index {
         color: theme-color("muted");
         display: inline-block;
-        min-width: 1.1rem;
+        min-width: 1.2rem;
+        opacity: 0.7;
         @media (max-width: 576px) {
             display: none;
         }
     }
 
     .content {
-        padding: 1.2rem;
-        padding-left: $horizontal-space;
+        padding: 1.25rem;
+        padding-left: calc(#{$horizontal-space} - 1.2rem);
         padding-right: $horizontal-space;
         margin-right: $tab-width;
         @media (max-width: 576px) {

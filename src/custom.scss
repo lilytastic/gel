@@ -12,7 +12,7 @@ $theme-colors: (
 /* Global styles */
 
 $mobile-font-size: 1rem;
-$horizontal-space: 2.1rem;
+$horizontal-space: 2.4rem;
 $horizontal-space-mobile: 1.3rem;
 $border-color: rgba(color-yiq(theme-color("base")),0.16);
 
@@ -24,9 +24,9 @@ body {
     height: 100%;
     line-height: 1.6rem;
     min-height: 100vh;
-    background-color: #f2f2f3;
+    background-color: #f2f3f3;
     background-attachment: fixed;
-    background: linear-gradient(165deg, #f2f2f3, darken(#f2f2f3,7));
+    background: linear-gradient(165deg, #f2f3f3, darken(#f2f3f3,7));
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-touch-callout: none;
