@@ -73,7 +73,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     this.choiceRequiresConfirmation = false;
 
     const self = this;
-    setTimeout(self.beginStory.bind(self), 100);
+    window.requestAnimationFrame(() => { this.beginStory(); });
   }
 
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
@@ -204,18 +204,18 @@ export class ReaderComponent implements OnInit, AfterViewInit {
 
       this.renderer.addClass(this.ref.nativeElement, 'animating');
 
-      setTimeout(function() {
-        const segmentBottom = latestSegment.getBoundingClientRect().bottom + window.scrollY;
-        const target = screen.width < 575 ?
-            (segmentBottom - 20) :
-            (segmentBottom - Math.min(300, window.innerHeight * 0.25));
-        self.scrollTo(target);
-      }, 100);
-
       const choiceIndex = selectedChoice.index;
       this.ink.selectChoice(choiceIndex);
       this.segments = this.ink.segments;
       this.choiceLength = this.ink.choices.length;
+
+      window.requestAnimationFrame(() => {
+        const segmentBottom = latestSegment.getBoundingClientRect().bottom + window.scrollY;
+        const target = screen.width < 575 ?
+            (segmentBottom - 20) :
+            (segmentBottom - Math.min(300, window.innerHeight * 0.25));
+        this.scrollTo(target);
+      });
 
       setTimeout(function() {
         // By now, our choice animations should be over; previous choices are visually gone.

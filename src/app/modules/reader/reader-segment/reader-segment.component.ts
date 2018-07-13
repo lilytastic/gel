@@ -47,30 +47,27 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
       this.renderer.setStyle(nativeEl, 'position', 'absolute');
       this.renderer.setStyle(nativeEl, 'transform', `translateY(${bindElm.offsetTop - nativeEl.offsetTop}px)`);
       this.renderer.setStyle(nativeEl, 'width', `${bounds.width}px`);
-      self.renderer.setStyle(nativeEl, 'max-height', `${otherBounds.height}px`);
+      this.renderer.setStyle(nativeEl, 'max-height', `${otherBounds.height}px`);
 
-      setTimeout(function() {
-        const mobile = false; // window.screen.width < 575;
-        // this.renderer.setStyle(nativeEl, 'top', `${(mobile ? otherBounds.top : bindElm.offsetTop)}px`);
-
+      window.requestAnimationFrame(() => {
         const transitionSpeed = 650;
-        self.renderer.addClass(nativeEl, 'moving');
-        self.renderer.addClass(nativeEl, 'active');
-        self.renderer.setStyle(nativeEl, 'transition', `
+        this.renderer.addClass(nativeEl, 'moving');
+        this.renderer.addClass(nativeEl, 'active');
+        this.renderer.setStyle(nativeEl, 'transition', `
           opacity .15s ease-in-out,
           transform ${transitionSpeed * 0.001}s ease-in-out,
           box-shadow .35s ease-in-out,
           max-height .35s ease-in-out
         `);
-        self.renderer.setStyle(nativeEl, 'transform', `translateY(0px)`);
-        self.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
+        this.renderer.setStyle(nativeEl, 'transform', `translateY(0px)`);
+        this.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
 
         setTimeout(function() {
           self.renderer.addClass(nativeEl, 'ingrained');
           self.renderer.removeClass(nativeEl, 'moving');
           self.renderer.removeAttribute(nativeEl, 'style');
-        }, transitionSpeed + 10);
-      }, 50);
+        }, transitionSpeed + 1);
+      });
     } else {
       this.renderer.addClass(nativeEl, 'active');
       this.renderer.addClass(nativeEl, 'ingrained');

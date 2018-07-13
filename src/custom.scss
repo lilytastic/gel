@@ -27,6 +27,7 @@ body {
     min-height: 100vh;
     background-color: theme-color("background");
     background: linear-gradient(165deg, theme-color("background"), darken(theme-color("background"),10));
+    background-attachment: fixed;
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-touch-callout: none;
