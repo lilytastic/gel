@@ -189,7 +189,7 @@ export class ReaderComponent implements OnInit {
 
       setTimeout(function() {
         const target = screen.width < 575 ?
-            (latestSegment.offsetTop + latestSegment.scrollHeight - 10) :
+            (latestSegment.offsetTop + latestSegment.scrollHeight - 20) :
             (latestSegment.offsetTop + latestSegment.scrollHeight - Math.min(300, window.innerHeight * 0.25));
         self.scrollTo(target);
       }, 100);
