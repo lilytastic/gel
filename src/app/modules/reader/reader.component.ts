@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Renderer2, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, HostListener, Renderer2, ElementRef, ViewChild, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 
@@ -10,6 +10,7 @@ import { FlexHeightDirective } from '@shared/directives/flex-height.directive';
 import { Segment } from '@core/classes/segment';
 import { Choice } from '@core/classes/choice';
 import { utils } from 'protractor';
+import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
 
 @Component({
   selector: 'app-reader',
@@ -44,6 +45,7 @@ import { utils } from 'protractor';
 export class ReaderComponent implements OnInit, AfterViewInit {
   @ViewChild('sections') sections: ElementRef;
   @ViewChild('sideNav') sideNav: ElementRef;
+  @ViewChildren(ReaderChoiceComponent) choiceElements: QueryList<ReaderChoiceComponent>;
 
   segments: Segment[];
   choices: any[];
@@ -58,11 +60,22 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   segmentLength = -1;
   choiceLength = -1;
 
+  lastChoice: ElementRef;
+  scrolledPast = true;
+
   ngOnInit() {
     const self = this;
   }
 
   ngAfterViewInit() {
+    this.choiceElements.changes.subscribe((r) => {
+      this.lastChoice = r.last.ref;
+      this.checkIfScrolledPastChoices();
+    });
+  }
+
+  clickScrollIndicator(): void {
+    this.scrollTo(window.scrollY + this.lastChoice.nativeElement.getBoundingClientRect().bottom - window.innerHeight + 20, 100);
   }
 
   constructor(ink: InkService, private util: UtilityService, private _ref: ElementRef, private _renderer: Renderer2) {
@@ -76,7 +89,15 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     window.requestAnimationFrame(() => { this.beginStory(); });
   }
 
+  checkIfScrolledPastChoices(): void {
+    this.scrolledPast = true;
+    if (this.lastChoice) {
+      this.scrolledPast = window.innerHeight > this.lastChoice.nativeElement.getBoundingClientRect().bottom + 4;
+    }
+  }
+
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
+    this.checkIfScrolledPastChoices();
     if (this.sideNav) {
       const self = this;
       this.renderer.setStyle(this.sideNav.nativeElement, 'transform', `translateY(${event.target.documentElement.scrollTop}px)`);
@@ -144,7 +165,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  scrollTo(bottom): void {
+  scrollTo(bottom, speed = 300): void {
     let scrollTarget = bottom;
     const body = document.body;
     const html = document.documentElement;
@@ -163,7 +184,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     const start = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
     // console.log(`Start: ${start}, target: ${scrollTarget}`);
     const dist = scrollTarget - start;
-    const speed = 300;
     const duration = speed + speed * dist / 100;
     if (dist < 0) {
       return;

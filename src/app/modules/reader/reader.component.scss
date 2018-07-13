@@ -2,6 +2,43 @@
 
 $border-thickness: 1px;
 
+.scroll-indicator {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    width: 68px;
+    height: 50px;
+    border-radius: $border-radius;
+    background-color: rgba(0,0,0,0.75);
+    z-index: 999;
+    transform: translateX(-50%) scale(0.8);
+    pointer-events: none;
+    opacity: 0;
+    cursor: pointer;
+    transition: background-color .15s ease-in-out, transform .15s ease-in-out, opacity .15s ease-in-out;
+
+    &.active {
+        pointer-events: all;
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+        &:hover {
+            background-color: rgba(0,0,0,0.9);
+        }
+    }
+
+    &:after {
+        content: '\f078';
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        font-size: 1.8rem;
+        color: white;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
 .container {
     padding: 0;
     @media (min-width: 576px) {

@@ -17,12 +17,14 @@ export class ReaderChoiceComponent implements OnInit {
   @Output() selectChoice: EventEmitter<any> = new EventEmitter();
 
   isDisabled = false;
+  ref: ElementRef;
 
   get isSelected(): boolean {
     return this.selectedChoice && this.selectedChoice === this.choice;
   }
 
-  constructor(private ink: InkService, private util: UtilityService) {
+  constructor(private _ref: ElementRef, private ink: InkService, private util: UtilityService) {
+    this.ref = _ref;
   }
 
   ngOnInit(): void {
