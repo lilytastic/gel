@@ -24,7 +24,7 @@
       
         <div class="choice-container" [@choiceAnimation]="segmentLength">
           <div *ngIf="choices && choices.length">
-            <div class="header">Choices</div>
+            <div class="header">Choose</div>
 
             <div class="choices">
               <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
