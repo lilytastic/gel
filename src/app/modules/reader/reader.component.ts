@@ -19,7 +19,7 @@ import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
       transition('* => *', [
         query('.choices', [
           style({ opacity: 0 }),
-          animate('1s ease-in-out', style({ opacity: 1 }))
+          animate('1.5s ease-in-out', style({ opacity: 1 }))
         ], {optional: true})
       ])
     ]),

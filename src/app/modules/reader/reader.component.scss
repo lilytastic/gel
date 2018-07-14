@@ -44,7 +44,7 @@ $border-thickness: 1px;
     @media (min-width: 576px) {
         padding-top: 2rem;
         @media (min-height: 600px) {
-            padding-top: 20vh;
+            padding-top: 10vh;
         }
     }
     @media (min-width: 992px) {
@@ -76,17 +76,17 @@ $border-thickness: 1px;
     transform: translateY(0px);
     transition: transform 1.35s ease-in-out 0.15s, opacity 1.5s ease-in-out;
 
+    h1, h2 {
+        font-weight: 300;
+    }
     h1 {
         text-transform: uppercase;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         opacity: 0.7;
     }
     h2 {
         color: theme-color("muted");
         font-size: 1rem;
-    }
-    h1, h2 {
-        font-weight: lighter;
     }
 }
 .choice-container {
@@ -94,11 +94,11 @@ $border-thickness: 1px;
         color: theme-color('muted');
         text-align: center;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.2em;
         margin: 2.2rem 0 0.8rem 0;
         font-family: "Roboto", sans-serif;
         font-weight: lighter;
-        transition: opacity .35s ease-in-out;
+        transition: opacity .35s ease-in-out, letter-spacing 1.5s ease-out;
     }
 }
 .choices {
@@ -106,7 +106,6 @@ $border-thickness: 1px;
     margin-top: 1.5rem;
     border-radius: $border-radius;
     margin-bottom: 100px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     margin-bottom: 550px;
 
     @media (max-width: 576px) {
@@ -172,6 +171,7 @@ $border-thickness: 1px;
     .choice-container {
         .header {
             opacity: 0;
+            letter-spacing: 0.02em;
         }
     }
 }

@@ -3,7 +3,7 @@
 $theme-colors: (
   "primary": #f34567,
   "muted": #aaafb6,
-  "background": #f7f8f8,
+  "background": #f9fafa,
   "base": #ffffff
 );
 
@@ -26,7 +26,7 @@ body {
     line-height: 1.6rem;
     min-height: 100vh;
     background-color: theme-color("background");
-    background: linear-gradient(165deg, theme-color("background"), darken(theme-color("background"),10));
+    background: linear-gradient(165deg, theme-color("background"), darken(theme-color("background"),7));
     background-attachment: fixed;
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
