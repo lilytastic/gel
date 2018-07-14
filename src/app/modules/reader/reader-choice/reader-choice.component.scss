@@ -44,9 +44,6 @@
         color: theme-color("muted");
         display: inline-block;
         min-width: 1.2rem;
-        @media (max-width: 576px) {
-            display: none;
-        }
     }
 
     .content {
