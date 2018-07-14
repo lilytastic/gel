@@ -15,8 +15,4 @@ describe('InkService', () => {
     service = _service;
     expect(service).toBeTruthy();
   }));
-
-  it('should have story variables', () => {
-    expect(service.story.variablesState['playerName']).toBe('Ananth');
-  });
 });

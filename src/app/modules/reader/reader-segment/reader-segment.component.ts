@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef, Renderer2, Input } from '@angular/core';
+import { interval } from 'rxjs';
 
 import { Segment } from '@core/classes/segment';
 import { Choice } from '@core/classes/choice';
@@ -62,11 +63,11 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
         this.renderer.setStyle(nativeEl, 'transform', `translateY(0px)`);
         this.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
 
-        setTimeout(function() {
+        interval(transitionSpeed).subscribe(() => {
           self.renderer.addClass(nativeEl, 'ingrained');
           self.renderer.removeClass(nativeEl, 'moving');
           self.renderer.removeAttribute(nativeEl, 'style');
-        }, transitionSpeed + 1);
+        });
       });
     } else {
       this.renderer.addClass(nativeEl, 'active');

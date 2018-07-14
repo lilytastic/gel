@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReaderSegmentComponent } from './reader-segment.component';
+import { Segment } from '@src/app/core/classes/segment';
 
 describe('ReaderSegmentComponent', () => {
   let component: ReaderSegmentComponent;
@@ -16,6 +17,9 @@ describe('ReaderSegmentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReaderSegmentComponent);
     component = fixture.componentInstance;
+    component.segment = new Segment([
+      {text: 'test'}
+    ]);
     fixture.detectChanges();
   });
 

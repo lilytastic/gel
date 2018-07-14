@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReaderComponent } from './reader.component';
+import { ReaderSegmentComponent } from './reader-segment/reader-segment.component';
 import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
@@ -14,6 +15,7 @@ describe('ReaderComponent', () => {
       declarations: [
         ReaderComponent,
         ReaderChoiceComponent,
+        ReaderSegmentComponent,
         PluralizePipe
       ],
       imports: [

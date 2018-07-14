@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer2, AfterViewInit, Input, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appFlexHeight]'
+  selector: '[flexHeight]'
 })
 export class FlexHeightDirective implements AfterViewInit {
   desiredHeight = 0;
