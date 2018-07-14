@@ -34,7 +34,7 @@ $border-thickness: 1px;
         font-size: 1.8rem;
         color: white;
         left: 50%;
-        top: 50%;
+        top: 51%;
         transform: translate(-50%, -50%);
     }
 }
@@ -122,8 +122,8 @@ $border-thickness: 1px;
 }
 
 .sections {
-    background-color: theme-color("base");
-    border: solid 1px $border-color;
+    background-color: rgba(theme-color("base"),0.85);
+    border: solid 1px rgba($border-color,0.1);
     border-radius: $border-radius;
     transform: scale(0.9);
     opacity: 0;

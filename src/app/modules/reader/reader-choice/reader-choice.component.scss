@@ -80,6 +80,7 @@
 
     &:hover {
         background-color: #f7f7f7;
+        transform: translateY(1px);
     }
     &:focus {
         box-shadow: 0 0 0 0.2rem rgba(theme-color("secondary"), 0.2) !important;

@@ -71,7 +71,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.choiceElements.changes.subscribe((r) => {
       this.lastChoice = r.last.ref;
-      this.checkIfScrolledPastChoices();
+      window.requestAnimationFrame(() => {this.checkIfScrolledPastChoices();})
     });
   }
 
