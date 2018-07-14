@@ -9,7 +9,7 @@ $border-thickness: 1px;
     width: 68px;
     height: 50px;
     border-radius: $border-radius;
-    background-color: rgba(0,0,0,0.75);
+    background-color: #36383cbf;
     z-index: 999;
     transform: translateX(-50%) scale(0.8);
     pointer-events: none;
@@ -22,7 +22,7 @@ $border-thickness: 1px;
         transform: translateX(-50%) scale(1);
         opacity: 1;
         &:hover {
-            background-color: rgba(0,0,0,0.9);
+            background-color: #36383c;
         }
     }
 
@@ -87,6 +87,18 @@ $border-thickness: 1px;
     }
     h1, h2 {
         font-weight: lighter;
+    }
+}
+.choice-container {
+    .header {
+        color: theme-color('muted');
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin: 2.2rem 0 0.8rem 0;
+        font-family: "Roboto", sans-serif;
+        font-weight: lighter;
+        transition: opacity .35s ease-in-out;
     }
 }
 .choices {
@@ -156,5 +168,10 @@ $border-thickness: 1px;
 :host.animating {
     .choices {
         box-shadow: none;
+    }
+    .choice-container {
+        .header {
+            opacity: 0;
+        }
     }
 }

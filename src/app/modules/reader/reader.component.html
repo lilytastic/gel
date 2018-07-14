@@ -22,9 +22,11 @@
           </div>
         </div>
       
-        <div [@choiceAnimation]="segmentLength">
-          <div class="choices">
-            <div *ngIf="choices && choices.length">
+        <div class="choice-container" [@choiceAnimation]="segmentLength">
+          <div *ngIf="choices && choices.length">
+            <div class="header">Choices</div>
+
+            <div class="choices">
               <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
                 (selectChoice)="selectChoice(choice)"
                 [selectedChoice]="selectedChoice"
