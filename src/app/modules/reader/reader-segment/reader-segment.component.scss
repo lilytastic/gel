@@ -13,6 +13,14 @@
     border-top: dashed 1px transparent;
     border-radius: $border-radius;
 
+    &:not(#latest) {
+        &.active {
+            .section-inner {
+                opacity: 0.75;
+            }
+        }
+    }
+
     ::ng-deep .highlighted {
         // color: theme-color("primary");
         color: theme-color("muted");

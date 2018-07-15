@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, ElementRef, Renderer2, AfterViewInit, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, ElementRef, Output, OnInit } from '@angular/core';
+import { interval } from 'rxjs';
 
 import { Choice } from '@core/classes/choice';
 
@@ -35,7 +36,9 @@ export class ReaderChoiceComponent implements OnInit {
     if (this.choiceIsDisabled()) {
       return;
     }
-    this.selectChoice.emit(this.choice);
+    interval(10).subscribe(() => {
+      this.selectChoice.emit(this.choice);
+    });
   }
 
   getValue(variableName): any {
