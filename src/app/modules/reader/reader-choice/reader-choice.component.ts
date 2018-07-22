@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, ElementRef, Output, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
+import { timer } from 'rxjs';
 
 import { Choice } from '@core/classes/choice';
 
@@ -36,7 +36,7 @@ export class ReaderChoiceComponent implements OnInit {
     if (this.choiceIsDisabled()) {
       return;
     }
-    interval(10).subscribe(() => {
+    timer(10).subscribe(() => {
       this.selectChoice.emit(this.choice);
     });
   }

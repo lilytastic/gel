@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, ElementRef, Renderer2, Input } from '@angular/core';
-import { interval } from 'rxjs';
+import { timer } from 'rxjs';
 
-import { Segment } from '@core/classes/segment';
+import { Segment } from '@core/models/segment.model';
+
 import { Choice } from '@core/classes/choice';
 
 @Component({
@@ -41,7 +42,6 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
     const nativeEl = this.ref.nativeElement;
 
     if (bindElm) {
-      const self = this;
       const otherBounds = bindElm.getBoundingClientRect();
       const bounds = nativeEl.getBoundingClientRect();
       this.renderer.addClass(nativeEl, 'addition');
@@ -63,10 +63,10 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
         this.renderer.setStyle(nativeEl, 'transform', `translateY(0px)`);
         this.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
 
-        interval(transitionSpeed).subscribe(() => {
-          self.renderer.addClass(nativeEl, 'ingrained');
-          self.renderer.removeClass(nativeEl, 'moving');
-          self.renderer.removeAttribute(nativeEl, 'style');
+        timer(transitionSpeed).subscribe(() => {
+          this.renderer.addClass(nativeEl, 'ingrained');
+          this.renderer.removeClass(nativeEl, 'moving');
+          this.renderer.removeAttribute(nativeEl, 'style');
         });
       });
     } else {

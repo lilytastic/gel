@@ -11,18 +11,17 @@
       </div>
     </div>
     -->
-    
     <div class="col">
       <div class="content">
         <div class="section-container">
-          <div class="sections" #sections [class.active]="segments && segments.length">
-            <reader-segment *ngFor="let segment of segments; let last = last"
+          <div class="sections" #sections [class.active]="segments">
+            <reader-segment *ngFor="let segment of segments | async; let last = last"
               [segment]="segment"
               id="{{last ? 'latest' : null}}">
             </reader-segment>
           </div>
         </div>
-      
+        
         <div class="choice-container" [@choiceAnimation]="segmentLength">
           <div *ngIf="choices && choices.length">
             <div class="header">Choose</div>

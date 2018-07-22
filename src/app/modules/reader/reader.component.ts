@@ -1,15 +1,22 @@
 import { Component, OnInit, HostListener, Renderer2, ElementRef, ViewChild, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
+import { Observable, timer } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '@modules/app/app.state';
 
 import { InkService } from '@core/services/ink.service';
 import { UtilityService } from '@core/services/util.service';
 
 import { FlexHeightDirective } from '@shared/directives/flex-height.directive';
 
-import { Segment } from '@core/classes/segment';
+import { Segment } from '@core/models/segment.model';
+import * as SegmentActions from '@core/actions/segment.actions';
+
 import { Choice } from '@core/classes/choice';
+
 import { utils } from 'protractor';
+
 import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
 
 @Component({
@@ -47,7 +54,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   @ViewChild('sideNav') sideNav: ElementRef;
   @ViewChildren(ReaderChoiceComponent) choiceElements: QueryList<ReaderChoiceComponent>;
 
-  segments: Segment[];
+  segments: Observable<Segment[]>;
   choices: any[];
   selectedChoice: any;
   ink: InkService;
@@ -81,10 +88,18 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     this.scrollTo(window.scrollY + this.lastChoice.nativeElement.getBoundingClientRect().bottom - window.innerHeight + 20, 100);
   }
 
-  constructor(ink: InkService, private util: UtilityService, private _ref: ElementRef, private _renderer: Renderer2) {
+  constructor(private store:      Store<AppState>,
+              ink:                InkService,
+              private util:       UtilityService,
+              private _ref:       ElementRef,
+              private _renderer:  Renderer2) {
     this.ref = _ref;
     this.renderer = _renderer;
     this.ink = ink;
+    this.segments = store.select('segments');
+    this.segments.subscribe(state => {
+      this.handleAnimation(state);
+    });
 
     this.choiceRequiresConfirmation = false;
 
@@ -119,11 +134,28 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   }
 
   beginStory() {
-    this.ink.Continue();
-    this.segments = this.ink.segments;
-    this.choices = this.ink.choices;
-    this.segmentLength = this.segments.length;
-    this.choiceLength = this.ink.choices.length;
+    // this.ink.Continue();
+    this.continueStory();
+    this.updateChoices();
+  }
+
+  continueStory(lastChoice?: number) {
+    const paragraphs = [];
+    while (this.ink.story.canContinue) {
+      const storyText: string = this.ink.story.Continue();
+      paragraphs.push({text: storyText.prettify()});
+    }
+    this.store.dispatch(new SegmentActions.AddSegment({
+      id: Math.random() * 9999,
+      paragraphs: paragraphs,
+      lastChoice: this.choices && lastChoice ? this.choices[lastChoice] : undefined,
+      choiceIndex: lastChoice
+    }));
+  }
+
+  updateChoices() {
+    this.choices = this.ink.compileChoices(this.ink.story.currentChoices);
+    this.choiceLength = this.choices.length;
   }
 
   getValue(variableName): any {
@@ -214,20 +246,20 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   confirmChoice(): void {
     const selectedChoice = this.selectedChoice;
     if (selectedChoice && selectedChoice.index !== undefined) {
-      this.handlingChoice = true;
-
-      // Scroll to the latest segment
-      const latestSegment = <HTMLElement>document.querySelector('#latest');
-      const bounds = latestSegment.getBoundingClientRect();
-      const self = this;
-
-      this.renderer.addClass(this.ref.nativeElement, 'animating');
-
       const choiceIndex = selectedChoice.index;
-      this.ink.selectChoice(choiceIndex);
-      this.segments = this.ink.segments;
-      this.choiceLength = this.ink.choices.length;
+      this.ink.story.ChooseChoiceIndex(choiceIndex);
+      this.continueStory(choiceIndex);
+    }
+  }
 
+  handleAnimation(segmentState): void {
+    // Scroll to the latest segment
+    const latestSegment = <HTMLElement>document.querySelector('#latest');
+    const self = this;
+
+    this.renderer.addClass(this.ref.nativeElement, 'animating');
+
+    if (latestSegment) {
       window.requestAnimationFrame(() => {
         const segmentBottom = latestSegment.getBoundingClientRect().bottom + window.scrollY;
         const target = screen.width < 575 ?
@@ -235,17 +267,17 @@ export class ReaderComponent implements OnInit, AfterViewInit {
             (segmentBottom - Math.min(300, window.innerHeight * 0.25));
         this.scrollTo(target);
       });
-
-      setTimeout(function() {
-        // By now, our choice animations should be over; previous choices are visually gone.
-        self.handlingChoice = false;
-        self.selectedChoice = undefined;
-        self.choices = self.ink.choices;
-        // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
-        self.segmentLength = self.segments.length;
-        self.renderer.removeClass(self.ref.nativeElement, 'animating');
-      }, 900);
     }
+
+    timer(900).subscribe(() => {
+      // By now, our choice animations should be over; previous choices are visually gone.
+      this.handlingChoice = false;
+      this.selectedChoice = undefined;
+      // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
+      this.updateChoices();
+      this.segmentLength = segmentState.length;
+      this.renderer.removeClass(self.ref.nativeElement, 'animating');
+    });
   }
 
 }

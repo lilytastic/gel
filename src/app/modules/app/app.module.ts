@@ -9,6 +9,9 @@ import { AppComponent } from './app.component';
 import { ReaderModule } from '@modules/reader/reader.module';
 import { StatusComponent } from '@modules/status/status.component';
 
+import { StoreModule } from '@ngrx/store';
+import { SegmentReducer } from '@core/reducers/segment.reducer';
+
 import '@core/prototypes/string-prototypes';
 
 import '@assets/js/ink.js';
@@ -24,7 +27,10 @@ import '@assets/js/story/story.js';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReaderModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    StoreModule.forRoot({
+      segments: SegmentReducer
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
