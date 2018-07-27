@@ -90,12 +90,10 @@ $border-thickness: 1px;
     }
 }
 .choice-container {
-    /*
     margin: 0 -2.4rem 0 2.4rem;
     @media (max-width: 576px) {
         margin: 0 0 0 0;
     }
-    */
     h1 {
         text-transform: uppercase;
         letter-spacing: 0.2em;
@@ -122,6 +120,7 @@ $border-thickness: 1px;
     border: solid 1px rgba($border-color,0.1);
     border-radius: $border-radius;
     transform: scale(0.9);
+    padding: 10px 0;
     opacity: 0;
     transition: transform .35s ease-in-out, opacity .35s ease-in-out;
     &.active {
