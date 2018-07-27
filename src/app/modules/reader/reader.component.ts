@@ -11,7 +11,6 @@ import { UtilityService } from '@core/services/util.service';
 import { FlexHeightDirective } from '@shared/directives/flex-height.directive';
 
 import { Segment } from '@core/models/segment.model';
-import * as SegmentActions from '@core/actions/segment.actions';
 
 import { Choice } from '@core/classes/choice';
 
@@ -29,21 +28,6 @@ import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
           animate('1.5s ease-in-out', style({ opacity: 1 }))
         ], {optional: true})
       ])
-    ]),
-    trigger('segmentAnimation', [
-      transition('* => *', [
-        query(':leave', [
-          stagger(300, [
-            animate('0.8s ease-in-out', style({ opacity: 0 }))
-          ])
-        ], {optional: true}),
-        query(':enter', [
-          style({ opacity: 0 }),
-          stagger(300, [
-            animate('0.8s ease-in-out', style({ opacity: 1 }))
-          ])
-        ], {optional: true})
-      ])
     ])
   ],
   templateUrl: './reader.component.html',
@@ -58,6 +42,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   choices: any[];
   selectedChoice: any;
   ink: InkService;
+  util: UtilityService;
   choiceRequiresConfirmation: boolean;
   ref: ElementRef;
   renderer: Renderer2;
@@ -71,8 +56,30 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   lastChoice: ElementRef;
   scrolledPast = true;
 
-  ngOnInit() {
+  store: Store<AppState>;
+
+  constructor(private _store:      Store<AppState>,
+              _ink:                InkService,
+              _util:               UtilityService,
+              private _ref:       ElementRef,
+              private _renderer:  Renderer2) {
+    this.ref = _ref;
+    this.renderer = _renderer;
+    this.util = _util;
+    this.ink = _ink;
+    this.store = _store;
+  }
+
+  ngOnInit(): void {
+    this.segments = this.store.select('segments');
+    this.segments.subscribe(state => {
+      this.handleAnimation(state);
+    });
+
+    this.choiceRequiresConfirmation = false;
+
     const self = this;
+    window.requestAnimationFrame(() => { this.beginStory(); });
   }
 
   ngAfterViewInit() {
@@ -86,25 +93,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
 
   clickScrollIndicator(): void {
     this.scrollTo(window.scrollY + this.lastChoice.nativeElement.getBoundingClientRect().bottom - window.innerHeight + 20, 100);
-  }
-
-  constructor(private store:      Store<AppState>,
-              ink:                InkService,
-              private util:       UtilityService,
-              private _ref:       ElementRef,
-              private _renderer:  Renderer2) {
-    this.ref = _ref;
-    this.renderer = _renderer;
-    this.ink = ink;
-    this.segments = store.select('segments');
-    this.segments.subscribe(state => {
-      this.handleAnimation(state);
-    });
-
-    this.choiceRequiresConfirmation = false;
-
-    const self = this;
-    window.requestAnimationFrame(() => { this.beginStory(); });
   }
 
   checkIfScrolledPastChoices(): void {
@@ -134,23 +122,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   }
 
   beginStory() {
-    // this.ink.Continue();
-    this.continueStory();
-    this.updateChoices();
-  }
-
-  continueStory(lastChoice?: number) {
-    const paragraphs = [];
-    while (this.ink.story.canContinue) {
-      const storyText: string = this.ink.story.Continue();
-      paragraphs.push({text: storyText.prettify()});
-    }
-    this.store.dispatch(new SegmentActions.AddSegment({
-      id: Math.random() * 9999,
-      paragraphs: paragraphs,
-      lastChoice: this.choices && lastChoice ? this.choices[lastChoice] : undefined,
-      choiceIndex: lastChoice
-    }));
+    this.ink.Continue();
   }
 
   updateChoices() {
@@ -170,7 +142,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
         case 'requirement':
           const currentValue = +self.ink.story.variablesState[d.variableName];
           const soughtValue = +d.value;
-          value = !(self.util.checkWithOperator[d.operator](currentValue, soughtValue));
+          value = !(this.util.checkWithOperator[d.operator](currentValue, soughtValue));
           break;
         default:
           break;
@@ -244,18 +216,16 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   }
 
   confirmChoice(): void {
-    const selectedChoice = this.selectedChoice;
-    if (selectedChoice && selectedChoice.index !== undefined) {
-      const choiceIndex = selectedChoice.index;
+    if (this.selectedChoice && this.selectedChoice.index !== undefined) {
+      const choiceIndex = this.selectedChoice.index;
       this.ink.story.ChooseChoiceIndex(choiceIndex);
-      this.continueStory(choiceIndex);
+      this.ink.Continue(choiceIndex);
     }
   }
 
   handleAnimation(segmentState): void {
     // Scroll to the latest segment
     const latestSegment = <HTMLElement>document.querySelector('#latest');
-    const self = this;
 
     this.renderer.addClass(this.ref.nativeElement, 'animating');
 
@@ -276,7 +246,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
       // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
       this.updateChoices();
       this.segmentLength = segmentState.length;
-      this.renderer.removeClass(self.ref.nativeElement, 'animating');
+      this.renderer.removeClass(this.ref.nativeElement, 'animating');
     });
   }
 

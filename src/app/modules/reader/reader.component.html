@@ -1,16 +1,6 @@
 <div class="scroll-indicator" [class.active]="!scrolledPast && !isScrolling" (click)="clickScrollIndicator()"></div>
 <div class="container">
   <div class="row">
-    <!--
-    <div class="col-3 d-none d-sm-block">
-      <div class="side-nav">
-        <div class="text-right">
-          <h1>The Intercept</h1>
-          <h2>by Inkle</h2>
-        </div>
-      </div>
-    </div>
-    -->
     <div class="col">
       <div class="content">
         <div class="section-container">
@@ -23,25 +13,23 @@
         </div>
         
         <div class="choice-container" [@choiceAnimation]="segmentLength">
-          <div *ngIf="choices && choices.length">
-            <div class="header">Choose</div>
+          <h1>Choose</h1>
 
-            <div class="choices">
-              <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
-                (selectChoice)="selectChoice(choice)"
-                [selectedChoice]="selectedChoice"
-                [choice]="choice">
-              </reader-choice>
-      
-              <button class="btn btn-block px-3 py-3 mt-0"
-                      *ngIf="choiceRequiresConfirmation"
-                      (click)="confirmChoice()"
-                      [attr.disabled]="selectedChoice ? null : true"
-                      [class.btn-secondary]="!selectedChoice"
-                      [class.btn-danger]="selectedChoice">
-                {{selectedChoice ? "Next" : "Choose"}}
-              </button>
-            </div>
+          <div class="choices" *ngIf="choices && choices.length">
+            <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
+              (selectChoice)="selectChoice(choice)"
+              [selectedChoice]="selectedChoice"
+              [choice]="choice">
+            </reader-choice>
+    
+            <button class="btn btn-block px-3 py-3 mt-0"
+                    *ngIf="choiceRequiresConfirmation"
+                    (click)="confirmChoice()"
+                    [attr.disabled]="selectedChoice ? null : true"
+                    [class.btn-secondary]="!selectedChoice"
+                    [class.btn-danger]="selectedChoice">
+              {{selectedChoice ? "Next" : "Choose"}}
+            </button>
           </div>
         </div>
       </div>

@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import { Store } from '@ngrx/store';
+import { AppState } from '@modules/app/app.state';
+import * as SegmentActions from '@core/actions/segment.actions';
+
 import { Segment } from '@core/classes/segment';
 import { Choice } from '@core/classes/choice';
 
@@ -13,17 +17,34 @@ export class InkService {
 
   continueChoice: Choice;
 
-  Continue(lastChoice?: number): Segment {
+  store: Store<AppState>;
+
+  constructor(private _store: Store<AppState>) {
+    this.store = _store;
+
+    this.choices = [];
+
+    this.continueChoice = undefined;
+
+    try {
+      this.story = new inkjs.Story(storyContent);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  Continue(lastChoice?: number): void {
     const paragraphs = [];
     while (this.story.canContinue) {
       const storyText: string = this.story.Continue();
       paragraphs.push({text: storyText.prettify()});
     }
-    const _segment = new Segment(paragraphs, this.choices[lastChoice]);
-    this.segments.push(_segment);
-    this.resetNode();
-    this.choices = this.compileChoices(this.story.currentChoices);
-    return _segment;
+    this.store.dispatch(new SegmentActions.AddSegment({
+      id: Math.random() * 9999,
+      paragraphs: paragraphs,
+      lastChoice: this.choices && lastChoice ? this.choices[lastChoice] : undefined,
+      choiceIndex: lastChoice
+    }));
   }
 
   resetNode(): void {
@@ -49,18 +70,5 @@ export class InkService {
   selectChoice(choice): void {
     this.story.ChooseChoiceIndex(choice);
     this.Continue(choice);
-  }
-
-  constructor() {
-    this.segments = [];
-    this.choices = [];
-
-    this.continueChoice = undefined;
-
-    try {
-      this.story = new inkjs.Story(storyContent);
-    } catch (err) {
-      console.error(err);
-    }
   }
 }

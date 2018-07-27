@@ -29,13 +29,15 @@
     right: 0;
     position: relative;
     transition: transform .15s ease-in-out, background-color .15s ease-in-out;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
     
     $tab-width: 3.5rem;
 
     .choice-index {
         color: theme-color("muted");
         display: inline-block;
-        min-width: 1.2rem;
+        min-width: 1.5rem;
     }
 
     .content {

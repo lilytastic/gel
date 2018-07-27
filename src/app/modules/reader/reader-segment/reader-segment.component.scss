@@ -12,6 +12,8 @@
     transition: border-radius .35s ease-in-out 1.1s, box-shadow .35s ease-in-out, background-color .35s ease-in-out;
     border-top: dashed 1px transparent;
     border-radius: $border-radius;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
 
     &:not(#latest) {
         &.active {
@@ -22,7 +24,6 @@
     }
 
     ::ng-deep .highlighted {
-        // color: theme-color("primary");
         color: theme-color("muted");
         margin-bottom: 1rem;
     }
@@ -37,15 +38,7 @@
             padding: $horizontal-space-mobile;
         }
     }
-
-    /*
-    &:not(.moving) {
-        max-height: unset;
-        width: auto;
-        position: relative;
-        top: 0;
-    }
-    */
+    
     &:not(.ingrained) {
         box-shadow: 0 0 1px $border-color, 0 0 7px rgba(0,0,0,0.2);
     }
