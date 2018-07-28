@@ -1,7 +1,6 @@
 @import "../../../../custom.scss";
 
 :host {
-    font-family: "Roboto Slab", serif;
     width: 100%;
     transition: top .8s ease-in-out;
     position: relative;
@@ -29,11 +28,12 @@
     right: 0;
     position: relative;
     transition: transform .15s ease-in-out, background-color .15s ease-in-out;
-    font-size: 1.2rem;
-    line-height: 1.8rem;
+    font-family: $prose-font;
+    font-size: $desktop-font-size;
+    line-height: 1.4em;
     @media (max-width: 576px) {
-        font-size: 1rem;
-        line-height: 1.7rem;
+        font-size: $mobile-font-size;
+        line-height: 1.3em;
     }
 
     $tab-width: 3.5rem;
@@ -49,6 +49,9 @@
         padding-left: calc(#{$horizontal-space} - 1.2rem);;
         padding-right: $horizontal-space;
         margin-right: $tab-width;
+        span {
+            vertical-align: middle;
+        }
         @media (max-width: 576px) {
             padding: 0.9rem;
             padding-left: $horizontal-space-mobile;

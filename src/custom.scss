@@ -12,7 +12,9 @@ $theme-colors: (
 
 /* Global styles */
 
-$mobile-font-size: 1rem;
+$prose-font: "Roboto Slab", serif;
+$mobile-font-size: 1.1rem;
+$desktop-font-size: 1.1rem;
 $horizontal-space: 2.7rem;
 $horizontal-space-mobile: 1.3rem;
 $border-color: rgba(color-yiq(theme-color("base")),0.16);

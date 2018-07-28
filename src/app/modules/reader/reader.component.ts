@@ -41,11 +41,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   segments: Observable<Segment[]>;
   choices: any[];
   selectedChoice: any;
-  ink: InkService;
-  util: UtilityService;
   choiceRequiresConfirmation: boolean;
-  ref: ElementRef;
-  renderer: Renderer2;
 
   handlingChoice = false;
 
@@ -56,18 +52,11 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   lastChoice: ElementRef;
   scrolledPast = true;
 
-  store: Store<AppState>;
-
-  constructor(private _store:      Store<AppState>,
-              _ink:                InkService,
-              _util:               UtilityService,
-              private _ref:       ElementRef,
-              private _renderer:  Renderer2) {
-    this.ref = _ref;
-    this.renderer = _renderer;
-    this.util = _util;
-    this.ink = _ink;
-    this.store = _store;
+  constructor(private store:     Store<AppState>,
+              private ink:       InkService,
+              private util:      UtilityService,
+              private ref:       ElementRef,
+              private renderer:  Renderer2) {
   }
 
   ngOnInit(): void {

@@ -1,7 +1,6 @@
 @import "../../../../custom.scss";
 
 :host {
-    font-family: "Roboto Slab", serif;
     display: block;
     background-color: theme-color("base");
     color: rgba(color-yiq(theme-color("base")),0.95);
@@ -12,11 +11,12 @@
     transition: border-radius .35s ease-in-out 1.1s, box-shadow .35s ease-in-out, background-color .35s ease-in-out;
     border-top: dashed 1px transparent;
     border-radius: $border-radius;
-    font-size: 1.2rem;
-    line-height: 1.8rem;
+    font-family: $prose-font;
+    font-size: $desktop-font-size;
+    line-height: 1.5em;
     @media (max-width: 576px) {
-        font-size: 1rem;
-        line-height: 1.7rem;
+        font-size: $mobile-font-size;
+        line-height: 1.4em;
     }
 
     &:not(#latest) {
