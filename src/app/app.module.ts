@@ -4,18 +4,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@environments/environment';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 
 import { AppComponent } from './app.component';
 import { ReaderModule } from '@reader/reader.module';
 import { StatusComponent } from '@status/status.component';
 
 import { StoreModule } from '@ngrx/store';
-import { SegmentReducer } from '@app/store/reducers/segment.reducer';
 
 import '@app/prototypes/string-prototypes';
 
 import '@assets/js/ink.js';
 import '@assets/js/story/story.js';
+import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -27,10 +28,10 @@ import '@assets/js/story/story.js';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReaderModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    StoreModule.forRoot({
-      segments: SegmentReducer
-    })
+    SharedModule,
+    StoreModule.forRoot({}),
+    StoreRouterConnectingModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

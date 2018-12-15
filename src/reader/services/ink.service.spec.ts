@@ -2,14 +2,14 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { InkService } from './ink.service';
 import { StoreModule } from '@ngrx/store';
-import { SegmentReducer } from '@src/app/store/reducers/segment.reducer';
+import { ReaderReducers } from '@reader/store/reducers/segment.reducer';
 
 describe('InkService', () => {
   let service: InkService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot(SegmentReducer)],
+      imports: [StoreModule.forRoot(ReaderReducers)],
       providers: [InkService]
     });
   });

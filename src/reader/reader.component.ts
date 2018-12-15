@@ -3,15 +3,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { trigger, animate, style, group, animateChild, query, stagger, transition } from '@angular/animations';
 import { Observable, timer } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '@app/app.state';
 
-import { InkService } from '@shared/services/ink.service';
-import { UtilityService } from '@shared/services/util.service';
+import { InkService } from '@reader/services/ink.service';
+import { UtilityService } from '@reader/services/util.service';
 
 import { Segment } from '@app/models/segment.model';
 import { Choice } from '@app/classes/choice';
 
 import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
+import { ReaderState } from './store/reducers/segment.reducer';
+import { getSegmentsState } from './store/selectors/segment.selector';
 
 @Component({
   selector: 'app-reader',
@@ -33,7 +34,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   @ViewChild('sideNav') sideNav: ElementRef;
   @ViewChildren(ReaderChoiceComponent) choiceElements: QueryList<ReaderChoiceComponent>;
 
-  segments: Observable<Segment[]>;
+  segments: Segment[];
   choices: any[];
   selectedChoice: any;
   choiceRequiresConfirmation: boolean;
@@ -47,7 +48,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   lastChoice: ElementRef;
   scrolledPast = true;
 
-  constructor(private store:     Store<AppState>,
+  constructor(private store:     Store<ReaderState>,
               private ink:       InkService,
               private util:      UtilityService,
               private ref:       ElementRef,
@@ -55,9 +56,9 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.segments = this.store.select('segments');
-    this.segments.subscribe(state => {
-      this.handleAnimation(state);
+    this.store.select(getSegmentsState).subscribe(data => {
+      this.segments = data;
+      this.handleAnimation(data);
     });
 
     this.choiceRequiresConfirmation = false;
@@ -229,6 +230,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
       this.selectedChoice = undefined;
       // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
       this.updateChoices();
+      console.log(segmentState);
       this.segmentLength = segmentState.length;
       this.renderer.removeClass(this.ref.nativeElement, 'animating');
     });

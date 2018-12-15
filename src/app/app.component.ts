@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { trigger, animate, style, group, animateChild, keyframes, query, stagger, transition } from '@angular/animations';
 
-import { ThemeService } from '@shared/services/theme.service';
+import { ThemeService } from '@app/services/theme.service';
 
 @Component({
   selector: 'app-root',

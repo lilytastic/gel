@@ -6,7 +6,7 @@ import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
 import { StoreModule } from '@ngrx/store';
-import { SegmentReducer } from '@src/app/store/reducers/segment.reducer';
+import { ReaderReducers } from '@reader/store/reducers/segment.reducer';
 
 describe('ReaderComponent', () => {
   let component: ReaderComponent;
@@ -22,7 +22,7 @@ describe('ReaderComponent', () => {
       ],
       imports: [
         BrowserAnimationsModule,
-        StoreModule.forRoot(SegmentReducer)
+        StoreModule.forRoot(ReaderReducers)
       ]
     })
     .compileComponents();

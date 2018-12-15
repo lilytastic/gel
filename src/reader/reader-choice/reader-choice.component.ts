@@ -3,8 +3,8 @@ import { timer } from 'rxjs';
 
 import { Choice } from '@app/classes/choice';
 
-import { InkService } from '@shared/services/ink.service';
-import { UtilityService } from '@shared/services/util.service';
+import { InkService } from '@reader/services/ink.service';
+import { UtilityService } from '@reader/services/util.service';
 
 @Component({
   selector: 'reader-choice',

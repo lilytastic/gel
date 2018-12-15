@@ -5,7 +5,7 @@
       <div class="content">
         <div class="section-container">
           <div class="sections" #sections [class.active]="segments">
-            <reader-segment *ngFor="let segment of segments | async; let last = last"
+            <reader-segment *ngFor="let segment of segments; let last = last"
               [segment]="segment"
               id="{{last ? 'latest' : null}}">
             </reader-segment>

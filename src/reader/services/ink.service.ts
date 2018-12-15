@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '@app/app.state';
-import * as SegmentActions from '@app/store/actions/segment.actions';
+import * as SegmentActions from '@reader/store/actions/segment.actions';
 
 import { Segment } from '@app/classes/segment';
 import { Choice } from '@app/classes/choice';
+import { ReaderState } from '../store/reducers/segment.reducer';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +17,7 @@ export class InkService {
 
   continueChoice: Choice;
 
-  store: Store<AppState>;
-
-  constructor(private _store: Store<AppState>) {
-    this.store = _store;
+  constructor(private store: Store<ReaderState>) {
 
     this.choices = [];
 

@@ -5,7 +5,7 @@ import { Choice } from '@app/classes/choice';
 import { ReaderChoiceComponent } from './reader-choice.component';
 import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
 import { StoreModule } from '@ngrx/store';
-import { SegmentReducer } from '@src/app/store/reducers/segment.reducer';
+import { ReaderReducers } from '@reader/store/reducers/segment.reducer';
 
 describe('ReaderChoiceComponent', () => {
   let component: ReaderChoiceComponent;
@@ -15,7 +15,7 @@ describe('ReaderChoiceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot(SegmentReducer)
+        StoreModule.forRoot(ReaderReducers)
       ],
       declarations: [
         ReaderChoiceComponent,
