@@ -8,7 +8,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es6",
     "typeRoots": [
       "node_modules/@types",
       "../src/typings.d.ts"
@@ -18,10 +18,10 @@
       "@app/*": ["src/app/*"],
       "@environments/*": ["src/environments/*"],
       "@assets/*": ["src/assets/*"],
-      "@core/*": ["src/app/core/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@modules/*": ["src/app/modules/*"]
-    },   
+      "@shared/*": ["src/shared/*"],
+      "@reader/*": ["src/reader/*"],
+      "@status/*": ["src/status/*"]
+    },
     "lib": [
       "es2017",
       "dom"
