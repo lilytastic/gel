@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, AfterViewInit, Input, HostListener } from '@angular/core';
+import { Directive, ElementRef, Renderer2, AfterViewInit, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[flexHeight]'

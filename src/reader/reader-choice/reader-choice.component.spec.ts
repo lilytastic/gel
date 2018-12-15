@@ -4,6 +4,8 @@ import { Choice } from '@app/classes/choice';
 
 import { ReaderChoiceComponent } from './reader-choice.component';
 import { PluralizePipe } from '@shared/pipes/pluralize.pipe';
+import { StoreModule } from '@ngrx/store';
+import { SegmentReducer } from '@src/app/store/reducers/segment.reducer';
 
 describe('ReaderChoiceComponent', () => {
   let component: ReaderChoiceComponent;
@@ -12,6 +14,9 @@ describe('ReaderChoiceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        StoreModule.forRoot(SegmentReducer)
+      ],
       declarations: [
         ReaderChoiceComponent,
         PluralizePipe
@@ -35,10 +40,10 @@ describe('ReaderChoiceComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit the index on click', () => {
+  it('should emit the index on click', async() => {
     spyOn(component, 'onClick');
     button.click();
-    fixture.whenStable().then(() => {
+    await fixture.whenStable().then(() => {
       expect(component.onClick).toHaveBeenCalled();
     });
   });

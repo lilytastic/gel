@@ -13,16 +13,12 @@ import { Choice } from '@app/classes/choice';
 export class ReaderSegmentComponent implements OnInit, AfterViewInit {
   @Input() segment: Segment;
 
-  ref: ElementRef;
-  renderer: Renderer2;
   displayLastChoice = false;
   visibleParagraphs: any[];
   lastChoice: Choice;
   hideFirstParagraph = false;
 
-  constructor(private _ref: ElementRef, private _renderer: Renderer2) {
-    this.ref = _ref;
-    this.renderer = _renderer;
+  constructor(private ref: ElementRef, private renderer: Renderer2) {
   }
 
   ngOnInit() {

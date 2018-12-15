@@ -4,15 +4,16 @@ import { UtilityService } from './util.service';
 
 describe('UtilityService', () => {
   let service: UtilityService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [UtilityService]
     });
+    service = TestBed.get(UtilityService);
   });
 
-  it('should be created', inject([UtilityService], (_service: UtilityService) => {
-    expect(_service).toBeTruthy();
-    service = _service;
+  it('should be created', inject([UtilityService], () => {
+    expect(service).toBeTruthy();
   }));
 
   it('#checkWithOperator should return the correct values for each operator', (done: DoneFn) => {
