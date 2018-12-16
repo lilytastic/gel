@@ -25,10 +25,8 @@ button {
         top: 51%;
         transform: translate(-50%, -50%);
     }
-}
 
-:host-context([Active=true]) {
-    button {
+    &.active {
         pointer-events: all;
         transform: translateX(-50%) scale(1);
         opacity: 1;

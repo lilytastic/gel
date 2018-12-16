@@ -1,1 +1,1 @@
-<button (click)="clickHandler($event)"></button>
+<button [class.active]="!scrollService.isScrolling && !scrolledPast" (click)="clickHandler($event)"></button>

@@ -80,22 +80,16 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     this.choiceElements.changes.subscribe((r) => {
       if (r.last) {
         this.lastChoice = r.last.ref;
-        window.requestAnimationFrame(() => { this.checkIfScrolledPastChoices(); });
+        window.requestAnimationFrame(() => {
+          this.scrollEnd = this.lastChoice.nativeElement.getBoundingClientRect().bottom;
+        });
       }
     });
   }
 
-  checkIfScrolledPastChoices(): void {
-    this.scrolledPast = true;
-    if (this.lastChoice) {
-      this.scrollEnd = window.scrollY + this.lastChoice.nativeElement.getBoundingClientRect().bottom - window.innerHeight + 20;
-      this.scrolledPast = window.innerHeight > this.lastChoice.nativeElement.getBoundingClientRect().bottom;
-    }
-  }
-
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
-    this.checkIfScrolledPastChoices();
     this.setMinHeight();
+    this.scrollEnd = this.lastChoice.nativeElement.getBoundingClientRect().bottom;
     if (this.sideNav) {
       const self = this;
       this.renderer.setStyle(this.sideNav.nativeElement, 'transform', `translateY(${event.target.documentElement.scrollTop}px)`);

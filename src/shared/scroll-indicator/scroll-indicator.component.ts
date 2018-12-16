@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener, AfterViewInit } from '@angular/core';
 import { ScrollService } from '@app/services/scroll.service';
 
 @Component({
@@ -6,16 +6,32 @@ import { ScrollService } from '@app/services/scroll.service';
   templateUrl: './scroll-indicator.component.html',
   styleUrls: ['./scroll-indicator.component.scss']
 })
-export class ScrollIndicatorComponent implements OnInit {
+export class ScrollIndicatorComponent implements OnInit, AfterViewInit {
   @Input() scrollTarget = 0;
 
+  scrolledPast = true;
+
   constructor(private scrollService: ScrollService) { }
+
+  @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
+    this.checkIfScrolledPastChoices();
+  }
 
   ngOnInit() {
   }
 
-  clickHandler(): void {
-    this.scrollService.scrollTo(this.scrollTarget, 100);
+  ngAfterViewInit() {
+    window.requestAnimationFrame(() => { this.checkIfScrolledPastChoices(); });
   }
+
+  clickHandler(): void {
+    const target = window.scrollY + this.scrollTarget - window.innerHeight + 20;
+    this.scrollService.scrollTo(target, 100);
+  }
+
+  checkIfScrolledPastChoices(): void {
+    this.scrolledPast = window.innerHeight > this.scrollTarget;
+  }
+
 
 }
