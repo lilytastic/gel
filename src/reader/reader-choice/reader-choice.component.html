@@ -1,11 +1,10 @@
-<button class="btn p-0"
+<button class="btn"
     [class.selected]="isSelected"
     [class.declined]="selectedChoice && selectedChoice !== choice"
     [attr.disabled]="isDisabled ? true : null"
     [class.btn-light]="!isSelected"
     (click)="onClick()">
-  
-  <div class="content">
+
     <div class="row align-items-center">
       <div class="col">
         <!--
@@ -27,5 +26,4 @@
         </div>
       </div>
     </div>
-  </div>
 </button>

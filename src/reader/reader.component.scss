@@ -40,8 +40,12 @@ $border-thickness: 1px;
 }
 
 .container {
-    padding: 0;
+    padding: 0.5rem;
     padding-bottom: 2rem;
+    grid-template-rows: min-content;
+
+    display: grid;
+    grid-row-gap: 1.4rem;
 
     @media (min-width: 576px) {
         padding-top: 2rem;
@@ -51,15 +55,6 @@ $border-thickness: 1px;
     }
     @media (min-width: 992px) {
         max-width: 800px;
-    }
-}
-
-.content {
-    display: grid;
-    grid-row-gap: 1.4rem;
-
-    @media (max-width: 576px) {
-        padding: 0.5rem;
     }
 }
 
@@ -111,7 +106,6 @@ $border-thickness: 1px;
     }
     .choices {
         transition: max-height .35s ease-in-out, opacity .15s ease-in-out;
-        border-radius: $border-radius;
         display: grid;
         grid-template-columns: 1fr;
         grid-row-gap: 1rem;

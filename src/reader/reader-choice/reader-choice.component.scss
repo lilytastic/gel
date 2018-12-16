@@ -1,5 +1,7 @@
 @import "../../custom.scss";
 
+$tab-width: 3.5rem;
+
 :host {
     width: 100%;
     transition: top .8s ease-in-out;
@@ -14,43 +16,32 @@
     color: rgba(color-yiq(theme-color("base")),0.95);
     border-width: 1px;
     border-radius: $border-radius;
-    border-color: $border-color;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-color: darken($border-color, 10%);
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2);
     text-align: left;
     transform: none;
     top: 0;
     right: 0;
     position: relative;
-    transition: transform .15s ease-in-out, background-color .15s ease-in-out;
+    transition: transform .15s ease-in-out, box-shadow .15s ease-in-out, background-color .15s ease-in-out;
     font-family: $prose-font;
     font-size: $desktop-font-size;
     line-height: 1.4em;
+    padding: 1.25rem;
+    padding-left: calc(#{$horizontal-space} - 1.2rem);;
+    padding-right: $horizontal-space;
+    margin-right: $tab-width;
+
+    span {
+        vertical-align: middle;
+    }
+
     @media (max-width: 576px) {
+        padding: 0.9rem;
+        padding-left: $horizontal-space-mobile;
+        padding-right: $horizontal-space-mobile;
         font-size: $mobile-font-size;
         line-height: 1.3em;
-    }
-
-    $tab-width: 3.5rem;
-
-    .choice-index {
-        color: theme-color("muted");
-        display: inline-block;
-        min-width: 1.5rem;
-    }
-
-    .content {
-        padding: 1.25rem;
-        padding-left: calc(#{$horizontal-space} - 1.2rem);;
-        padding-right: $horizontal-space;
-        margin-right: $tab-width;
-        span {
-            vertical-align: middle;
-        }
-        @media (max-width: 576px) {
-            padding: 0.9rem;
-            padding-left: $horizontal-space-mobile;
-            padding-right: $horizontal-space-mobile;
-        }
     }
 
     &:before {
@@ -74,7 +65,7 @@
         position: absolute;
         font-size: 1.3rem;
         line-height: 0;
-        color: theme-color("muted");
+        color: rgba(color-yiq(theme-color("base")),0.95);
         opacity: 0.7;
         right: calc(#{$tab-width} / 2);
         top: 50%;
@@ -84,6 +75,7 @@
     &:hover {
         background-color: #f7f7f7;
         transform: translateY(1px);
+        box-shadow: 0 1px 4px -1px rgba(0,0,0,0.4);
     }
     &:focus {
         box-shadow: 0 0 0 0.2rem rgba(theme-color("secondary"), 0.2) !important;
@@ -96,19 +88,6 @@
         transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
         transform: translateX(400px);
         opacity: 0;
-    }
-
-    .choice-locked,
-    .choice-unlocked,
-    .choice-selected {
-        display: none;
-        margin-right: 0.5rem;
-        min-width: 1.2rem;
-        text-align: center;
-    }
-
-    .choice-unlocked {
-        display: inline-block;
     }
 
     &.locked, &:disabled, &.disabled {
@@ -146,20 +125,37 @@
             display: inline-block;
         }
     }
+}
 
-    .choice-metadata {
-        text-align: right;
-        font-family: "Roboto", sans-serif;
-        @media (max-width: 576px) {
-            text-align: left;
-        }
+.choice-locked,
+.choice-unlocked,
+.choice-selected {
+    display: none;
+    margin-right: 0.5rem;
+    min-width: 1.2rem;
+    text-align: center;
+}
+
+.choice-unlocked {
+    display: inline-block;
+}
+
+.choice-metadata {
+    text-align: right;
+    font-family: "Roboto", sans-serif;
+    @media (max-width: 576px) {
+        text-align: left;
     }
 }
 
+.choice-index {
+    color: theme-color("muted");
+    display: inline-block;
+    min-width: 1.5rem;
+}
+
 @media (max-width: 576px) {
-    .btn {
-        .choice-metadata {
-            text-align: left;
-        }
+    .choice-metadata {
+        text-align: left;
     }
 }
