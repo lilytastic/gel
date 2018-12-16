@@ -35,7 +35,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   @ViewChildren(ReaderChoiceComponent) choiceElements: QueryList<ReaderChoiceComponent>;
 
   get readingLine() {
-    return Math.min(300, window.innerHeight * 0.1);
+    return screen.width < 575 ? 20 : Math.min(300, window.innerHeight * 0.25);
   }
 
   segments: Segment[];
@@ -231,9 +231,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
       window.requestAnimationFrame(() => {
         this.setMinHeight();
         const segmentBottom = latestSegment.getBoundingClientRect().bottom + window.scrollY;
-        const target = screen.width < 575 ?
-            (segmentBottom - 20) :
-            (segmentBottom - this.readingLine);
+        const target = segmentBottom - this.readingLine;
         this.scrollTo(target);
       });
     }
