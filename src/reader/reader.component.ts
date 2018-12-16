@@ -34,6 +34,10 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   @ViewChild('sideNav') sideNav: ElementRef;
   @ViewChildren(ReaderChoiceComponent) choiceElements: QueryList<ReaderChoiceComponent>;
 
+  get readingLine() {
+    return Math.min(300, window.innerHeight * 0.1);
+  }
+
   segments: Segment[];
   choices: any[];
   selectedChoice: any;
@@ -43,6 +47,8 @@ export class ReaderComponent implements OnInit, AfterViewInit {
 
   segmentLength = -1;
   choiceLength = -1;
+
+  minHeight = 0;
 
   isScrolling = false;
   lastChoice: ElementRef;
@@ -83,12 +89,13 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   checkIfScrolledPastChoices(): void {
     this.scrolledPast = true;
     if (this.lastChoice) {
-      this.scrolledPast = window.innerHeight > this.lastChoice.nativeElement.getBoundingClientRect().bottom + 4;
+      this.scrolledPast = window.innerHeight > this.lastChoice.nativeElement.getBoundingClientRect().bottom;
     }
   }
 
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
     this.checkIfScrolledPastChoices();
+    this.setMinHeight();
     if (this.sideNav) {
       const self = this;
       this.renderer.setStyle(this.sideNav.nativeElement, 'transform', `translateY(${event.target.documentElement.scrollTop}px)`);
@@ -208,6 +215,12 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     }
   }
 
+  setMinHeight(): void {
+    const latestSegment = <HTMLElement>document.querySelector('#latest');
+    const segmentBottom = latestSegment.getBoundingClientRect().top + window.scrollY;
+    this.minHeight = (segmentBottom) + window.innerHeight - this.readingLine;
+  }
+
   handleAnimation(segmentState): void {
     // Scroll to the latest segment
     const latestSegment = <HTMLElement>document.querySelector('#latest');
@@ -216,10 +229,11 @@ export class ReaderComponent implements OnInit, AfterViewInit {
 
     if (latestSegment) {
       window.requestAnimationFrame(() => {
+        this.setMinHeight();
         const segmentBottom = latestSegment.getBoundingClientRect().bottom + window.scrollY;
         const target = screen.width < 575 ?
             (segmentBottom - 20) :
-            (segmentBottom - Math.min(300, window.innerHeight * 0.25));
+            (segmentBottom - this.readingLine);
         this.scrollTo(target);
       });
     }
@@ -230,7 +244,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
       this.selectedChoice = undefined;
       // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
       this.updateChoices();
-      console.log(segmentState);
       this.segmentLength = segmentState.length;
       this.renderer.removeClass(this.ref.nativeElement, 'animating');
     });

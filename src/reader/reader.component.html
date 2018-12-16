@@ -1,5 +1,5 @@
 <div class="scroll-indicator" [class.active]="!scrolledPast && !isScrolling" (click)="clickScrollIndicator()"></div>
-<div class="container">
+<div class="container" [style.minHeight]="minHeight + 'px'">
   <div class="row">
     <div class="col">
       <div class="content">
