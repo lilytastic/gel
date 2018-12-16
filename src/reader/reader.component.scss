@@ -24,7 +24,7 @@ $border-thickness: 1px;
 
 .segment-container {
     background-color: theme-color("base");
-    border: solid 1px rgba($border-color,0.1);
+    border: solid 1px rgba($border-color, 0.1);
     border-radius: $border-radius;
     transform: scale(0.9);
     padding: 10px 0 0 0;

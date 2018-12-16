@@ -120,23 +120,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     return this.ink.story.variablesState[variableName];
   }
 
-  choiceIsDisabled(choice): boolean {
-    const self = this;
-    let value = false;
-    choice.metadata.forEach(function(d) {
-      switch (d.type) {
-        case 'requirement':
-          const currentValue = +self.ink.story.variablesState[d.variableName];
-          const soughtValue = +d.value;
-          value = !(this.util.checkWithOperator[d.operator](currentValue, soughtValue));
-          break;
-        default:
-          break;
-      }
-    });
-    return value;
-  }
-
   choiceSelected(): Choice {
     if (this.selectedChoice !== undefined) {
       return this.selectedChoice;
