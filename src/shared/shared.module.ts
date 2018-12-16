@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { PluralizePipe } from './pipes/pluralize.pipe';
 import { FlexHeightDirective } from './directives/flex-height.directive';
 import { ReaderModule } from '@reader/reader.module';
+import { ScrollIndicatorComponent } from './scroll-indicator/scroll-indicator.component';
 
 @NgModule({
   declarations: [
     PluralizePipe,
-    FlexHeightDirective
+    FlexHeightDirective,
+    ScrollIndicatorComponent
   ],
   imports: [
     CommonModule
@@ -16,7 +18,8 @@ import { ReaderModule } from '@reader/reader.module';
   ],
   exports: [
     PluralizePipe,
-    FlexHeightDirective
+    FlexHeightDirective,
+    ScrollIndicatorComponent
   ]
 })
 export class SharedModule { }

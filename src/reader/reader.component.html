@@ -1,17 +1,15 @@
-<div class="scroll-indicator" [class.active]="!scrolledPast && !isScrolling" (click)="clickScrollIndicator()"></div>
+<scroll-indicator [attr.Active]="!scrolledPast && !isScrolling" [scrollTarget]="scrollEnd"></scroll-indicator>
 
-<div class="container" [style.minHeight]="minHeight + 'px'">
-  <div class="section-container">
-    <div class="sections" #sections [class.active]="segments">
-      <reader-segment *ngFor="let segment of segments; let last = last"
-        [segment]="segment"
-        id="{{last ? 'latest' : null}}">
-      </reader-segment>
-    </div>
+<div class="outer-container" [style.minHeight]="minHeight + 'px'">
+  <div class="segment-container" #sections [class.active]="segments">
+    <reader-segment *ngFor="let segment of segments; let last = last"
+      [segment]="segment"
+      id="{{last ? 'latest' : null}}">
+    </reader-segment>
   </div>
   
   <div class="choice-container" [@choiceAnimation]="segmentLength">
-    <h1>Choose</h1>
+    <h1 class="choice-header">Choose</h1>
 
     <div class="choices" *ngIf="choices && choices.length">
       <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"

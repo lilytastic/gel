@@ -10,6 +10,7 @@ import { SharedModule } from '@shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { ReaderReducers } from './store/reducers/segment.reducer';
 import { READER_FEATURE_KEY } from './store/selectors/segment.selector';
+import { ScrollService } from '@app/services/scroll.service';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,9 @@ import { READER_FEATURE_KEY } from './store/selectors/segment.selector';
         SharedModule,
         BrowserAnimationsModule,
         StoreModule.forFeature(READER_FEATURE_KEY, ReaderReducers)
+    ],
+    providers: [
+        ScrollService
     ]
 })
 export class ReaderModule {}

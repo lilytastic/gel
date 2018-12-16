@@ -17,6 +17,7 @@ import '@app/prototypes/string-prototypes';
 import '@assets/js/ink.js';
 import '@assets/js/story/story.js';
 import { SharedModule } from '@shared/shared.module';
+import { ScrollService } from './services/scroll.service';
 
 @NgModule({
   declarations: [

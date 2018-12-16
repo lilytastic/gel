@@ -13,6 +13,7 @@ import { Choice } from '@app/classes/choice';
 import { ReaderChoiceComponent } from './reader-choice/reader-choice.component';
 import { ReaderState } from './store/reducers/segment.reducer';
 import { getSegmentsState } from './store/selectors/segment.selector';
+import { ScrollService } from '@app/services/scroll.service';
 
 @Component({
   selector: 'app-reader',
@@ -38,6 +39,8 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     return screen.width < 575 ? 20 : Math.min(300, window.innerHeight * 0.25);
   }
 
+  scrollEnd = 0;
+
   segments: Segment[];
   choices: any[];
   selectedChoice: any;
@@ -50,7 +53,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
 
   minHeight = 0;
 
-  isScrolling = false;
   lastChoice: ElementRef;
   scrolledPast = true;
 
@@ -58,7 +60,8 @@ export class ReaderComponent implements OnInit, AfterViewInit {
               private ink:       InkService,
               private util:      UtilityService,
               private ref:       ElementRef,
-              private renderer:  Renderer2) {
+              private renderer:  Renderer2,
+              private scrollService: ScrollService) {
   }
 
   ngOnInit(): void {
@@ -82,13 +85,10 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  clickScrollIndicator(): void {
-    this.scrollTo(window.scrollY + this.lastChoice.nativeElement.getBoundingClientRect().bottom - window.innerHeight + 20, 100);
-  }
-
   checkIfScrolledPastChoices(): void {
     this.scrolledPast = true;
     if (this.lastChoice) {
+      this.scrollEnd = window.scrollY + this.lastChoice.nativeElement.getBoundingClientRect().bottom - window.innerHeight + 20;
       this.scrolledPast = window.innerHeight > this.lastChoice.nativeElement.getBoundingClientRect().bottom;
     }
   }
@@ -164,49 +164,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  scrollTo(bottom, speed = 300): void {
-    if (this.isScrolling) {
-      return;
-    }
-    this.isScrolling = true;
-    const scrollTarget = bottom;
-    const body = document.body;
-    const html = document.documentElement;
-    const maxHeight = Math.max( body.scrollHeight, body.offsetHeight,
-                       html.clientHeight, html.scrollHeight, html.offsetHeight );
-
-    const start = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    const dist = scrollTarget - start;
-    const duration = speed + speed * dist / 100;
-    if (dist < 0) {
-      this.isScrolling = false;
-      return;
-    }
-
-    const self = this;
-    let startTime = null;
-    function step(time) {
-      if (startTime == null) {
-        startTime = time;
-      }
-      const t = (time - startTime) / duration;
-      const lerp = 3 * t * t - 2 * t * t * t;
-      if (window.scroll) {
-        window.scroll(0, start + lerp * dist);
-      } else if (document.body.scrollTo) {
-        document.body.scrollTo(0, start + lerp * dist);
-      } else {
-        document.body.scrollTop = start + lerp * dist;
-      }
-      if (t < 1) {
-        requestAnimationFrame(step);
-      } else {
-        self.isScrolling = false;
-      }
-    }
-    requestAnimationFrame(step);
-  }
-
   confirmChoice(): void {
     if (this.selectedChoice && this.selectedChoice.index !== undefined) {
       const choiceIndex = this.selectedChoice.index;
@@ -232,7 +189,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
         this.setMinHeight();
         const segmentBottom = latestSegment.getBoundingClientRect().bottom + window.scrollY;
         const target = segmentBottom - this.readingLine;
-        this.scrollTo(target);
+        this.scrollService.scrollTo(target);
       });
     }
 
