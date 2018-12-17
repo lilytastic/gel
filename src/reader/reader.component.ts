@@ -20,9 +20,11 @@ import { ScrollService } from '@app/services/scroll.service';
   animations: [
     trigger('choiceAnimation', [
       transition('* => *', [
-        query('.choices', [
+        query('button', [
           style({ opacity: 0 }),
-          animate('1.5s ease-in-out', style({ opacity: 1 }))
+          stagger(100, [
+            animate('1.5s ease-in-out', style({ opacity: 1 }))
+          ])
         ], {optional: true})
       ])
     ])
@@ -67,7 +69,9 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store.select(getSegmentsState).subscribe(data => {
       this.segments = data;
-      this.handleAnimation(data);
+      if (data.length > 0) {
+        this.handleAnimation(data);
+      }
     });
 
     this.choiceRequiresConfirmation = false;
@@ -85,6 +89,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
         });
       }
     });
+    this.setMinHeight();
   }
 
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
@@ -160,6 +165,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     const latestSegment = <HTMLElement>document.querySelector('#latest');
 
     this.renderer.addClass(this.ref.nativeElement, 'animating');
+    this.choices = [];
 
     if (latestSegment) {
       window.requestAnimationFrame(() => {

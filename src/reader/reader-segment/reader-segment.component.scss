@@ -8,7 +8,7 @@
     box-sizing: content-box;
     z-index: 9;
     box-shadow: 0 1px 7px transparent;
-    transition: border-radius .35s ease-in-out 0s, box-shadow .35s ease-in-out, background-color .35s ease-in-out;
+    transition: border-radius .35s ease-in-out 0s, background-color .35s ease-in-out;
     border-top: dashed 1px transparent;
     border-radius: $border-radius;
     font-family: $prose-font;
@@ -43,7 +43,7 @@
     }
     
     &:not(.ingrained) {
-        box-shadow: 0 0 1px $border-color, 0 0 7px rgba(0,0,0,0.2);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     &.ingrained {
@@ -57,7 +57,6 @@
             &:not(:first-child) {
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
-                border-top: dashed 1px rgba(color-yiq(theme-color("base")),0.1);
             }
         }
         opacity: 1;

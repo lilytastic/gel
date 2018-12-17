@@ -4,12 +4,10 @@ $border-thickness: 1px;
 
 .outer-container {
     margin: 0 auto;
-    padding: 0.5rem;
-    padding-bottom: 2rem;
-    grid-template-rows: min-content;
-
+    max-width: 90vw;
     display: grid;
-    grid-row-gap: 1.4rem;
+    grid-template-rows: min-content;
+    grid-row-gap: 1.7rem;
 
     @media (min-width: 576px) {
         padding-top: 2rem;
@@ -24,16 +22,24 @@ $border-thickness: 1px;
 
 .segment-container {
     background-color: theme-color("base");
-    border: solid 1px rgba($border-color, 0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     border-radius: $border-radius;
     transform: scale(0.9);
-    padding: 10px 0 0 0;
+    padding: 1rem 0 0 0;
     opacity: 0;
     transition: transform .35s ease-in-out, opacity .35s ease-in-out;
+
     &.active {
         opacity: 1;
         transform: none;
     }
+
+    @media (min-width: 576px) {
+    }
+}
+
+.choice-container {
+    margin: 0 0 2rem 0;
 }
 
 .choice-header {

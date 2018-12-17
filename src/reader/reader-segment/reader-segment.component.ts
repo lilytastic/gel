@@ -45,7 +45,6 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
       this.renderer.setStyle(nativeEl, 'transform', `translateY(${bindElm.offsetTop - nativeEl.offsetTop}px)`);
       this.renderer.setStyle(nativeEl, 'width', `${bounds.width}px`);
       this.renderer.setStyle(nativeEl, 'max-height', `${otherBounds.height}px`);
-
       window.requestAnimationFrame(() => {
         const transitionSpeed = 650;
         this.renderer.addClass(nativeEl, 'moving');

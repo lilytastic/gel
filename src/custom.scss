@@ -1,10 +1,11 @@
 /* Bootstrap overrides */
 
 $theme-colors: (
-  "primary": #f34567,
-  "muted": #aaafb6,
-  "background": #f9fafa,
-  "base": #ffffff
+    "primary": #2e00d4,
+    "secondary": #f34567,
+    "muted": #aaafb6,
+    "background": #f9f9f9,
+    "base": #ffffff
 );
 
 @import "./variables.scss";
@@ -12,10 +13,10 @@ $theme-colors: (
 
 /* Global styles */
 
-$prose-font: "Roboto Slab", serif;
-$mobile-font-size: 1.1rem;
-$desktop-font-size: 1rem;
-$horizontal-space: 2.7rem;
+$prose-font: "Nunito", sans-serif;
+$mobile-font-size: 1.3rem;
+$desktop-font-size: 1.2rem;
+$horizontal-space: 2.9rem;
 $horizontal-space-mobile: 1.3rem;
 $border-color: rgba(color-yiq(theme-color("base")),0.16);
 
