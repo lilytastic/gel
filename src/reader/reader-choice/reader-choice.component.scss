@@ -28,7 +28,7 @@ $tab-width: 3.5rem;
     font-size: $desktop-font-size;
     line-height: 1.4em;
     padding: 1.25rem;
-    padding-left: calc(#{$horizontal-space} - 1.2rem);;
+    padding-left: calc(#{$horizontal-space} - 1.2rem);
     padding-right: $horizontal-space;
 
     span {
@@ -141,7 +141,7 @@ $tab-width: 3.5rem;
 
 .choice-metadata {
     text-align: right;
-    font-family: "Roboto", sans-serif;
+    font-family: $base-font;
     @media (max-width: 576px) {
         text-align: left;
     }

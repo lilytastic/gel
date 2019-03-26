@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as SegmentActions from '@reader/store/actions/segment.actions';
 
-import { Segment } from '@app/classes/segment';
+import { Segment, Paragraph, ParagraphType } from '@app/classes/segment';
 import { Choice } from '@app/classes/choice';
 import { ReaderState } from '../store/reducers/segment.reducer';
 
@@ -25,17 +25,42 @@ export class InkService {
 
     try {
       this.story = new inkjs.Story(storyContent);
+      this.story.variablesState['environment'] = 'gel';
     } catch (err) {
       console.error(err);
     }
   }
 
-  Continue(lastChoice?: number): void {
-    const paragraphs = [];
-    while (this.story.canContinue) {
-      const storyText: string = this.story.Continue();
-      paragraphs.push({text: storyText.prettify()});
+  makeParagraph(storyText: string): Paragraph {
+    const tokens = storyText.split(' ');
+    let text = storyText.prettify();
+    let type = ParagraphType.Paragraph;
+    let options = {};
+    if (tokens.length) {
+      switch (tokens[0].trim()) {
+        case 'DIRECTION:':
+          type = ParagraphType.Paragraph;
+          text = storyText.slice(10).prettify();
+          break;
+        default:
+          type = ParagraphType.Dialogue;
+          text = storyText.slice(storyText.indexOf('\"') + 1, storyText.lastIndexOf('\"')).prettify();
+          options = {
+            speaker: 'Rita'
+          };
+          break;
+      }
     }
+    return {text: text, type: type, options: options};
+  }
+
+  Continue(lastChoice?: number): void {
+    const paragraphs: Paragraph[] = [];
+    while (this.story.canContinue) {
+      const text = this.story.Continue();
+      paragraphs.push(this.makeParagraph(text));
+    }
+    console.log(paragraphs);
     this.store.dispatch(new SegmentActions.AddSegment({
       id: Math.random() * 9999,
       paragraphs: paragraphs,
