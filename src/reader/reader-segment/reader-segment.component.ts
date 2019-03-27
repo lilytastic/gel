@@ -36,37 +36,8 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
     // Start this off at the position of the choice, if it exists.
     const bindElm: HTMLElement = this.getChoiceSection();
     const nativeEl = this.ref.nativeElement;
-
-    if (bindElm) {
-      const otherBounds = bindElm.getBoundingClientRect();
-      const bounds = nativeEl.getBoundingClientRect();
-      this.renderer.addClass(nativeEl, 'addition');
-      this.renderer.setStyle(nativeEl, 'position', 'absolute');
-      this.renderer.setStyle(nativeEl, 'transform', `translateY(${bindElm.offsetTop - nativeEl.offsetTop}px)`);
-      this.renderer.setStyle(nativeEl, 'width', `${bounds.width}px`);
-
-      window.requestAnimationFrame(() => {
-        const transitionSpeed = 650;
-        this.renderer.addClass(nativeEl, 'moving');
-        this.renderer.addClass(nativeEl, 'active');
-        this.renderer.setStyle(nativeEl, 'transition', `
-          opacity .15s ease-in-out,
-          transform ${transitionSpeed * 0.001}s ease-in-out,
-          box-shadow .35s ease-in-out,
-          max-height .35s ease-in-out
-        `);
-        this.renderer.setStyle(nativeEl, 'transform', `translateY(0px)`);
-
-        timer(transitionSpeed).subscribe(() => {
-          this.renderer.addClass(nativeEl, 'ingrained');
-          this.renderer.removeClass(nativeEl, 'moving');
-          this.renderer.removeAttribute(nativeEl, 'style');
-        });
-      });
-    } else {
-      this.renderer.addClass(nativeEl, 'active');
-      this.renderer.addClass(nativeEl, 'ingrained');
-    }
+    this.renderer.addClass(nativeEl, 'active');
+    this.renderer.addClass(nativeEl, 'ingrained');
   }
 
 }

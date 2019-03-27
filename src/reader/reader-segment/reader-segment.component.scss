@@ -94,13 +94,22 @@ p {
     margin-top: 1rem;
     margin-left: 2.2in;
     text-transform: uppercase;
+    @media (max-width: 576px) {
+        margin-left: 1.15in;
+    }
 }
 
 .parenthetical {
     margin-left: 2.2in;
+    @media (max-width: 576px) {
+        margin-left: 0.5in;
+    }
 }
 
 .dialogue {
     margin-left: 1in;
     margin-right: 20%;
+    @media (max-width: 576px) {
+        margin-left: 0;
+    }
 }

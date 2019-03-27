@@ -9,7 +9,7 @@ $border-thickness: 1px;
     background-color: theme-color("base");
 
     display: grid;
-    grid-row-gap: calc(1in - 1rem);
+    grid-row-gap: 1rem;
 
     @media (min-width: 576px) {
         margin-top: 2rem;
@@ -23,18 +23,23 @@ $border-thickness: 1px;
 }
 
 .choice-container {
+    box-shadow: 0 -30px theme-color("background");
+    background-color: theme-color("background");
 }
 
 .segment-container {
     background-color: theme-color("base");
     border-radius: $border-radius;
     transform: scale(0.9);
-    padding: calc(1in - 0.5rem) 0 0 0;
+    padding: calc(1in - 0.5rem) 0 1in 0;
     opacity: 0;
     transition: transform .35s ease-in-out, opacity .35s ease-in-out;
     &.active {
         opacity: 1;
         transform: none;
+    }
+    @media (max-width: 576px) {
+        padding: calc(20px - 0.5rem) 0 20px 0;
     }
 }
 

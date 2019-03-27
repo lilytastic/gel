@@ -36,7 +36,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   @ViewChildren(ReaderChoiceComponent) choiceElements: QueryList<ReaderChoiceComponent>;
 
   get readingLine() {
-    return screen.width < 575 ? 20 : Math.min(300, window.innerHeight * 0.25);
+    return screen.width < 575 ? 20 : Math.min(100, window.innerHeight * 0.1);
   }
 
   scrollEnd = 0;
@@ -160,8 +160,6 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     // Scroll to the latest segment
     const latestSegment = <HTMLElement>document.querySelector('#latest');
 
-    this.renderer.addClass(this.ref.nativeElement, 'animating');
-
     if (latestSegment) {
       window.requestAnimationFrame(() => {
         this.setMinHeight();
@@ -171,15 +169,12 @@ export class ReaderComponent implements OnInit, AfterViewInit {
       });
     }
 
-    timer(900).subscribe(() => {
-      // By now, our choice animations should be over; previous choices are visually gone.
-      this.handlingChoice = false;
-      this.selectedChoice = undefined;
-      // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
-      this.updateChoices();
-      this.segmentLength = segmentState.length;
-      this.renderer.removeClass(this.ref.nativeElement, 'animating');
-    });
+    // By now, our choice animations should be over; previous choices are visually gone.
+    this.handlingChoice = false;
+    this.selectedChoice = undefined;
+    // This acts as the trigger for choice animations. We wait until we have the choices before changing it.
+    this.updateChoices();
+    this.segmentLength = segmentState.length;
   }
 
 }
