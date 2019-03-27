@@ -4,30 +4,33 @@ $border-thickness: 1px;
 
 .outer-container {
     margin: 0 auto;
-    padding: 0.5rem;
-    padding-bottom: 2rem;
+    margin-bottom: 100px;
     grid-template-rows: min-content;
+    background-color: theme-color("base");
 
     display: grid;
-    grid-row-gap: 1.4rem;
+    grid-row-gap: calc(1in - 1rem);
 
     @media (min-width: 576px) {
-        padding-top: 2rem;
+        margin-top: 2rem;
         @media (min-height: 600px) {
-            padding-top: 10vh;
+            margin-top: 10vh;
         }
     }
     @media (min-width: 992px) {
-        max-width: calc(8.5in + 1rem);
+        max-width: 8.5in;
     }
+}
+
+.choice-container {
+    background-color: theme-color("background");
 }
 
 .segment-container {
     background-color: theme-color("base");
-    border: solid 1px rgba($border-color, 0.1);
     border-radius: $border-radius;
     transform: scale(0.9);
-    padding: calc(1in - 1.9rem) 0 0 0;
+    padding: calc(1in - 0.5rem) 0 0 0;
     opacity: 0;
     transition: transform .35s ease-in-out, opacity .35s ease-in-out;
     &.active {
@@ -52,7 +55,6 @@ $border-thickness: 1px;
     transition: max-height .35s ease-in-out, opacity .15s ease-in-out;
     display: grid;
     grid-template-columns: 1fr;
-    grid-row-gap: 1rem;
 }
 
 :host.animating {

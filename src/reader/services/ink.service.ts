@@ -46,7 +46,7 @@ export class InkService {
           type = ParagraphType.Dialogue;
           text = storyText.slice(storyText.indexOf('\"') + 1, storyText.lastIndexOf('\"')).prettify();
           options = {
-            speaker: 'Rita'
+            speaker: this.story.variablesState[tokens[0]] || '???'
           };
           break;
       }
@@ -60,7 +60,6 @@ export class InkService {
       const text = this.story.Continue();
       paragraphs.push(this.makeParagraph(text));
     }
-    console.log(paragraphs);
     this.store.dispatch(new SegmentActions.AddSegment({
       id: Math.random() * 9999,
       paragraphs: paragraphs,

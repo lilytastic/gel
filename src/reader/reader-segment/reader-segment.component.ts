@@ -44,7 +44,6 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
       this.renderer.setStyle(nativeEl, 'position', 'absolute');
       this.renderer.setStyle(nativeEl, 'transform', `translateY(${bindElm.offsetTop - nativeEl.offsetTop}px)`);
       this.renderer.setStyle(nativeEl, 'width', `${bounds.width}px`);
-      this.renderer.setStyle(nativeEl, 'max-height', `${otherBounds.height}px`);
 
       window.requestAnimationFrame(() => {
         const transitionSpeed = 650;
@@ -57,7 +56,6 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
           max-height .35s ease-in-out
         `);
         this.renderer.setStyle(nativeEl, 'transform', `translateY(0px)`);
-        this.renderer.setStyle(nativeEl, 'max-height', nativeEl.scrollHeight + 'px');
 
         timer(transitionSpeed).subscribe(() => {
           this.renderer.addClass(nativeEl, 'ingrained');

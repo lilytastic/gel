@@ -7,7 +7,8 @@
     overflow-y: hidden;
     box-sizing: content-box;
     z-index: 9;
-    box-shadow: 0 1px 7px transparent;
+    box-shadow: none;
+    will-change: transform;
     transition: border-radius .35s ease-in-out 0s, box-shadow .35s ease-in-out, background-color .35s ease-in-out;
     border-top: dashed 1px transparent;
     border-radius: $border-radius;
@@ -34,21 +35,20 @@
     }
     
     &:not(.ingrained) {
-        box-shadow: 0 0 1px $border-color, 0 0 7px rgba(0,0,0,0.2);
+        box-shadow: none;
     }
 
     &.ingrained {
         background-color: transparent;
-        box-shadow: 0 0 0 transparent;
+        box-shadow: none;
     }
     
     &.active {
         &:not(.moving) {
-            box-shadow: 0 0 0 transparent;
+            box-shadow: none;
             &:not(:first-child) {
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
-                border-top: dashed 1px rgba(color-yiq(theme-color("base")),0.1);
             }
         }
         opacity: 1;
@@ -61,7 +61,7 @@
 .section-inner {
     transition: opacity .8s ease-in-out 0.1s;
     opacity: 0;
-    padding: 1.9rem 1.5in 1.9rem 1in;
+    padding: 0.5rem 1in 0.5rem 1.5in;
     @media (max-width: 576px) {
         padding: $horizontal-space-mobile;
     }
