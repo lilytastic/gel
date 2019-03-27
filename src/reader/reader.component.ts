@@ -144,6 +144,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   confirmChoice(): void {
     if (this.selectedChoice && this.selectedChoice.index !== undefined) {
       const choiceIndex = this.selectedChoice.index;
+      this.ink.addText('* PLAYER CHOICE: ' + this.selectedChoice.text);
       this.ink.story.ChooseChoiceIndex(choiceIndex);
       this.ink.Continue(choiceIndex);
     }

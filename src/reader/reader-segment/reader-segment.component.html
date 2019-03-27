@@ -2,10 +2,12 @@
   <div class="section-inner">
     <div *ngFor="let paragraph of segment.paragraphs; let i = index" [class.first]="i===0" [ngSwitch]="paragraph.type">
       <div *ngSwitchCase="1">
-        <div class="speaker paragraph" [innerHTML]="paragraph.options.speaker"></div>
+        <div class="speaker paragraph" [innerHTML]="paragraph.options.speaker + (paragraph.options.continued ? ' (CONT\'D)' : '')"></div>
         <div class="dialogue paragraph" [innerHTML]="paragraph.text"></div>
       </div>
-      <p *ngSwitchDefault class="paragraph" [innerHTML]="paragraph.text"></p> 
+      <p *ngSwitchCase="2" class="paragraph transition" [innerHTML]="paragraph.text"></p>
+      <p *ngSwitchCase="3" class="paragraph scene-heading" [innerHTML]="paragraph.text"></p>
+      <p *ngSwitchDefault class="paragraph" [class.prefix]="paragraph.text.startsWith('* ')" [innerHTML]="paragraph.text"></p> 
     </div>
   </div>
 </div>

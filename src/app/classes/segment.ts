@@ -24,5 +24,7 @@ export class Paragraph {
 
 export enum ParagraphType {
     Paragraph,
-    Dialogue
+    Dialogue,
+    Transition,
+    SceneHeading
 }

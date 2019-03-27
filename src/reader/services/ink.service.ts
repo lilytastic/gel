@@ -31,23 +31,39 @@ export class InkService {
     }
   }
 
+  lastSpeaker = '';
+
   makeParagraph(storyText: string): Paragraph {
+    storyText = storyText.trim();
     const tokens = storyText.split(' ');
-    let text = storyText.prettify();
+    let text: string = storyText.prettify();
     let type = ParagraphType.Paragraph;
     let options = {};
-    if (tokens.length) {
+    if (storyText.toLowerCase().endsWith('to:')) {
+      type = ParagraphType.Transition;
+      this.lastSpeaker = '';
+    } else if (storyText.startsWith('pause')) {
+      type = ParagraphType.Paragraph;
+      text = '(beat)';
+    } else if (storyText.toLowerCase().startsWith('int.') || storyText.toLowerCase().startsWith('ext.')) {
+      type = ParagraphType.SceneHeading;
+      this.lastSpeaker = '';
+    } else if (storyText.indexOf('\"') !== -1 && storyText.indexOf('\"') !== storyText.lastIndexOf('\"') ) {
+      type = ParagraphType.Dialogue;
+      text = storyText.slice(storyText.indexOf('\"') + 1, storyText.lastIndexOf('\"')).prettify();
+      const speaker = this.story.variablesState[tokens[0]] || '???';
+      options = {
+        speaker: speaker,
+        continued: this.lastSpeaker === speaker
+      };
+      this.lastSpeaker = speaker;
+    } else if (tokens.length) {
       switch (tokens[0].trim()) {
         case 'DIRECTION:':
           type = ParagraphType.Paragraph;
           text = storyText.slice(10).prettify();
           break;
         default:
-          type = ParagraphType.Dialogue;
-          text = storyText.slice(storyText.indexOf('\"') + 1, storyText.lastIndexOf('\"')).prettify();
-          options = {
-            speaker: this.story.variablesState[tokens[0]] || '???'
-          };
           break;
       }
     }
@@ -65,6 +81,15 @@ export class InkService {
       paragraphs: paragraphs,
       lastChoice: this.choices && lastChoice ? this.choices[lastChoice] : undefined,
       choiceIndex: lastChoice
+    }));
+  }
+
+  addText(text: string) {
+    this.store.dispatch(new SegmentActions.AddSegment({
+      id: Math.random() * 9999,
+      paragraphs: [this.makeParagraph(text)],
+      lastChoice: undefined,
+      choiceIndex: undefined
     }));
   }
 
