@@ -81,7 +81,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
       if (r.last) {
         this.lastChoice = r.last.ref;
         window.requestAnimationFrame(() => {
-          this.scrollEnd = this.lastChoice.nativeElement.getBoundingClientRect().bottom;
+          this.scrollEnd = this.lastChoice.nativeElement.getBoundingClientRect().bottom - 10;
         });
       }
     });
@@ -89,7 +89,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
     this.setMinHeight();
-    this.scrollEnd = this.lastChoice.nativeElement.getBoundingClientRect().bottom;
+    this.scrollEnd = this.lastChoice.nativeElement.getBoundingClientRect().bottom - 10;
     if (this.sideNav) {
       const self = this;
       this.renderer.setStyle(this.sideNav.nativeElement, 'transform', `translateY(${event.target.documentElement.scrollTop}px)`);

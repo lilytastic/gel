@@ -9,7 +9,7 @@
     z-index: 9;
     box-shadow: none;
     will-change: transform;
-    transition: border-radius .35s ease-in-out 0s, box-shadow .35s ease-in-out, background-color .35s ease-in-out;
+    transition: border-radius .35s ease-in-out 0s, box-shadow .35s ease-in-out, opacity .35s ease-in-out, background-color .35s ease-in-out;
     border-top: dashed 1px transparent;
     border-radius: $border-radius;
     font-family: $prose-font;
@@ -36,11 +36,15 @@
     
     &:not(.ingrained) {
         box-shadow: none;
+        opacity: 0;
+        transform: translateY(100px);
     }
 
     &.ingrained {
         background-color: transparent;
         box-shadow: none;
+        opacity: 1;
+        transform: translateY(0px);
     }
     
     &.active {
@@ -61,7 +65,7 @@
 .section-inner {
     transition: opacity .8s ease-in-out 0.1s;
     opacity: 0;
-    padding: 0.5rem 1in 0.5rem 1.5in;
+    padding: 0 1in 0 1.5in;
     @media (max-width: 576px) {
         padding: $horizontal-space-mobile;
     }

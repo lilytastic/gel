@@ -36,8 +36,10 @@ export class ReaderSegmentComponent implements OnInit, AfterViewInit {
     // Start this off at the position of the choice, if it exists.
     const bindElm: HTMLElement = this.getChoiceSection();
     const nativeEl = this.ref.nativeElement;
-    this.renderer.addClass(nativeEl, 'active');
-    this.renderer.addClass(nativeEl, 'ingrained');
+    timer(10).subscribe(() => {
+      this.renderer.addClass(nativeEl, 'active');
+      this.renderer.addClass(nativeEl, 'ingrained');
+    });
   }
 
 }

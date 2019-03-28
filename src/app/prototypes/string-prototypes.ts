@@ -24,13 +24,19 @@ function splice(start, end?) {
     }
 }
 function prettify() {
-    let newString = this.trim();
+    let newString: string = this.trim();
     for (let i = 0; i < newString.length; i++) {
         const char = newString[i];
         let newChar = char;
         const prevChar = (i > 0) ? newString[i - 1] : '';
         const nextChar = (i < newString.length - 1) ? newString[i + 1] : '';
         switch (char) {
+            case '_':
+                newString = (newString.slice(0, i) + '<u>' + newString.slice(i + 1));
+                const end = newString.indexOf('_', i + 3);
+                newString = (newString.slice(0, end) + '</u>' + newString.slice(end + 1));
+                // newString = newString.replaceAt(newString.indexOf('_', i + 1), '</u>');
+                break;
             case '"':
                 if (prevChar === ' ' || prevChar === '') {
                     newChar = '“';
