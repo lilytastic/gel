@@ -4,9 +4,7 @@ $border-thickness: 1px;
 
 .outer-container {
     margin: 0 auto;
-    margin-bottom: 100px;
     grid-template-rows: min-content;
-    background-color: theme-color("base");
 
     display: grid;
     grid-row-gap: 1rem;
@@ -23,12 +21,11 @@ $border-thickness: 1px;
 }
 
 .choice-container {
-    box-shadow: 0 -30px theme-color("background");
-    background-color: theme-color("background");
 }
 
 .segment-container {
     background-color: theme-color("base");
+    box-shadow: 0 2px 7px 0 rgba(0,0,0,0.1);
     border-radius: $border-radius;
     transform: scale(0.9);
     padding: calc(1in - 0.5rem) 0 1in 0;
@@ -58,7 +55,11 @@ $border-thickness: 1px;
 .choices {
     transition: max-height .35s ease-in-out, opacity .15s ease-in-out;
     display: grid;
+    background-color: theme-color("base");
     grid-template-columns: 1fr;
+    box-shadow: 0 2px 7px 0 rgba(0,0,0,0.1);
+    border-radius: $border-radius;
+    overflow: hidden;
 }
 
 :host.animating {

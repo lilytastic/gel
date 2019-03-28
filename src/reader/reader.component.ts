@@ -144,7 +144,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   confirmChoice(): void {
     if (this.selectedChoice && this.selectedChoice.index !== undefined) {
       const choiceIndex = this.selectedChoice.index;
-      this.ink.addText('* PLAYER CHOICE: ' + this.selectedChoice.text);
+      this.ink.addText('* PLAYER: ' + this.selectedChoice.text);
       this.ink.story.ChooseChoiceIndex(choiceIndex);
       this.ink.Continue(choiceIndex);
     }
@@ -153,7 +153,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
   setMinHeight(): void {
     const latestSegment = <HTMLElement>document.querySelector('#latest');
     const segmentBottom = latestSegment.getBoundingClientRect().top + window.scrollY;
-    this.minHeight = (segmentBottom + 100) + window.innerHeight - this.readingLine;
+    this.minHeight = (segmentBottom) + window.innerHeight - this.readingLine;
   }
 
   handleAnimation(segmentState): void {
