@@ -75,6 +75,10 @@ p {
     margin-top: 1rem;
 }
 
+.paragraph {
+    margin-bottom: 1rem;
+}
+
 .first {
     .paragraph {
         margin-top: 0;
@@ -95,7 +99,6 @@ p {
 }
 
 .speaker {
-    margin-top: 1rem;
     margin-left: 2.2in;
     text-transform: uppercase;
     @media (max-width: 576px) {

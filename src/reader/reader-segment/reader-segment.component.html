@@ -1,9 +1,9 @@
 <div class="section" id="{{segment.id}}">
   <div class="section-inner">
     <div *ngFor="let paragraph of segment.paragraphs; let i = index" [class.first]="i===0" [ngSwitch]="paragraph.type">
-      <div *ngSwitchCase="1">
-        <div class="speaker paragraph" [innerHTML]="paragraph.options.speaker + (paragraph.options.continued ? ' (CONT\'D)' : '')"></div>
-        <div class="dialogue paragraph" [innerHTML]="paragraph.text"></div>
+      <div *ngSwitchCase="1" class="paragraph">
+        <div class="speaker" [innerHTML]="paragraph.options.speaker + (paragraph.options.continued ? ' (CONT\'D)' : '')"></div>
+        <div class="dialogue" [innerHTML]="paragraph.text"></div>
       </div>
       <p *ngSwitchCase="2" class="paragraph transition" [innerHTML]="paragraph.text"></p>
       <p *ngSwitchCase="3" class="paragraph scene-heading" [innerHTML]="paragraph.text"></p>
