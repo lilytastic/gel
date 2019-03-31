@@ -67,22 +67,12 @@
     opacity: 0;
     padding: 0 1in 0 1.5in;
     @media (max-width: 576px) {
-        padding: $horizontal-space-mobile;
+        padding: 0 $horizontal-space-mobile;
     }
-}
-
-p {
-    margin-top: 1rem;
 }
 
 .paragraph {
     margin-bottom: 1rem;
-}
-
-.first {
-    .paragraph {
-        margin-top: 0;
-    }
 }
 
 .scene-heading {
@@ -92,6 +82,9 @@ p {
 
 .prefix {
     text-indent: -1.2rem;
+    @media (max-width: 576px) {
+        text-indent: 0;
+    }
 }
 
 .transition {
@@ -102,14 +95,18 @@ p {
     margin-left: 2.2in;
     text-transform: uppercase;
     @media (max-width: 576px) {
-        margin-left: 1.15in;
+        margin-left: 1.25in;
     }
 }
 
+.bump-up {
+    margin-top: -1rem;
+}
+
 .parenthetical {
-    margin-left: 2.2in;
+    margin-left: 1.6in;
     @media (max-width: 576px) {
-        margin-left: 0.5in;
+        margin-left: 0.75in;
     }
 }
 
@@ -117,6 +114,7 @@ p {
     margin-left: 1in;
     margin-right: 20%;
     @media (max-width: 576px) {
-        margin-left: 0;
+        margin-left: 0.23in;
+        margin-right: 0.23in;
     }
 }

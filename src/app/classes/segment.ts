@@ -5,6 +5,7 @@ export class Segment {
     paragraphs: Paragraph[];
     lastChoice: Choice;
     choiceIndex: number;
+    options: any;
 
     constructor(_paragraphs: Paragraph[], lastChoice?: Choice) {
         this.id = Math.floor(Math.random() * 9999);

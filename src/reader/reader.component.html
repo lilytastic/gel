@@ -2,7 +2,7 @@
 
 <div class="outer-container" [style.minHeight]="minHeight + 'px'">
   <div class="segment-container" #sections [class.active]="segments">
-    <reader-segment *ngFor="let segment of segments; let last = last"
+    <reader-segment *ngFor="let segment of segments; trackBy: id; let last = last"
       [segment]="segment"
       id="{{last ? 'latest' : null}}">
     </reader-segment>
@@ -12,7 +12,7 @@
     <h1 class="choice-header">Choose</h1>
 
     <div class="choices" *ngIf="choices && choices.length">
-      <reader-choice *ngFor="let choice of choices; let i = index" id="choice{{i}}"
+      <reader-choice *ngFor="let choice of choices; trackBy: text; let i = index" id="choice{{i}}"
         (selectChoice)="selectChoice(choice)"
         [selectedChoice]="selectedChoice"
         [choice]="choice">

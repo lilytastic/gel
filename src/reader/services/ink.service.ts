@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import * as SegmentActions from '@reader/store/actions/segment.actions';
+import * as fromStore from '@reader/store/selectors/segment.selector';
 
 import { Segment, Paragraph, ParagraphType } from '@app/classes/segment';
 import { Choice } from '@app/classes/choice';
@@ -12,16 +13,24 @@ import { ReaderState } from '../store/reducers/segment.reducer';
 })
 export class InkService {
   story: any;
-  segments: Segment[];
-  choices: Choice[];
+  segments: Segment[] = [];
+  choices: Choice[] = [];
+  lastSegment: Segment;
+  paragraphs: Paragraph[] = [];
 
   continueChoice: Choice;
 
   constructor(private store: Store<ReaderState>) {
-
     this.choices = [];
 
     this.continueChoice = undefined;
+
+    this.store.select<any>(fromStore.getSegmentsState).subscribe(x => {
+      this.lastSegment = x.length > 0 ? x[x.length - 1] : undefined;
+    });
+    this.store.select<any>(fromStore.getAllParagraphs).subscribe(x => {
+      this.paragraphs = x;
+    });
 
     try {
       this.story = new inkjs.Story(storyContent);
@@ -33,12 +42,16 @@ export class InkService {
 
   lastSpeaker = '';
 
-  makeParagraph(storyText: string): Paragraph {
+  makeParagraph(storyText: string, previousParagraphs: Paragraph[]): Paragraph {
     storyText = storyText.trim();
     const tokens = storyText.split(' ');
     let text: string = storyText.prettify();
     let type = ParagraphType.Paragraph;
     let options = {};
+
+    const lastParagraph = previousParagraphs.length > 0 ? previousParagraphs[previousParagraphs.length - 1] : undefined;
+    console.log(lastParagraph);
+
     if (storyText.toLowerCase().endsWith('to:')) {
       type = ParagraphType.Transition;
       this.lastSpeaker = '';
@@ -51,11 +64,18 @@ export class InkService {
     } else if (storyText.indexOf('\"') !== -1 && storyText.indexOf('\"') !== storyText.lastIndexOf('\"') ) {
       type = ParagraphType.Dialogue;
       text = storyText.slice(storyText.indexOf('\"') + 1, storyText.lastIndexOf('\"')).prettify();
+      const parenthetical =
+        storyText.indexOf('(') !== -1 && storyText.indexOf('(') < storyText.indexOf('\"') ?
+        storyText.slice(storyText.indexOf('(') + 1, storyText.lastIndexOf(')')).prettify() :
+        '';
       const speaker = this.story.variablesState[tokens[0]] || '???';
       options = {
         speaker: speaker,
+        parenthetical: parenthetical !== '' ? parenthetical : null,
+        hideSpeaker: lastParagraph !== undefined && lastParagraph.options.speaker === speaker,
         continued: this.lastSpeaker === speaker
       };
+      console.log(options, this.lastSegment);
       this.lastSpeaker = speaker;
     } else if (tokens.length) {
       switch (tokens[0].trim()) {
@@ -74,7 +94,7 @@ export class InkService {
     const paragraphs: Paragraph[] = [];
     while (this.story.canContinue) {
       const text = this.story.Continue();
-      paragraphs.push(this.makeParagraph(text));
+      paragraphs.push(this.makeParagraph(text, [...this.paragraphs, ...paragraphs]));
     }
     this.store.dispatch(new SegmentActions.AddSegment({
       id: Math.random() * 9999,
@@ -87,7 +107,7 @@ export class InkService {
   addText(text: string) {
     this.store.dispatch(new SegmentActions.AddSegment({
       id: Math.random() * 9999,
-      paragraphs: [this.makeParagraph(text)],
+      paragraphs: [this.makeParagraph(text, this.paragraphs)],
       lastChoice: undefined,
       choiceIndex: undefined
     }));

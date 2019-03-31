@@ -1,8 +1,9 @@
 <div class="section" id="{{segment.id}}">
   <div class="section-inner">
-    <div *ngFor="let paragraph of segment.paragraphs; let i = index" [class.first]="i===0" [ngSwitch]="paragraph.type">
-      <div *ngSwitchCase="1" class="paragraph">
-        <div class="speaker" [innerHTML]="paragraph.options.speaker + (paragraph.options.continued ? ' (CONT\'D)' : '')"></div>
+    <div *ngFor="let paragraph of segment.paragraphs; trackBy: text; let i = index" [class.first]="i===0" [ngSwitch]="paragraph.type">
+      <div *ngSwitchCase="1" class="paragraph" [class.bump-up]="paragraph.options.hideSpeaker">
+        <div class="speaker" *ngIf="!paragraph.options.hideSpeaker" [innerHTML]="paragraph.options.speaker + (paragraph.options.continued ? ' (CONT\'D)' : '')"></div>
+        <div class="parenthetical" *ngIf="paragraph.options.parenthetical" [innerHTML]="'('+paragraph.options.parenthetical+')'"></div>
         <div class="dialogue" [innerHTML]="paragraph.text"></div>
       </div>
       <p *ngSwitchCase="2" class="paragraph transition" [innerHTML]="paragraph.text"></p>

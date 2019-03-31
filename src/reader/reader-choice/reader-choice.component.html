@@ -16,7 +16,7 @@
         <span>{{choice.text}}</span>
       </div>
       <div class="col-sm-auto choice-metadata">
-        <div class="small" *ngFor="let d of choice.metadata">
+        <div class="small" *ngFor="let d of choice.metadata; trackBy: variableName">
           <div *ngIf="d.type=='requirement'">
             Need {{d.value}} {{d.variableName|pluralize:d.value}} (have {{getValue(d.variableName)}})
           </div>
