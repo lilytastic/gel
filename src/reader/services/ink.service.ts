@@ -47,10 +47,9 @@ export class InkService {
     const tokens = storyText.split(' ');
     let text: string = storyText.prettify();
     let type = ParagraphType.Paragraph;
-    let options = {};
+    let options: any = {};
 
     const lastParagraph = previousParagraphs.length > 0 ? previousParagraphs[previousParagraphs.length - 1] : undefined;
-    console.log(lastParagraph);
 
     if (storyText.toLowerCase().endsWith('to:')) {
       type = ParagraphType.Transition;
@@ -63,19 +62,26 @@ export class InkService {
       this.lastSpeaker = '';
     } else if (storyText.indexOf('\"') !== -1 && storyText.indexOf('\"') !== storyText.lastIndexOf('\"') ) {
       type = ParagraphType.Dialogue;
-      text = storyText.slice(storyText.indexOf('\"') + 1, storyText.lastIndexOf('\"')).prettify();
+      const t = [];
+      for (let i = 0; i < storyText.length; i++) {
+        i = storyText.indexOf('\"', i) + 1;
+        const next = storyText.indexOf('\"', i);
+        t.push(storyText.slice(i, next));
+        i = next + 1;
+      }
+      text = t[t.length - 1].prettify();
       const parenthetical =
         storyText.indexOf('(') !== -1 && storyText.indexOf('(') < storyText.indexOf('\"') ?
         storyText.slice(storyText.indexOf('(') + 1, storyText.lastIndexOf(')')).prettify() :
         '';
       const speaker = this.story.variablesState[tokens[0]] || '???';
       options = {
-        speaker: speaker,
+        speaker: speaker + (t.length > 1 ? ` (${t[0]})` : ''),
+        speakerDetails: [],
         parenthetical: parenthetical !== '' ? parenthetical : null,
         hideSpeaker: lastParagraph !== undefined && lastParagraph.options.speaker === speaker,
         continued: this.lastSpeaker === speaker
       };
-      console.log(options, this.lastSegment);
       this.lastSpeaker = speaker;
     } else if (tokens.length) {
       switch (tokens[0].trim()) {
@@ -134,6 +140,7 @@ export class InkService {
   }
 
   selectChoice(choice): void {
+    this.lastSpeaker = '';
     this.story.ChooseChoiceIndex(choice);
     this.Continue(choice);
   }

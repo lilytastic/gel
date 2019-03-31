@@ -134,6 +134,7 @@ export class ReaderComponent implements OnInit, AfterViewInit {
     if (this.handlingChoice) {
       return;
     }
+    this.ink.lastSpeaker = '';
     this.selectedChoice = choice;
     if (!this.choiceRequiresConfirmation) {
       const self = this;
