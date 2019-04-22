@@ -8,7 +8,7 @@ export class ScrollService {
 
   constructor() { }
 
-  scrollTo(bottom, speed = 300) {
+  scrollTo(bottom, speed = 200) {
     if (this.isScrolling) {
       return;
     }

@@ -8,6 +8,7 @@ $border-thickness: 1px;
 
     display: grid;
     grid-row-gap: 1rem;
+    max-width: 8.5in;
 
     @media (min-width: 576px) {
         margin-top: 2rem;
@@ -15,12 +16,6 @@ $border-thickness: 1px;
             margin-top: 10vh;
         }
     }
-    @media (min-width: 992px) {
-        max-width: 8.5in;
-    }
-}
-
-.choice-container {
 }
 
 .segment-container {
